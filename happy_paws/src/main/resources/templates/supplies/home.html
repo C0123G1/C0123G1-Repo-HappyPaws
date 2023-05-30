@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Shops</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style th:replace="fragment.html::css"></style>
+</head>
+<body>
+<div th:replace="fragment.html::header"></div>
+<h1 th:if="${statusSave}">Create Success</h1>
+<div class="row mt-5 container-fluid">
+
+    <div class="dropdown col-2">
+        <!--        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%">-->
+        <!--            <th:block th:if="${categoryName == null}" th:text="'Category'"></th:block>-->
+        <!--            <th:block th:if="${categoryName != ''}" th:text="${categoryName}"></th:block>-->
+        <!--        </button>-->
+        <!--        <ul class="dropdown-menu ">-->
+        <!--            <li th:each="supplies : ${suppliesTypePage}">-->
+        <!--                <a  class="dropdown-item" th:href="@{/supplies(suppliesTypeId=${supplies.id})}"-->
+        <!--                    th:text="${supplies.nameTypeSupplies}" ></a>-->
+        <!--            </li>-->
+        <!--        </ul>-->
+        <a th:href="@{/supplies/create}" class="btn btn-sm btn-primary">Create Supplies</a>
+    </div>
+
+    <form th:action="@{/supplies/search}" method="get" class="col-8">
+        <div class="row">
+            <div class="col-11">
+                <input class="form-control form-control-sm" type="text" placeholder="Title"
+                       aria-label=".form-control-sm example" name="nameSupplies" th:value="${nameSupplies}">
+            </div>
+            <div class="col-1">
+                <button class="btn btn-sm btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="col-2">
+        <a class="btn btn-sm btn-primary" th:href="@{/category/}" th:text="'Supplies Type Mangager'"
+           style="width: 100%"></a>
+    </div>
+
+</div>
+<div class="container-fluid mt-2">
+    <table class="table-hover table " border="1" style="text-align: center">
+        <thead>
+        <tr class="table100-head bg-secondary text-light">
+            <th class="column1">Id</th>
+            <th class="column2">Name</th>
+            <th class="column4">Price</th>
+            <th class="column5">Origin</th>
+            <th class="column6">Supplies Types</th>
+            <th class="column6">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="supplies : ${suppliesPage}" th:if="${supplies.delete != true}" style="width: 20vw">
+            <td class="column1" th:text="${supplies.id}"></td>
+            <td class="column2" th:text="${supplies.nameSupplies}"></td>
+            <td class="column3" th:text="${supplies.price}"></td>
+            <td class="column4" th:text="${supplies.origin}"></td>
+            <td class="column5" th:text="${supplies.suppliesType.nameTypeSupplies}"></td>
+            <td class="column5">
+                <button class="btn btn-sm btn-danger" type="button" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" th:text="Delete"
+                        th:attr="onclick=|deleteSupplies(${supplies.id},'${supplies.nameSupplies}')|"></button>
+                <a class="btn btn-sm btn-warning" th:text="'Update'"
+                   th:href="@{/supplies/update(id = ${supplies.id})}"></a>
+                <a class="btn btn-sm btn-info" th:text="'Detail'"
+                   th:href="@{/supplies/detail(id = ${supplies.id})}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragment.html::footer"></div>
+
+
+<div class="btn-group me-2" style="position: fixed;bottom: 2vh;right: 0; height: 30px" role="group"
+     aria-label="First group">
+    <a th:href="@{/supplies/(page = ${suppliesPage.number - 1})}" th:if="${suppliesPage.hasPrevious()}"
+       class="btn btn-primary"
+       style="line-height: 100%">Previous</a>
+    <th:block th:each="pageNo : ${#numbers.sequence(0,suppliesPage.getTotalPages()-1)}" class="btn btn-primary">
+        <a th:href="@{/supplies/(page = ${pageNo})}" th:text="${pageNo+1}" class="btn btn-primary"
+           style="color: white; background-color: #0d6efd;width: 40px;text-align: center;line-height: 100%"></a>
+    </th:block>
+    <a th:href="@{/supplies/(page = ${suppliesPage.number + 1})}" th:if="${suppliesPage.hasNext()}"
+       class="btn btn-primary"
+       style="line-height: 100%">Next</a>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel" style="width: 100%;text-align: center;">Delete
+                    Blog</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="deleteForm" th:action="@{/supplies/delete}" method="get">
+                <div class="modal-body" style="width: 100%;text-align: center;">
+                    <input type="text" id="id" name="id" hidden>
+                    Do you want to delete <span class="text-danger" id="suppliesName"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalSave" tabindex="-1" aria-labelledby="deleteResultModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h3 style="width: 100%;text-align: center;">Create Supplies</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1 th:if="${statusSave == true}" style="width: 100%;text-align: center;" class="text-success">Create
+                    Supplies Success</h1>
+                <h1 th:if="${statusSave == false}" style="width: 100%;text-align: center;" class="text-danger">Create
+                    Supplies Fail</h1>
+            </div>
+            <div class="modal-footer" style="height: 49px">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="deleteResultModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h3 style="width: 100%;text-align: center;">Create Supplies</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1 th:if="${statusDelete == true}" style="width: 100%;text-align: center;" class="text-success">Delete
+                    Supplies Success</h1>
+                <h1 th:if="${statusDelete == false}" style="width: 100%;text-align: center;" class="text-danger">Delete
+                    Supplies Fail</h1>
+            </div>
+            <div class="modal-footer" style="height: 49px">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalUpdate" tabindex="-1" aria-labelledby="deleteResultModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h3 style="width: 100%;text-align: center;">Create Supplies</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1 th:if="${statusUpdate == true}" style="width: 100%;text-align: center;" class="text-success">Update
+                    Supplies Success</h1>
+                <h1 th:if="${statusUpdate == false}" style="width: 100%;text-align: center;" class="text-danger">Update
+                    Supplies Fail</h1>
+            </div>
+            <div class="modal-footer" style="height: 49px">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script>
+    function deleteSupplies(id, suppliesName) {
+        document.getElementById("id").value = id;
+        document.getElementById("suppliesName").innerText = suppliesName;
+    }
+</script>
+
+<div th:if="${statusSave != null}">
+    <script>
+        let saveResultModal = new bootstrap.Modal(document.getElementById('exampleModalSave'));
+        saveResultModal.show();
+    </script>
+</div>
+<div th:if="${statusDelete != null}">
+    <script>
+        let deleteResultModal = new bootstrap.Modal(document.getElementById('exampleModalDelete'));
+        deleteResultModal.show();
+    </script>
+</div>
+<div th:if="${statusUpdate == true || statusUpdate == false}">
+    <script>
+        let updateResultModal = new bootstrap.Modal(document.getElementById('exampleModalUpdate'));
+        updateResultModal.show();
+    </script>
+</div>
+
+</body>
+
+</html>
