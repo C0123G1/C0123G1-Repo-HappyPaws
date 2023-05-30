@@ -1,7 +1,7 @@
 package com.casestudy.happy_paws.config;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebFilter(filterName = "FilterUTF-8",value = "/*")
