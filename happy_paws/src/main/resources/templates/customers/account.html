@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer</title>
+</head>
+<body>
+<div th:replace="fragment.html::header"></div>
+
+<table class="table-hover table " border="1" style="text-align: center">
+  <thead>
+  <tr>
+
+    <th>STT</th>
+    <th>Username</th>
+    <th>Password</th>
+    <th>Role</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="account,loop  :  ${accountList}">
+    <td th:text="${loop.count}"></td>
+    <td th:text="${account.getUsername()()}"></td>
+    <td th:text="${account.getPassword()}"></td>
+    <td th:text="${account.getRole().getNameRole()}"></td>
+
+  </tr>
+  </tbody>
+</table>
+
+
+<div th:replace="fragment.html::footer"></div>
+
+</body>
+</html>
