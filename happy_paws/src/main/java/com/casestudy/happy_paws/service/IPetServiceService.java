@@ -8,4 +8,6 @@ public interface IPetServiceService {
     Page<PetService> findPage(Pageable pageable);
 
     void save(PetService petService);
+
+    PetService findById(Integer id);
 }

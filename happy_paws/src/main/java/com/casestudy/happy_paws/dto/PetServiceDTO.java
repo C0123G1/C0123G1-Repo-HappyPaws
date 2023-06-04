@@ -1,12 +1,11 @@
 package com.casestudy.happy_paws.dto;
 
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ public class PetServiceDTO implements Validator {
 
     @Size(max = 1000, message = "Maximum 1000 characters")
     private String description;
-    private String image;
+    private MultipartFile image;
 
 
 
@@ -35,6 +34,46 @@ public class PetServiceDTO implements Validator {
 
     public PetServiceDTO() {
 
+    }
+
+//    public PetServiceDTO(PetServiceDTOBuilder petServiceDTOBuilder) {
+//        this.name = petServiceDTOBuilder.name;
+//        this.description = petServiceDTOBuilder.description;
+//        this.image = petServiceDTOBuilder.image;}
+//        public static class PetServiceDTOBuilder {
+//            private final String name;
+//            private String description;
+//            private MultipartFile image;
+//
+//            public PetServiceDTOBuilder(String name) {
+//                this.name = name;
+//            }
+//
+//            public PetServiceDTOBuilder description(String description) {
+//                this.description = description;
+//                return this;
+//            }
+//
+//            public PetServiceDTOBuilder image(MultipartFile image) {
+//                this.image = image;
+//                return this;
+//            }
+//
+//            public PetServiceDTO build() {
+//                return new PetServiceDTO(this);
+//            }
+//        }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (image == null || id == null) return null;
+
+        return "/service-photos/" + id + "/" + image;
+    }
+
+    public PetServiceDTO(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public LocalDateTime getCreateTime() {
@@ -61,7 +100,7 @@ public class PetServiceDTO implements Validator {
         this.status = status;
     }
 
-    public PetServiceDTO(Integer id, String name, String description, String image, LocalDateTime createTime, LocalDateTime updateTime, Boolean status) {
+    public PetServiceDTO(Integer id, String name, String description, MultipartFile image, LocalDateTime createTime, LocalDateTime updateTime, Boolean status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -71,7 +110,7 @@ public class PetServiceDTO implements Validator {
         this.status = status;
     }
 
-    public PetServiceDTO(String name, String description, String image, LocalDateTime createTime, LocalDateTime updateTime, Boolean status) {
+    public PetServiceDTO(String name, String description, MultipartFile image, LocalDateTime createTime, LocalDateTime updateTime, Boolean status) {
         this.name = name;
         this.description = description;
         this.image = image;
@@ -80,14 +119,14 @@ public class PetServiceDTO implements Validator {
         this.status = status;
     }
 
-    public PetServiceDTO(Integer id, String name, String description, String image) {
+    public PetServiceDTO(Integer id, String name, String description, MultipartFile image) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.image = image;
     }
 
-    public PetServiceDTO(String name, String description, String image) {
+    public PetServiceDTO(String name, String description, MultipartFile image) {
         this.name = name;
         this.description = description;
         this.image = image;
@@ -117,11 +156,11 @@ public class PetServiceDTO implements Validator {
         this.description = description;
     }
 
-    public String getImage() {
+    public MultipartFile getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(MultipartFile image) {
         this.image = image;
     }
 

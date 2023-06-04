@@ -22,4 +22,9 @@ public class PetServiceServiceImpl implements IPetServiceService {
     public void save(PetService petService) {
         iPetServiceRepository.save(petService);
     }
+
+    @Override
+    public PetService findById(Integer id) {
+        return iPetServiceRepository.findById(id).get();
+    }
 }

@@ -54,7 +54,7 @@
       <th class="column3">Description</th>
       <th class="column4">Create on</th>
       <th class="column5">Update on</th>
-      <th class="column6">image</th>
+      <th class="column6">Image</th>
       <th class="column7">Actions</th>
     </tr>
     </thead>
@@ -65,7 +65,9 @@
       <td class="column3" th:text="${service.description}"></td>
       <td class="column4" th:text="${service.createTime}"></td>
       <td class="column5" th:text="${service.updateTime}"></td>
-      <td class="column6" th:text="${service.image}"></td>
+      <td class="column6" >
+        <img th:src="${service.image}" alt="">
+      </td>
       <td class="column7">
         <button class="btn btn-sm btn-danger" type="button" data-bs-toggle="modal"
                 data-bs-target="#exampleModal" th:text="Delete"

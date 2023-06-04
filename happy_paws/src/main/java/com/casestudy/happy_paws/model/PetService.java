@@ -1,5 +1,6 @@
 package com.casestudy.happy_paws.model;
 
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,7 +28,7 @@ public class PetService {
     private String description;
 
 
-    @Column(name = "image",columnDefinition = "TEXT")
+    @Column(name = "image",columnDefinition = "TEXT", nullable = true)
     private String image;
 
     @Column(name = "createTime" , nullable = false,updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
@@ -42,6 +43,44 @@ public class PetService {
     private Boolean status = false;
 
     public PetService() {
+    }
+//    public PetService(PetServiceBuilder petServiceBuilder) {
+//        this.name = petServiceBuilder.name;
+//        this.description = petServiceBuilder.description;
+//        this.image = petServiceBuilder.image;
+//    }
+//    public static class PetServiceBuilder{
+//        private final String name;
+//        private String description;
+//        private String image;
+//        public PetServiceBuilder(String name) {
+//            this.name = name;
+//        }
+//
+//        public PetServiceBuilder description(String description) {
+//            this.description = description;
+//            return this;
+//        }
+//
+//        public PetServiceBuilder image(String image) {
+//            this.image = image;
+//            return this;
+//        }
+//
+//        public PetService build() {
+//            return new PetService(this);
+//        }
+//    }
+    @Transient
+    public String getPhotosImagePath() {
+        if (image == null || id == null) return null;
+
+        return "/service-photos/" + id + "/" + image;
+    }
+
+    public PetService(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public LocalDateTime getCreateTime() {
