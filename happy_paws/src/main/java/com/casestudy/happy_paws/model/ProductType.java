@@ -7,20 +7,20 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-public class SuppliesType {
+public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
-    private String nameTypeSupplies;
+    private String nameTypeProduct;
     private boolean isDelete;
 
-    public SuppliesType() {
+    public ProductType() {
     }
 
-    public SuppliesType(Long id, String nameTypeSupplies,boolean isDelete) {
+    public ProductType(Long id, String nameTypeProduct, boolean isDelete) {
         this.id = id;
-        this.nameTypeSupplies = nameTypeSupplies;
+        this.nameTypeProduct = nameTypeProduct;
         this.isDelete = isDelete;
     }
 
@@ -32,12 +32,12 @@ public class SuppliesType {
         this.id = id;
     }
 
-    public String getNameTypeSupplies() {
-        return nameTypeSupplies;
+    public String getNameTypeProduct() {
+        return nameTypeProduct;
     }
 
-    public void setNameTypeSupplies(String nameTypeSupplies) {
-        this.nameTypeSupplies = nameTypeSupplies;
+    public void setNameTypeProduct(String nameTypeProduct) {
+        this.nameTypeProduct = nameTypeProduct;
     }
 
     public boolean isDelete() {
