@@ -11,11 +11,11 @@ import javax.transaction.Transactional;
 import java.awt.print.Pageable;
 
 public interface IProductRepository extends JpaRepository<Product, Long> {
-    @Query(value = "update product set is_delete = true where id=:id",nativeQuery = true)
-    @Modifying
-    @Transactional
-    void deletebyId(@Param("id") Long id);
-    @Query(value = "select p from Product p where p.isDelete = false")
-    Page<Product> findAllSupplies(Pageable pageable);
+//    @Query(value = "update product set is_delete = true where id=:id",nativeQuery = true)
+//    @Modifying
+//    @Transactional
+//    void deletebyId(@Param("id") Long id);
+//    @Query(value = "select p from Product p where p.isDelete = false")
+//    Page<Product> findAllSupplies(Pageable pageable);
 }
 
