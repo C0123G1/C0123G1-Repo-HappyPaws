@@ -11,7 +11,7 @@
 https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="../../static/crud_table.css">
+<link rel="stylesheet" href="../../../static/crud_table.css">
 <body>
 <form th:action="@{/pet-service/create}" method="post" th:object="${petServiceDTO}">
     <div class="modal-header">
@@ -35,8 +35,6 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
             <p style="color:red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
         <div class="form-group">
-<!--            <label>Image</label>-->
-<!--            <input type="text" class="form-control" >-->
             <label for="thumbnailURL">ThumbnailURL:</label>
             <input type="hidden" id="thumbnailURL" th:field="*{image}" />
             <input id="btnThumbnailURL" type="file" class="form-control"/>
@@ -84,4 +82,4 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </script>
 </body>
 </html>
-<script src="/static/crud_table.js"></script>
+<script src="/crud_table.js"></script>

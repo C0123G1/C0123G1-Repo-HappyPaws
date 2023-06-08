@@ -1,17 +1,20 @@
 package com.casestudy.happy_paws.model;
 
 import com.sun.istack.NotNull;
+import net.bytebuddy.asm.Advice;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE pet_service SET is_delete = true WHERE booking_service_id=?")
+@SQLDelete(sql = "UPDATE booking_service SET is_delete = true WHERE booking_service_id=?")
 @Where(clause = "is_delete=false")
 public class BookingService {
     @Id
@@ -22,6 +25,7 @@ public class BookingService {
     private Customer customer;
 
     @NotNull
+
     private LocalDate bookingDate;
     @NotNull
     private String bookingTime;
@@ -35,6 +39,7 @@ public class BookingService {
     private boolean isDelete = false;
 
     public BookingService() {
+
     }
 
     public BookingService(Long bookingServiceId, Customer customer, LocalDate bookingDate, String bookingTime, Date createTime, Date updateTime, boolean isDelete) {
