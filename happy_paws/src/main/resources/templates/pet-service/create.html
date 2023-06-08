@@ -35,8 +35,12 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
             <p style="color:red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
         <div class="form-group">
-            <label>Image</label>
-            <input type="text" class="form-control" >
+<!--            <label>Image</label>-->
+<!--            <input type="text" class="form-control" >-->
+            <label for="thumbnailURL">ThumbnailURL:</label>
+            <input type="hidden" id="thumbnailURL" th:field="*{image}" />
+            <input id="btnThumbnailURL" type="file" class="form-control"/>
+            <progress id="uploader" value="0" max="100">0%</progress>
         </div>
     </div>
     <div class="modal-footer">
@@ -44,6 +48,40 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <input type="submit" class="btn btn-success" value="Add">
     </div>
 </form>
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDpLFDgziCMcgvUDrE64kNuoYiKvU3PeKg",
+        authDomain: "paws-image.firebaseapp.com",
+        projectId: "paws-image",
+        storageBucket: "paws-image.appspot.com",
+        messagingSenderId: "939502564406",
+        appId: "1:939502564406:web:a127764d05552a5bb3d497",
+        measurementId: "G-QQV6T9DTSD"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // const analytics = getAnalytics(app);
+    let uploader = document.getElementById('uploader');
+    let fileButton = document.getElementById('btnThumbnailURL');
+    fileButton.addEventListener('change', function (e) {
+        let file = e.target.files[0];
+        let storageRef = firebase.storage().ref('img/' + file.name);
+        let task = storageRef.put(file);
+        task.on('state_changed', function progress(snapshot) {
+            let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            uploader.value = percentage;
+
+        });
+
+        task
+            .then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+                document.getElementById('thumbnailURL').setAttribute("value", url);
+            })
+    });
+</script>
 </body>
 </html>
 <script src="/static/crud_table.js"></script>
