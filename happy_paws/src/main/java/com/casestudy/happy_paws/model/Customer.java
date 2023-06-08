@@ -1,6 +1,10 @@
 package com.casestudy.happy_paws.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Customer {
@@ -18,28 +22,41 @@ public class Customer {
     @Column(name = "address", nullable = false, columnDefinition = "VARCHAR(100)")
     private String address;
 
+
     @ManyToOne
     @JoinColumn
     private Account account;
 
-    public Customer() {
-    }
 
-    public Customer(Integer customerId, String name, String phone, String email, String address, Account account) {
+    @Column(name = "create_time" ,updatable = false,nullable = false,columnDefinition ="TIMESTAMP DEFAULT now()" )
+    @CreationTimestamp
+    private LocalDateTime createTime ;
+    @Column(name = "update_time",nullable = false,updatable = false,columnDefinition = "TIMESTAMP DEFAULT now()")
+    @UpdateTimestamp
+    private  LocalDateTime updateTime ;
+
+    public Customer(Integer customerId, String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {
         this.customerId = customerId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.account = account;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
-    public Customer(String name, String phone, String email, String address, Account account) {
+    public Customer() {
+    }
+
+    public Customer(String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.account = account;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
     public Integer getCustomerId() {
@@ -88,5 +105,21 @@ public class Customer {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 }

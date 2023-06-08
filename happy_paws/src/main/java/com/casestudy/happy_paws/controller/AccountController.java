@@ -1,42 +1,94 @@
 package com.casestudy.happy_paws.controller;
 
 import com.casestudy.happy_paws.model.Account;
-import com.casestudy.happy_paws.model.Customer;
 import com.casestudy.happy_paws.service.IAccountService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
-@RequestMapping("/account")
+@SessionAttributes("accountController")
 public class AccountController {
 
     @Autowired
-    private IAccountService accountService ;
+    private IAccountService accountService;
+
+
 
     @GetMapping("")
-    public String index(@RequestParam("page") int page, Model model){
-        Page<Account> accountList = accountService.getAllPage(page);
-        model.addAttribute("accountList",accountList);
-        return "/customers/account";
+    public String index( Model model){
+        List<Account> accountList = accountService.findAll();
+        model.addAttribute("accountList", accountList);
+        return "/customers/user";
     }
-    @GetMapping("/create")
-    public  String create(Model model){
-        model.addAttribute("account" , new Account() );
-        return "/customers/account-create";
+//    @GetMapping("/create")
+//    public  String create(Model model){
+//        model.addAttribute("user" , new AccountDTO() );
+//        return "/customers/account-create";
+//    }
+//    @PostMapping("/save")
+//    public String save(@ModelAttribute("user") AccountDTO userDTO , RedirectAttributes redirectAttributes){
+//       Account user = new Account();
+//        BeanUtils.copyProperties(userDTO,user) ;
+//        Role role =  new Role(user.getRole().getRoleId(),user.getRole().getNameRole());
+//        userService.save(role);
+//        Role role1 = uss
+//       userService.save(user);
+//       redirectAttributes.addFlashAttribute("mess","Add New Successfully");
+//        return "redirect:/user";
+//    }
+//
+
+
+//
+    @GetMapping("/login")
+    public String login(Model model ){
+
+        Account account = new Account();
+        model.addAttribute("account", account);
+        return "/customers/login";
     }
-    @PostMapping("/save")
-    public String save( @ModelAttribute("account") Account accountDTO , RedirectAttributes redirectAttributes){
-       Account account = new Account();
-        BeanUtils.copyProperties(accountDTO,account) ;
-       accountService.save(account);
-       redirectAttributes.addFlashAttribute("mess","Add New Successfully");
-        return "redirect:/account";
-    }
+
+//
+//    @GetMapping("/")
+//    public String sessions(HttpServletRequest httpServletRequest){
+//
+//        Cookie[] cookies = httpServletRequest.getCookies();
+//        if (cookies!=null){
+//            for ( Cookie cookie: cookies) {
+//                if(cookie.getName().equals("cookieUser")){
+//                    httpServletRequest.setAttribute("name",cookie.getValue());
+//                }
+//                if(cookie.getName().equals("cookiePass")){
+//                    httpServletRequest.setAttribute("pass",cookie.getValue());
+//                }
+//            }
+//
+//        }
+//        return "redirect:/";
+//
+//    }
+
+
+//    @PostMapping("/userLogin")
+//    public String LoginUser( HttpServletRequest httpServletRequest, @ModelAttribute("user") Account user, Model model ) {
+//        String username = user.getUsername();
+//        Account user1 = userService.findUser(username);
+//        if (user.getPassword().equals(user1.getPassword())) {
+//            HttpSession session = httpServletRequest.getSession();
+//            session.setAttribute("user", user);
+//            model.addAttribute("mess"," Login Successfully");
+//            return "redirect:/customer";
+//        } else {
+//            model.addAttribute("mess","Login fail");
+//
+//            return "/customers/error" ;
+//        }
+//    }
+
 
 
 }

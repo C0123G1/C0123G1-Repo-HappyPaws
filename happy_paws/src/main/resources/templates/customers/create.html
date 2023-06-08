@@ -198,20 +198,28 @@
     <h3>Create</h3>
     <label>User</label>
     <input type="text"  th:field="*{account.username}" required/>
+    <p style="color: red" th:if="${#fields.hasErrors('account.username')}" th:errors="*{account.username}"></p>
     <label>Password </label>
     <input type="password"  th:field="*{account.password}"  required/>
+    <p style="color: red"  th:if="${#fields.hasErrors('account.password')}" th:errors="*{account.password}"></p>
+
     <label>Name</label>
     <input placeholder="Your Name" type="text" th:field="*{name}" required>
+    <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
     <label>Phone </label>
     <input placeholder=" phone number " type="text" th:field="*{phone}" required>
+    <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" ></p>
     <label>Email</label>
     <input placeholder="Example: abc@gmail.com" type="text" th:field="*{email}" required>
+    <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
     <label>Address</label>
     <input  type="text" th:field="*{address}" required>
-
+    <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
 
     <button type="submit">Submit</button>
 </form>
+
+
 
 </body>
 </html>

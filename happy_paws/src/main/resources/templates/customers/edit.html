@@ -188,16 +188,17 @@
   <title>Sign up</title>
 </head>
 <body>
-<a th:href="@{/templates/customers}">
+<a th:href="@{/customer}">
   <img style="width: 120px; height:120px"
        src="https://img.freepik.com/premium-vector/football-lion-team-logo_441059-67.jpg?w=1060">
 </a>
 
 
-<form th:action="@{/templates/customers/update}" method="post" th:object="${customer}">
-  <input type="text"  th:field="*{account.username}" required/>
-  <label>Password </label>
-  <input type="password"  th:field="*{account.password}"  required/>
+<form th:action="@{/customer/update}" method="post" th:object="${customer}">
+  <input type="text" th:field="*{customerId}" hidden>
+<!--  <label>Password </label>-->
+<!--  <input type="password"  th:field="*{account.password}"  required/>-->
+<!--  <input type="password"  th:field="*{account.password}" hidden  required/>-->
   <label>Name</label>
   <input placeholder="Your Name" type="text" th:field="*{name}" required>
   <label>Phone </label>
@@ -206,10 +207,10 @@
   <input placeholder="Example: abc@gmail.com" type="text" th:field="*{email}" required>
   <label>Address</label>
   <input  type="text" th:field="*{address}" required>
-
+  <input th:field="*{account}" hidden>
 
   <button type="submit">Submit</button>
-</form>
 
+</form>
 </body>
 </html>

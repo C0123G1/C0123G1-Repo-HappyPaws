@@ -5,8 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 
-public interface IAccountRepository extends JpaRepository<Account ,Integer> {
-    @Query(value = "select c.* from  account c order by c.account_id desc limit 1",nativeQuery = true)
-    Account findAccount();
+public interface IAccountRepository extends JpaRepository<Account,Integer> {
+    @Query(value = "SELECT  c FROM  Account c WHERE c.accountId = :userId ")
+    Account findAccount(Integer userId);
+
+    @Query(value = "SELECT u FROM Account u WHERE u.username LIKE :username ")
+    Account findUser(String username);
+
+
 }
-// c.* mới đúng * khong van duoc ủa order by cái chi oi quen
+
+
