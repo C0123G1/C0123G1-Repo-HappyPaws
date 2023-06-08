@@ -1,41 +1,30 @@
-package com.casestudy.happy_paws.model;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+package com.casestudy.happy_paws.dto;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import com.casestudy.happy_paws.model.ProductType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
 import java.time.LocalDateTime;
 
-@Entity
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductDTO implements Validator {
     private Long id;
-    @NotNull
     private String name;
-    @Column(columnDefinition = "text")
     private String description;
-    @NotNull
     private Long price;
-    @NotNull
     private String origin;
-    @Column(columnDefinition = "text")
     private String image;
-    @ManyToOne
-    @JoinColumn
+
     private ProductType productType;
-    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @CreationTimestamp
+
     private LocalDateTime createDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @UpdateTimestamp
+
     private LocalDateTime updateDate;
     private boolean isDelete;
 
-    public Product() {
+    public ProductDTO() {
     }
 
-    public Product(Long id, String name, String description, Long price, String origin, String image, ProductType productType, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
+    public ProductDTO(Long id, String name, String description, Long price, String origin, String image, ProductType productType, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -127,5 +116,14 @@ public class Product {
     public void setDelete(boolean delete) {
         isDelete = delete;
     }
-}
 
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
+    }
+}
