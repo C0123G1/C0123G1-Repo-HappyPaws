@@ -1,22 +1,27 @@
 package com.casestudy.happy_paws.model;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-public class User {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer UserId;
+    private Integer accountId;
 
     @Column(name = "username",nullable = false,unique = true,columnDefinition = "VARCHAR(100)")
     private String username ;
     @Column(name = "password",nullable = false,columnDefinition = "VARCHAR(100)")
     private String password ;
+
+    @NotNull
+    private int code ;
+    @NotNull
+    private boolean enable ;
 
     @ManyToOne
     private Role role;
@@ -29,39 +34,44 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updateTime ;
 
-    public User() {
+    public Account() {
     }
 
-    public User(Integer userId, String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime) {
-        UserId = userId;
+    public Account(Integer accountId, String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime ,int code,boolean enable) {
+        this.accountId = accountId;
         this.username = username;
         this.password = password;
         this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.code = code;
+        this.enable=enable;
+
     }
 
-    public User(String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Account(String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime,int code , boolean enable) {
         this.username = username;
         this.password = password;
         this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.code= code;
+        this.enable=enable;
     }
 
-    public User(String username, String password, Role role) {
+    public Account(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
 
     }
 
-    public Integer getUserId() {
-        return UserId;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setUserId(Integer userId) {
-        UserId = userId;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
     public String getUsername() {
@@ -104,6 +114,19 @@ public class User {
         this.updateTime = updateTime;
     }
 
+    public int getCode() {
+        return code;
+    }
 
+    public void setCode(int code) {
+        this.code = code;
+    }
 
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 }

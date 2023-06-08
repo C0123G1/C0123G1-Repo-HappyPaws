@@ -23,7 +23,7 @@ public class Customer {
     private String address;
     @ManyToOne
     @JoinColumn
-    private User user;
+    private Account account;
 
 
     @Column(name = "create_time" ,updatable = false,nullable = false,columnDefinition ="TIMESTAMP DEFAULT now()" )
@@ -33,13 +33,13 @@ public class Customer {
     @UpdateTimestamp
     private  LocalDateTime updateTime ;
 
-    public Customer(Integer customerId, String name, String phone, String email, String address, User user, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Customer(Integer customerId, String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {
         this.customerId = customerId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.user = user;
+        this.account = account;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -47,12 +47,12 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String phone, String email, String address, User user, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Customer(String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.user = user;
+        this.account = account;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -97,12 +97,12 @@ public class Customer {
         this.address = address;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public LocalDateTime getCreateTime() {

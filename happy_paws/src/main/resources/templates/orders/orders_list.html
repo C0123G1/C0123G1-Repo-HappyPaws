@@ -64,21 +64,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each=" : ${}"  style="width: 20vw">
-            <td class="column1" th:text="${accessories.id}"></td>
-            <td class="column2" th:text="${accessories.name}"></td>
-            <td class="column3" th:text="${accessories.price}"></td>
-            <td class="column4" th:text="${accessories.origin}"></td>
-            <td class="column5" th:text="${accessories.accessoriesType.nameType}"></td>
-            <td class="column5">
-                <button class="btn btn-sm btn-danger" type="button" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" th:text="Delete"
-                        th:attr="onclick=|deleteSupplies(${accessories.id},'${accessories.name}')|"></button>
-                <a class="btn btn-sm btn-warning" th:text="'Update'"
-                   th:href="@{/accessories/update(id = ${accessories.id})}"></a>
-                <a class="btn btn-sm btn-info" th:text="'Detail'"
-                   th:href="@{/accessories/detail(id = ${accessories.id})}"></a>
-            </td>
+        <tr th:each="order : ${ordersPage}"  style="width: 20vw">
+<!--            <td class="column1" th:text="${accessories.id}"></td>-->
+<!--            <td class="column2" th:text="${accessories.name}"></td>-->
+<!--            <td class="column3" th:text="${accessories.price}"></td>-->
+<!--            <td class="column4" th:text="${accessories.origin}"></td>-->
+<!--            <td class="column5" th:text="${accessories.accessoriesType.nameType}"></td>-->
+<!--            <td class="column5">-->
+<!--                <button class="btn btn-sm btn-danger" type="button" data-bs-toggle="modal"-->
+<!--                        data-bs-target="#exampleModal" th:text="Delete"-->
+<!--                        th:attr="onclick=|deleteSupplies(${accessories.id},'${accessories.name}')|"></button>-->
+<!--                <a class="btn btn-sm btn-warning" th:text="'Update'"-->
+<!--                   th:href="@{/accessories/update(id = ${accessories.id})}"></a>-->
+<!--                <a class="btn btn-sm btn-info" th:text="'Detail'"-->
+<!--                   th:href="@{/accessories/detail(id = ${accessories.id})}"></a>-->
+<!--            </td>-->
         </tr>
         </tbody>
     </table>
