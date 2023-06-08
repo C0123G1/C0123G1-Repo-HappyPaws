@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE pet_service SET is_delete = true WHERE id=?")
+@SQLDelete(sql = "UPDATE pet_service SET is_delete = true WHERE booking_service_id=?")
 @Where(clause = "is_delete=false")
 public class BookingService {
     @Id
