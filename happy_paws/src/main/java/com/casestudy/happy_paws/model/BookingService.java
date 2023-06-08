@@ -1,5 +1,4 @@
 package com.casestudy.happy_paws.model;
-
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
@@ -20,7 +19,6 @@ public class BookingService {
     @ManyToOne
     @JoinColumn
     private Customer customer;
-
     @NotNull
     private LocalDate bookingDate;
     @NotNull
@@ -31,10 +29,24 @@ public class BookingService {
     @Column(name = "updateTime", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @UpdateTimestamp
     private Date updateTime;
-
+    private boolean isDelete = false;
     public BookingService() {
     }
-
+    public BookingService(Long bookingServiceId, Customer customer, LocalDate bookingDate, String bookingTime, Date createTime, Date updateTime, boolean isDelete) {
+        this.bookingServiceId = bookingServiceId;
+        this.customer = customer;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.isDelete = isDelete;
+    }
+    public BookingService(Long bookingServiceId, Customer customer, LocalDate bookingDate, String bookingTime) {
+        this.bookingServiceId = bookingServiceId;
+        this.customer = customer;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
+    }
     public BookingService(Long bookingServiceId, Customer customer, LocalDate bookingDate, String bookingTime, Date createTime, Date updateTime) {
         this.bookingServiceId = bookingServiceId;
         this.customer = customer;
@@ -43,26 +55,18 @@ public class BookingService {
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
-
-    public BookingService(LocalDate bookingDate, String bookingTime) {
-        this.bookingDate = bookingDate;
-        this.bookingTime = bookingTime;
-    }
     public Long getBookingServiceId() {
         return bookingServiceId;
     }
-    public void setBookingServiceId(Long id) {
-        this.bookingServiceId = id;
+    public void setBookingServiceId(Long bookingServiceId) {
+        this.bookingServiceId = bookingServiceId;
     }
-
     public Customer getCustomer() {
         return customer;
     }
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
     public LocalDate getBookingDate() {
         return bookingDate;
     }

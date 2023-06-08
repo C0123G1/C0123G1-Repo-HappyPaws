@@ -16,8 +16,8 @@ public class Employee {
     private String email;
     private String address;
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "account_id")
+    private Account account;
     @Column(name = "date_create", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreationTimestamp
     private LocalDateTime dateCreate;
@@ -28,23 +28,23 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Long employeeId, String name, String phone, String email, String address, User user, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
+    public Employee(Long employeeId, String name, String phone, String email, String address, Account account, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
         this.employeeId = employeeId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.user = user;
+        this.account = account;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
     }
 
-    public Employee(String name, String phone, String email, String address, User user) {
+    public Employee(String name, String phone, String email, String address, Account account) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.user = user;
+        this.account = account;
     }
 
     public Long getEmployeeId() {
@@ -87,12 +87,12 @@ public class Employee {
         this.address = address;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public LocalDateTime getDateCreate() {

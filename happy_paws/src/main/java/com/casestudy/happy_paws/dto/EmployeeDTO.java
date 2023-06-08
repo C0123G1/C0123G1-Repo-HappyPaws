@@ -1,12 +1,7 @@
 package com.casestudy.happy_paws.dto;
 
-import com.casestudy.happy_paws.model.User;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.casestudy.happy_paws.model.Account;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 public class EmployeeDTO {
@@ -16,7 +11,7 @@ public class EmployeeDTO {
     private String email;
     private String address;
 
-    private User user;
+    private Account account;
 
     private LocalDateTime dateCreate;
 
@@ -25,23 +20,23 @@ public class EmployeeDTO {
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(Long employeeId, String name, String phone, String email, String address, User user, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
+    public EmployeeDTO(Long employeeId, String name, String phone, String email, String address, Account account, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
         this.employeeId = employeeId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.user = user;
+        this.account = account;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
     }
 
-    public EmployeeDTO(String name, String phone, String email, String address, User user) {
+    public EmployeeDTO(String name, String phone, String email, String address, Account account) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.user = user;
+        this.account = account;
     }
 
     public Long getEmployeeId() {
@@ -84,12 +79,12 @@ public class EmployeeDTO {
         this.address = address;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public LocalDateTime getDateCreate() {

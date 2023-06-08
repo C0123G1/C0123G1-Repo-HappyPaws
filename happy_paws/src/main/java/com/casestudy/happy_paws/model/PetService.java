@@ -16,10 +16,9 @@ public class PetService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long petServiceId;
-
     @NotNull
     private String name;
-    @Column(name = "description" , columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
     private Double price;
     private String image;
@@ -32,8 +31,8 @@ public class PetService {
     private LocalDateTime updateTime;
     public PetService() {
     }
-    public PetService(Long id, String name, String description, Double price, String image, boolean isDelete, LocalDateTime createTime, LocalDateTime updateTime) {
-        this.petServiceId = id;
+    public PetService(Long petServiceId, String name, String description, Double price, String image, boolean isDelete, LocalDateTime createTime, LocalDateTime updateTime) {
+        this.petServiceId = petServiceId;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -51,8 +50,8 @@ public class PetService {
     public Long getPetServiceId() {
         return petServiceId;
     }
-    public void setPetServiceId(Long id) {
-        this.petServiceId = id;
+    public void setPetServiceId(Long petServiceId) {
+        this.petServiceId = petServiceId;
     }
     public String getName() {
         return name;
