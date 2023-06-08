@@ -1,40 +1,39 @@
-package com.casestudy.happy_paws.model;
+package com.casestudy.happy_paws.dto;
 
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import javax.persistence.*;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE pet_service SET is_delete = true WHERE id=?")
-@Where(clause = "is_delete=false")
-public class PetService {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class PetServiceDTO implements Validator {
+
     private Long petServiceId;
 
-    @NotNull
+
+    @NotBlank(message = "This field is required")
+    @Size(max = 100, message = "")
     private String name;
-    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+    @NotBlank(message = "This field is required")
     private Double price;
     private String image;
     private boolean isDelete = false;
-    @Column(name = "createTime", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @CreationTimestamp
     private LocalDateTime createTime;
-    @Column(name = "updateTime", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @UpdateTimestamp
     private LocalDateTime updateTime;
 
-    public PetService() {
+    public PetServiceDTO() {
     }
 
-    public PetService(Long petServiceId, String name, String description, Double price, String image, boolean isDelete, LocalDateTime createTime, LocalDateTime updateTime) {
+    public PetServiceDTO(Long petServiceId, String name, String description, Double price, String image, boolean isDelete, LocalDateTime createTime, LocalDateTime updateTime) {
         this.petServiceId = petServiceId;
         this.name = name;
         this.description = description;
@@ -45,7 +44,7 @@ public class PetService {
         this.updateTime = updateTime;
     }
 
-    public PetService(String name, String description, Double price, String image) {
+    public PetServiceDTO(String name, String description, Double price, String image) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -114,5 +113,15 @@ public class PetService {
 
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }

@@ -32,7 +32,26 @@ public class BookingService {
     @UpdateTimestamp
     private Date updateTime;
 
+    private boolean isDelete = false;
+
     public BookingService() {
+    }
+
+    public BookingService(Long bookingServiceId, Customer customer, LocalDate bookingDate, String bookingTime, Date createTime, Date updateTime, boolean isDelete) {
+        this.bookingServiceId = bookingServiceId;
+        this.customer = customer;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.isDelete = isDelete;
+    }
+
+    public BookingService(Long bookingServiceId, Customer customer, LocalDate bookingDate, String bookingTime) {
+        this.bookingServiceId = bookingServiceId;
+        this.customer = customer;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
     }
 
     public BookingService(Long bookingServiceId, Customer customer, LocalDate bookingDate, String bookingTime, Date createTime, Date updateTime) {
@@ -44,15 +63,12 @@ public class BookingService {
         this.updateTime = updateTime;
     }
 
-    public BookingService(LocalDate bookingDate, String bookingTime) {
-        this.bookingDate = bookingDate;
-        this.bookingTime = bookingTime;
-    }
     public Long getBookingServiceId() {
         return bookingServiceId;
     }
-    public void setBookingServiceId(Long id) {
-        this.bookingServiceId = id;
+
+    public void setBookingServiceId(Long bookingServiceId) {
+        this.bookingServiceId = bookingServiceId;
     }
 
     public Customer getCustomer() {
@@ -66,24 +82,31 @@ public class BookingService {
     public LocalDate getBookingDate() {
         return bookingDate;
     }
+
     public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
     }
+
     public String getBookingTime() {
         return bookingTime;
     }
+
     public void setBookingTime(String bookingTime) {
         this.bookingTime = bookingTime;
     }
+
     public Date getCreateTime() {
         return createTime;
     }
+
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
     public Date getUpdateTime() {
         return updateTime;
     }
+
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
