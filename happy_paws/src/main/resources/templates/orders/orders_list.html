@@ -36,6 +36,9 @@
         </div>
         <div class="row mt-1 container-fluid">
             <div class="dropdown col-2">
+                <a class="btn btn-sm btn-primary" th:href="@{/orders}" th:if="${pageSearch}">
+                    Reset Search
+                </a>
 <!--                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
 <!--                        aria-expanded="false" style="width: 100%">-->
 <!--                    <th:block th:text="'Manager'"></th:block>-->

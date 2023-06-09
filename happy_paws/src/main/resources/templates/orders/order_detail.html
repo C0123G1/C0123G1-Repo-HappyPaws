@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
@@ -30,9 +30,11 @@
             </div>
         </div>
         <div class="row mt-1 container-fluid">
-                <div class="col-2">
-                    <button onclick="window.history.back()"  class="btn btn-sm btn-primary material-icons" data-toggle="modal">&#xE5e0;</button>
-                </div>
+            <div class="col-2">
+                <button onclick="window.history.back()" class="btn btn-sm btn-primary material-icons"
+                        data-toggle="modal">&#xE5e0;
+                </button>
+            </div>
             <form th:action="@{/order-detail/search}" method="get" class="col-10">
                 <div class="row">
                     <div class="col-8">
@@ -84,7 +86,8 @@
                        data-toggle="modal"><i class="material-icons"
                                               data-toggle="tooltip"
                                               title="Edit">&#xE3c9;</i></a>
-                    <a th:attr="onclick=|deleteProduct(${orderDetail.id},${orderId},'${orderDetail.products.name}')|" href="#deleteEmployeeModal" class="delete"
+                    <a th:attr="onclick=|deleteProduct(${orderDetail.id},${orderId},'${orderDetail.products.name}')|"
+                       href="#deleteEmployeeModal" class="delete"
                        data-toggle="modal"><i class="material-icons"
                                               data-toggle="tooltip"
                                               title="Delete">&#xE872;</i></a>
@@ -95,22 +98,34 @@
 
         <div class="row">
             <div class="col-10" th:if="${pageList == true}">
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/order-detail(orderId = ${orderId},page = ${orderDetailPage.number - 1})}" th:if="${orderDetailPage.hasPrevious()}">Previous</a>
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{/order-detail(orderId = ${orderId},page = ${orderDetailPage.number - 1})}"
+                   th:if="${orderDetailPage.hasPrevious()}">Previous</a>
                 <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDetailPage.getTotalPages() -1)}">
-                    <a class="btn btn-sm btn-outline-primary" th:href="@{/order-detail(orderId = ${orderId},page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                    <a class="btn btn-sm btn-outline-primary"
+                       th:href="@{/order-detail(orderId = ${orderId},page = ${pageNo})}" th:text="${pageNo +1}"></a>
                 </th:block>
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/order-detail(orderId = ${orderId},page = ${orderDetailPage.number + 1})}" th:if="${orderDetailPage.hasNext()}">Next</a>
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{/order-detail(orderId = ${orderId},page = ${orderDetailPage.number + 1})}"
+                   th:if="${orderDetailPage.hasNext()}">Next</a>
             </div>
 
             <div class="col-10" th:if="${pageSearch == true}">
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${orderDetailPage.number - 1})}" th:if="${orderDetailPage.hasPrevious()}">Previous</a>
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${orderDetailPage.number - 1})}"
+                   th:if="${orderDetailPage.hasPrevious()}">Previous</a>
                 <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDetailPage.getTotalPages() -1)}">
-                    <a class="btn btn-sm btn-outline-primary" th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                    <a class="btn btn-sm btn-outline-primary"
+                       th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${pageNo})}"
+                       th:text="${pageNo +1}"></a>
                 </th:block>
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${orderDetailPage.number + 1})}" th:if="${orderDetailPage.hasNext()}">Next</a>
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${orderDetailPage.number + 1})}"
+                   th:if="${orderDetailPage.hasNext()}">Next</a>
             </div>
             <div class="col-2">
-                <p style="font-weight: bold" th:text="${ 'Total : ' + totalPrice + ' $ '}"></p>
+                <p style="font-weight: bold" th:if="${totalPrice != null}" th:text="${ 'Total : ' + totalPrice + ' $ '}"></p>
+                <p style="font-weight: bold" th:if="${totalPrice == null}" th:text="${ 'Total : 0 $ '}"></p>
             </div>
         </div>
     </div>
@@ -124,8 +139,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="orderId" id="orderId" hidden >
-                    <input type="text" name="orderDetailId" id="orderDetailId" hidden >
+                    <input type="text" name="orderId" id="orderId" hidden>
+                    <input type="text" name="orderDetailId" id="orderDetailId" hidden>
                     <p>Are you sure you want to delete these <span class="text-danger" id="name"></span> ?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
@@ -139,14 +154,14 @@
 </div>
 
 <div th:if="${statusDelete}">
-    <span  hidden id="inputId" th:text="'Successfully'"></span>
+    <span hidden id="inputId" th:text="'Successfully'"></span>
 </div>
 <div th:if="${statusDelete == false}">
-    <span  hidden id="inputId2" th:text="'Fail'"></span>
+    <span hidden id="inputId2" th:text="'Fail'"></span>
 </div>
 
 <script>
-    function deleteProduct(id,orderId, name) {
+    function deleteProduct(id, orderId, name) {
         document.getElementById('orderDetailId').value = id;
         document.getElementById('orderId').value = orderId;
         document.getElementById('name').innerText = name;
@@ -156,6 +171,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script th:if="${statusDelete}">
+
     let inputId = document.getElementById("inputId");
     if (inputId && inputId.innerText != null) {
         swal({
@@ -170,6 +186,24 @@
         });
     }
 </script>
+<!--<script>-->
+<!--        let statusDelete = "${statusDelete}"-->
+<!--        localStorage.setItem("statusDelete", statusDelete);-->
+<!--</script>-->
+
+<!--<script>-->
+<!--    // Kiểm tra giá trị của biến statusSave trong localStorage-->
+<!--    var statusDelete = localStorage.getItem('statusDelete');-->
+
+<!--    // Kiểm tra nếu giá trị là null (đã bị xóa) hoặc không tồn tại-->
+<!--    if (statusDelete === null) {-->
+<!--        // Thực hiện xử lý khi giá trị đã bị xóa-->
+<!--        alert('statusDelete')-->
+<!--    } else {-->
+<!--        // Thực hiện xử lý khi giá trị còn tồn tại-->
+<!--        alert(statusDelete)-->
+<!--    }-->
+<!--</script>-->
 
 <script th:if="${statusDelete == false}">
     let inputId = document.getElementById("inputId2");

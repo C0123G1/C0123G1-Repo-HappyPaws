@@ -60,6 +60,9 @@ public class OrderDetailServicceImpl implements IOrderDetailService {
     @Override
     public boolean delete(Long orderDetailId) {
         try{
+            if(iOrderDetailRepository.findOrderDetailById(orderDetailId) == null){
+                return false;
+            }
             iOrderDetailRepository.deleteOrderDetailById(orderDetailId);
         }catch (Exception e){
             return false;
