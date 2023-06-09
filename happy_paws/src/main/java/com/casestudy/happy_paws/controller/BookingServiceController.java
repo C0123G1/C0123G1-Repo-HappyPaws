@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -70,6 +71,9 @@ public class BookingServiceController {
         Pageable pageable = PageRequest.of(page.orElse(0), 5, Sort.by(Sort.Order.desc("updateTime")));
         Page<PetService> petServicePage = iPetServiceService.findPage(pageable);
         model.addAttribute("petServicePage", petServicePage);
+        model.addAttribute("bookingService", bookingService);
+        Boolean checked = true;
+        model.addAttribute("checked", checked);
 
         return "pet-service/booking/select-service";
     }
@@ -83,4 +87,9 @@ public class BookingServiceController {
 //        model.addAttribute("bookingService",bookingService);
 //        return "pet-service/booking/select-time";
 //    }
+    @PostMapping("/bookingServiceDetail/{bookingServiceId}")
+    public String detail(@PathVariable("bookingServiceId")Long bookingServiceId, @RequestParam("checked") Boolean checked){
+        System.out.println(checked);
+        return "";
+    }
 }
