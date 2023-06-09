@@ -1,7 +1,7 @@
 package com.casestudy.happy_paws.controller;
 
-import com.casestudy.happy_paws.dto.CustomerDTO;
 import com.casestudy.happy_paws.dto.AccountDTO;
+import com.casestudy.happy_paws.dto.CustomerDTO;
 import com.casestudy.happy_paws.model.Account;
 import com.casestudy.happy_paws.model.Customer;
 import com.casestudy.happy_paws.model.Role;
@@ -37,7 +37,9 @@ public class CustomerController {
     public String index(@RequestParam(value = "page", defaultValue = "0") int page, Model model) {
         Page<Customer> customerList = customerService.getAllPage(page);
         model.addAttribute("customerList", customerList);
-        return "/customers/index";
+
+
+        return "customers/index";
     }
 
     @GetMapping("/create")
@@ -46,35 +48,16 @@ public class CustomerController {
         return "/customers/create";
     }
 
-//    @PostMapping("/save")
-//    public String save (@Validated @ModelAttribute("customerDto") CustomerDTO customerDTO,BindingResult bindingResult, @ModelAttribute("userDto") AccountDTO userDTO,  RedirectAttributes redirectAttributes) {
-//        if(bindingResult.hasErrors()){
-//            return "/customers/create";
-//        }
-//
-//
-//        Customer customer = new Customer();
-//        BeanUtils.copyProperties(customerDTO, customer);
-//        int result = customerService.getRandom(10000,999999);
-////        emailService.sendEmail(customer.getEmail(),"Hello "+ customer.getName()  , "Bạn vui lòng nhập mã số xác nhận : " +result );
-//        emailService.sendEmail("khanhgazz50@gmail.com","Hello "+ customer.getName()  , "Bạn vui lòng nhập mã số xác nhận : " +result );
-//        Role role = new Role(1,"CUSTOMER");
-//
-//        Account user = new Account(customer.getUser().getUsername(),customer.getUser().getPassword(),role);
-//        userService.save(user);
-//        customer.setUser();
-//        customerService.save(customer);
-//        redirectAttributes.addFlashAttribute("mess", "Add New Successfully");
-//        return "redirect:/customer";
-//    }
+
     @PostMapping("/save")
-    public String save(@Validated @ModelAttribute("customer") CustomerDTO customerDTO  ,BindingResult bindingResult,Model model , RedirectAttributes redirectAttributes) {
+    public String save(@Validated @ModelAttribute("customerDTO") CustomerDTO customerDTO ,BindingResult bindingResult,Model model ) {
+//       new CustomerDTO().validate(customerDTO,bindingResult);
         if(bindingResult.hasErrors()){
             return "/customers/create";
         }
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDTO, customer);
-        Account account = new Account(customer.getAccount().getUsername(),customer.getAccount().getPassword(),new Role(1,"admin"));
+        Account account = new Account(customerDTO.getAccountDTO().getUsername(),customerDTO.getAccountDTO().getPassword(),new Role(1,"CUSTOMER"));
         accountService.save(account);
         Account account1 = accountService.findAccount(account.getAccountId());
         int result = customerService.getRandom(10000,999999);
@@ -84,6 +67,7 @@ public class CustomerController {
         customerService.save(customer);
         model.addAttribute("mess", "Add New Successfully");
         model.addAttribute("account",account);
+
         return "/customers/pageCheck";
     }
 
@@ -97,16 +81,29 @@ public class CustomerController {
 
 
     @GetMapping("/edit/{customerId}")
-    public String edit(@PathVariable("customerId") Integer customerId, Model model) {
-//        Customer customer = customerService.findById(customerId);
-        model.addAttribute("customer", customerService.findById(customerId));
+    public String edit(@PathVariable("customerId") Integer customerId ,  Model model) {
+        Customer customer = customerService.findById(customerId);
+        CustomerDTO customerDTO = new CustomerDTO();
+        BeanUtils.copyProperties(customer , customerDTO);
+        Account account = customer.getAccount();
+        customerDTO.setAccountDTO(new AccountDTO(account.getAccountId(), account.getUsername(), account.getPassword(),account.getRole(),account.getCode(),account.isEnable()));
+        model.addAttribute("customerDTO", customerDTO);
         return "/customers/edit";
     }
 
     @PostMapping("/update")
-    private String update(@ModelAttribute("customer") CustomerDTO customerDTO, RedirectAttributes redirectAttributes) {
+    private String update(@Validated @ModelAttribute("customerDTO") CustomerDTO customerDTO,BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+//        customerDTO.setAccount();
+        new CustomerDTO().validate(customerDTO,bindingResult);
+        if(bindingResult.hasErrors()){
+            return "/customers/edit";
+        }
         Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDTO, customer);
+        BeanUtils.copyProperties(customerDTO,customer);
+//        customer.setAccount(account);
+        Account account = new Account(customerDTO.getAccountDTO().getAccountId(),customerDTO.getAccountDTO().getUsername(),customerDTO.getAccountDTO().getPassword(),customerDTO.getAccountDTO().getCode(),customerDTO.getAccountDTO().isEnable(),customerDTO.getAccountDTO().getRole());
+        customer.setAccount(account);
         customerService.update(customer);
         redirectAttributes.addFlashAttribute("mess", "Update Successfully");
         return "redirect:/customer";
@@ -118,7 +115,7 @@ public class CustomerController {
         Pageable pageable = PageRequest.of(page,2);
         Page<Customer> customerList=customerService.findByCustomer( '%'+ name + '%' , '%'+ phone + '%', '%'+username + '%',pageable);
         model.addAttribute("customerList",customerList);
-        return "/customers/index";
+        return "customers/index";
     }
     @PostMapping("/check")
     public String check(@RequestParam("accountId") Integer id ,@RequestParam("code") int code, Model model ){
@@ -130,15 +127,20 @@ public class CustomerController {
             return "redirect:/customer";
 
         }
-//        int result = customerService.getRandom(10000,999999);
-//        emailService.sendEmail(customer.getEmail(),"Hello "+ customer.getName()  , "Bạn vui lòng nhập mã số xác nhận : " +result );
-//        account.setCode(result);
-//        accountService.save(account);
+        int result = customerService.getRandom(10000,999999);
+        emailService.sendEmail(customer.getEmail(),"Hello "+ customer.getName()  , "Bạn vui lòng nhập mã số xác nhận : " +result );
+        account.setCode(result);
+        accountService.save(account);
         model.addAttribute("account",account);
+        model.addAttribute("mess","Create Successfully");
         return "/customers/pageCheck";
 
     }
-
+    @GetMapping("/{customerId}/view")
+    public String view (@PathVariable("customerId") Integer customerId  ,Model model){
+        model.addAttribute("customer",customerService.findById(customerId));
+        return "/customers/view";
+    }
 
 
 }

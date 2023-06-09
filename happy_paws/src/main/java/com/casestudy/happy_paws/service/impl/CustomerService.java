@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,7 @@ public class CustomerService  implements ICustomerService {
     private ICustomerRepository customerRepository ;
     @Override
     public Page<Customer> getAllPage(int page) {
-        return customerRepository.findAll(PageRequest.of(page,5));
+        return customerRepository.findAllCustomer(PageRequest.of(page,5));
     }
 
     @Override
@@ -35,7 +36,7 @@ public class CustomerService  implements ICustomerService {
 
     @Override
     public void delete(Integer customerId) {
-        customerRepository.deleteById(customerId);
+        customerRepository.deleteByIdCustomer(customerId);
     }
 
     public  int getRandom(int min, int max) {

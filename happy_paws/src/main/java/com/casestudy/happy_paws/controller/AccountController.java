@@ -51,6 +51,12 @@ public class AccountController {
         model.addAttribute("account", account);
         return "/customers/login";
     }
+    @GetMapping( "/logoutSuccessful")
+    public String logoutSuccessfulPage(Model model) {
+        model.addAttribute("title", "Logout");
+        return "redirect:/customer";
+    }
+
 
 //
 //    @GetMapping("/")

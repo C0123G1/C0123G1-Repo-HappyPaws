@@ -1,8 +1,6 @@
 package com.casestudy.happy_paws.model;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -38,33 +36,30 @@ public class Account {
     public Account() {
     }
 
-    public Account(Integer accountId, String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime ,int code,boolean enable) {
+    public Account(Integer accountId, String username, String password, int code, boolean enable, Role role) {
         this.accountId = accountId;
         this.username = username;
         this.password = password;
-        this.role = role;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
         this.code = code;
-        this.enable=enable;
-
+        this.enable = enable;
+        this.role = role;
     }
 
-    public Account(String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime,int code , boolean enable) {
+    public Account(Integer accountId, String username, String password, int code, boolean enable, Role role, LocalDateTime createTime, LocalDateTime updateTime) {
+        this.accountId = accountId;
         this.username = username;
         this.password = password;
+        this.code = code;
+        this.enable = enable;
         this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
-        this.code= code;
-        this.enable=enable;
     }
 
-    public Account(String username, String password, Role role) {
+    public Account(String username, String password, Role admin) {
         this.username = username;
         this.password = password;
-        this.role = role;
-
+        this.role=admin;
     }
 
     public Integer getAccountId() {
@@ -91,6 +86,22 @@ public class Account {
         this.password = password;
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -113,21 +124,5 @@ public class Account {
 
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public boolean isEnable() {
-        return enable;
-    }
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
     }
 }

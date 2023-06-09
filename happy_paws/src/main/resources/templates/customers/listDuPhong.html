@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style th:replace="fragment.html::css"></style>
+</head>
+<body>
+<div th:replace="fragment.html::header"></div>
+
+<form th:action="@{/customer/search}" method="post" th:object="${customerList}">
+    <label>name</label>
+    <input type="text" name="name"  placeholder="name">
+    <label>phone</label>
+    <input type="text" name="phone"   placeholder="phone">
+
+    <label>Username</label>
+    <input type="text" name="username"  placeholder="name">
+
+    <button>Tìm kieếm</button>
+</form>
+
+<table class="table-hover table " border="1" style="text-align: center">
+    <thead>
+    <tr>
+
+        <th>STT</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Account</th>
+            <th>Role</th>
+        <th>Function</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customers,loop  :  ${customerList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${customers.getName()}"></td>
+        <td th:text="${customers.getPhone()}"></td>
+        <td th:text="${customers.getEmail()}"></td>
+        <td th:text="${customers.getAddress()}"></td>
+        <td th:text="${customers.getAccount().getUsername()}"></td>
+        <td th:text="${customers.getAccount().getRole().getNameRole()}"></td>
+
+        <td>
+                <button type="button" style="background-color: palevioletred" th:attr="onclick=|inforDelete(${customers.getCustomerId()},'${customers.getName()}')|">Delete</button>
+                <a style="display: none" id="actionDelete"></a>
+        </td>
+        <td>
+            <a th:href="@{/customer/edit/{customerId}(customerId=${customers.customerId})}">
+                <button style="background-color: palevioletred">Edit</button>
+            </a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <a th:href="@{/customer/create}">
+        <button>Create</button></a>
+</div>
+
+<div th:replace="fragment.html::footer"></div>
+
+
+<div th:if="${mess}">
+    <span th:text="${mess}" id="inputId"></span>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    let inputId = document.getElementById("inputId");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "SUCCESSFULLY",
+            text: inputId.innerText,
+            icon: "success",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
+<script>
+    function inforDelete(customerId, name) {
+        swal({
+            title: `Are you sure delete blog "${name}"?`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((isDelete) => {
+                if (isDelete) {
+                    const actionDelete = document.getElementById('actionDelete');
+                    actionDelete.setAttribute('href',`/customer/delete?customerId=${customerId}`)
+                    actionDelete.click();
+                }
+            });
+    }
+
+
+</script>
+
+</html>

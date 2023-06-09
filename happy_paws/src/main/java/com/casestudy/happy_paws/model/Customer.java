@@ -22,6 +22,7 @@ public class Customer {
     @Column(name = "address", nullable = false, columnDefinition = "VARCHAR(100)")
     private String address;
 
+    private boolean idDelete ;
 
     @ManyToOne
     @JoinColumn
@@ -35,7 +36,7 @@ public class Customer {
     @UpdateTimestamp
     private  LocalDateTime updateTime ;
 
-    public Customer(Integer customerId, String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Customer(Integer customerId, String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime,boolean idDelete) {
         this.customerId = customerId;
         this.name = name;
         this.phone = phone;
@@ -44,12 +45,13 @@ public class Customer {
         this.account = account;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.idDelete=idDelete;
     }
 
     public Customer() {
     }
 
-    public Customer(String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Customer(String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime,boolean idDelete) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -57,6 +59,7 @@ public class Customer {
         this.account = account;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.idDelete = idDelete;
     }
 
     public Integer getCustomerId() {
@@ -119,7 +122,16 @@ public class Customer {
         return updateTime;
     }
 
+    public boolean isIdDelete() {
+        return idDelete;
+    }
+
+    public void setIdDelete(boolean idDelete) {
+        this.idDelete = idDelete;
+    }
+
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
+
 }

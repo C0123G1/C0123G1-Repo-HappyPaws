@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,11 +18,15 @@ import java.util.List;
 @Service
 public class AccountService implements IAccountService, UserDetailsService {
     @Autowired
-    private IAccountRepository accountRepository ;
+    private IAccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void save(Account account) {
-accountRepository.save(account);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        accountRepository.save(account);
     }
 
     @Override
@@ -77,8 +82,6 @@ accountRepository.save(account);
 //    public List<Account> findAll() {
 //        return accountRepository.findAll();
 //    }
-
-
 
 
     //    @Override

@@ -1,16 +1,12 @@
 package com.casestudy.happy_paws.dto;
 
-import com.casestudy.happy_paws.model.Account;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
 
 public class CustomerDTO implements Validator {
@@ -20,50 +16,36 @@ public class CustomerDTO implements Validator {
 
 
     @Size(max = 100, message = "name cannot be longer than 100 characters")
-    @Pattern(regexp = "^([A-Z])([a-z])*((\\s)[A-Z]([a-z]*)){0,4}$", message = "malformed name")
+    @Pattern(regexp = "^\\p{Lu}\\p{Ll}*(\\s\\p{Lu}\\p{Ll}*)*$", message = "malformed  name")
     private String name;
 
     @Size(max = 11, message = "Phone number cannot 11 number !!!")
     @Pattern(regexp = "^0[0-9]{9,10}$", message = "Invalid phone number")
 
     private String phone;
-    @Email
+    @Email(message = "email is incorrect . Please type abc@gmail.com ")
     private String email;
 
     @Size(max = 100, message = "Address cannot longer than 100 character !!")
     private String address;
 
-    private Account account;
-    @Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @CreationTimestamp
-    private LocalDateTime createTime;
+    private AccountDTO accountDTO;
 
-    @Column(name = "update_time", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @UpdateTimestamp
-    private LocalDateTime updateTime;
 
-    public CustomerDTO(Integer customerId, String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {
+    private boolean isDelete ;
+
+    public CustomerDTO()  {
+    }
+
+    public CustomerDTO(Integer customerId, String name, String phone, String email, String address, AccountDTO accountDTO, boolean isDelete) {
         this.customerId = customerId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.account = account;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
+        this.accountDTO = accountDTO;
 
-    public CustomerDTO(String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.account = account;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
-
-    public CustomerDTO() {
+        this.isDelete = isDelete;
     }
 
     public Integer getCustomerId() {
@@ -106,28 +88,22 @@ public class CustomerDTO implements Validator {
         this.address = address;
     }
 
-    public Account getAccount() {
-        return account;
+    public AccountDTO getAccountDTO() {
+        return accountDTO;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccountDTO(AccountDTO accountDTO) {
+        this.accountDTO = accountDTO;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
+
+
+    public boolean isDelete() {
+        return isDelete;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 
     @Override

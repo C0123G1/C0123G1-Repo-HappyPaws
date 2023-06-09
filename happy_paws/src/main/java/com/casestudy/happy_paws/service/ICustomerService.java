@@ -1,5 +1,6 @@
 package com.casestudy.happy_paws.service;
 
+import com.casestudy.happy_paws.dto.CustomerDTO;
 import com.casestudy.happy_paws.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
