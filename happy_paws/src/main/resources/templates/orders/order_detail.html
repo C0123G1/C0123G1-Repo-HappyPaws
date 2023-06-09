@@ -78,7 +78,7 @@
                 <td th:text="${orderDetail.createDate}"></td>
                 <td th:text="${orderDetail.price}"></td>
                 <td th:text="${orderDetail.quantity}"></td>
-                <td th:text="${orderDetail.quantity * orderDetail.price}"></td>
+                <td th:text="${orderDetail.quantity * orderDetail.price + ' $ '}"></td>
                 <td>
                     <a th:href="@{/order-detail/update(orderDetailId = ${orderDetail.id})}" class="edit"
                        data-toggle="modal"><i class="material-icons"

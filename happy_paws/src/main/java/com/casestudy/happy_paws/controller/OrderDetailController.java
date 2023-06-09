@@ -42,6 +42,7 @@ public class OrderDetailController {
     public String create(@RequestParam("customerId") Long customerId, @RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         model.addAttribute("customerId", customerId);
+        model.addAttribute("pageList", true);
         model.addAttribute("productPage", iOrderDetailService.findAllProduct(pageable));
         return "orders/product_list";
     }

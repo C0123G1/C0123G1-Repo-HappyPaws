@@ -60,10 +60,8 @@ public class OrderController {
         Pageable pageable = PageRequest.of(page,8);
         Page<Product> productPage = iOrderService.searchProductByNameAndPrice(name,chosePrice,pageable);
         model.addAttribute("productPage",productPage);
-//        Double totalPrice = iOrderDetailService.getTotalPriceOrder(orderId);
-//        model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("name",name);
-//        model.addAttribute("orderId",orderId);
+        model.addAttribute("chosePrice",chosePrice);
         model.addAttribute("pageSearch", true);
         return "orders/product_list";
     }

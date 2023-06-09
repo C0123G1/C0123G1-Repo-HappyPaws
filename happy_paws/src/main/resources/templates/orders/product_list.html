@@ -85,16 +85,30 @@
                 <td th:text="${product.price}"></td>
                 <td th:text="${product.productType.nameTypeProduct}"></td>
                 <td>
-                    <a th:attr="onclick=|infoProduct(${product.id},${customerId},'${product.name}')|" href="#addEmployeeModal" class="add" data-toggle="modal"><i class="material-icons"
+                    <a th:attr="onclick=|infoProduct(${product.id},${customerId},${product.price},'${product.name}')|" href="#addProductModal" class="add" data-toggle="modal"><i class="material-icons"
                                                                                                                                                                   data-toggle="tooltip"
                                                                                                                                                                   title="Add">&#xE145;</i></a>
                 </td>
             </tr>
             </tbody>
         </table>
+        <div th:if="${pageList == true}">
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/create(page= ${productPage.number -1})}" th:if="${productPage.hasPrevious()}"></a>
+            <th:block  th:each="pageNo : ${#numbers.sequence(0,productPage.getTotalPages() -1)}">
+                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/create(page= ${pageNo})}" th:text="${pageNo+1}"></a>
+            </th:block>
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/create(page= ${productPage.number +1})}" th:if="${productPage.hasNext()}"></a>
+        </div>
+        <div th:if="${pageSearch == true}">
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search-product(name =${name} ,page= ${productPage.number -1})}" th:if="${productPage.hasPrevious()}"></a>
+            <th:block  th:each="pageNo : ${#numbers.sequence(0,productPage.getTotalPages() -1)}">
+                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search-product(name =${name} ,page= ${pageNo})}" th:text="${pageNo+1}"></a>
+            </th:block>
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search-product(name =${name},page= ${productPage.number +1})}" th:if="${productPage.hasNext()}"></a>
+        </div>
     </div>
 </div>
-<div id="addEmployeeModal" class="modal fade">
+<div id="addProductModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form th:action="@{/order-detail/add-product}" method="post">
@@ -112,7 +126,12 @@
                     </div>
                     <div class="form-group">
                         <label for="quantity">Quantity</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control" required>
+                        <input type="text" id="price" hidden>
+                        <input type="number" id="quantity" name="quantity" class="form-control"  required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Total ($)</label>
+                        <input type="text" id="total" class="form-control" readonly >
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -132,12 +151,29 @@
 </div>
 
 <script>
-    function infoProduct(id,customerId, name){
+    function infoProduct(id,customerId,price, name){
         document.getElementById('productId').value = id;
         document.getElementById('customerId').value = customerId;
+        document.getElementById('price').value = price;
         document.getElementById('name').value = name;
     }
 </script>
+<script>
+    $(document).ready(function() {
+        $('#addProductModal').on('shown.bs.modal', function() {
+            $('#quantity').focus();
+        });
+    });
+    $('#quantity').on('input', function () {
+        let quantity = document.getElementById('quantity').value;
+        let price = document.getElementById('price').value;
+        document.getElementById('total').value = quantity * price;
+    });
+
+</script>
+
+
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script th:if="${statusSave}">
