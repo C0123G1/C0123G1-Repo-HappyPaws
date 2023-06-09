@@ -9,4 +9,5 @@ public interface IProductService {
     boolean save(Product product);
     boolean deleteById(Long id);
     Product findById(Long id);
+    Page<Product> search(String name, String origin,Pageable pageable);
 }

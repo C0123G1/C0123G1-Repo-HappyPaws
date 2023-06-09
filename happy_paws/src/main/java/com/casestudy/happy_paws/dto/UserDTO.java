@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-public class UserDTO {
+public class UserDTO{
 
     private Integer userId;
 

@@ -1,31 +1,22 @@
-package com.casestudy.happy_paws.model;
+package com.casestudy.happy_paws.dto;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
 import java.time.LocalDateTime;
 
-@Entity
-public class ProductType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductTypeDTO implements Validator {
     private Long id;
-    @NotEmpty
     private String nameTypeProduct;
-    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @CreationTimestamp
     private LocalDateTime createDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @UpdateTimestamp
     private LocalDateTime updateDate;
     private boolean isDelete;
 
-    public ProductType() {
+    public ProductTypeDTO() {
     }
 
-    public ProductType(Long id, String nameTypeProduct, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
+    public ProductTypeDTO(Long id, String nameTypeProduct, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
         this.id = id;
         this.nameTypeProduct = nameTypeProduct;
         this.createDate = createDate;
@@ -71,5 +62,15 @@ public class ProductType {
 
     public void setDelete(boolean delete) {
         isDelete = delete;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }
