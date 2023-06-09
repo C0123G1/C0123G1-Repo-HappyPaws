@@ -13,7 +13,7 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../../../static/crud_table.css">
 <body>
-<form th:action="@{/pet-service/create}" method="post" th:object="${petServiceDTO}">
+<form th:action="@{/api/admin/pet-service/create}" method="post" th:object="${petServiceDTO}">
     <div class="modal-header">
         <h4 class="modal-title">Add Service</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -45,6 +45,21 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
         <input type="submit" class="btn btn-success" value="Add">
     </div>
+<!--    <input type="date" class="Future">-->
+<!--    <script>$(document).ready(function(){-->
+<!--        var todaysDate = new Date();	// Get today's date.-->
+
+<!--        // Get today's date.-->
+<!--        var year = todaysDate.getFullYear();			// yyyy-->
+<!--        var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2); // mm-->
+<!--        var day = ("0" + todaysDate.getDate()).slice(-2);	// dd-->
+
+<!--        var dtToday = (year + "-" + month + "-" + day);	// Results in yyyy-mm-dd-->
+
+<!--        // Now set the max date value for the calendar to be that date.-->
+<!--        $(".Past input").attr('max', dtToday);-->
+<!--        $(".Future input").attr('min', dtToday);-->
+<!--    });</script>-->
 </form>
 <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
 <script>

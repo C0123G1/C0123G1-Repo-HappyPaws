@@ -286,10 +286,10 @@
                     <h2>Manage <b>Service</b></h2>
                 </div>
                 <div class="col-sm-6">
-                    <a th:href="@{/api/admin/booking-service/create}" class="btn btn-success" data-toggle="modal"><i
-                            class="material-icons">&#xE147;</i> <span>Add New Booking</span></a>
-                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
-                        <span>Delete</span></a>
+<!--                    <a th:href="@{/api/admin/pet-service/create}" class="btn btn-success" data-toggle="modal"><i-->
+<!--                            class="material-icons">&#xE147;</i> <span>Add New Service</span></a>-->
+<!--                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>-->
+<!--                        <span>Delete</span></a>-->
 
                 </div>
             </div>
@@ -300,15 +300,15 @@
             <tr>
                 <th>
 							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
+								<input  type="checkbox" id="selectAll">
 								<label for="selectAll"></label>
 							</span>
                 </th>
                 <th>ID</th>
-                <th>Customer Name</th>
-                <th>Booking Date</th>
-                <th>Time</th>
-                <th>Total Bill</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Create Time</th>
+                <th>Update Time</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -316,31 +316,33 @@
             <a href="">
 
             </a>
-            <tr th:each="bookingService :${bookingServicePage}">
+            <tr th:each="petService :${petServicePage}">
                 <td>
 							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="1">
+								<input th:attr="onchange=|deleteInformation(${petService.getPetServiceId()})|" type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
                 </td>
 
-                <td th:text="${bookingService.bookingServiceId}"></td>
+                <td th:text="${petService.getPetServiceId()}"></td>
 
-                <td><a th:href="@{/pet-service/detail/{id}(id=${bookingService.bookingServiceId})}" title="Detail"
-                       th:text="${bookingService.customer.name}"></a></td>
+                <td ><a th:href="@{/api/admin/pet-service/detail/{id}(id=${petService.getPetServiceId()})}" title="Detail" th:text="${petService.name}"></a></td>
 
-                <td th:text="${bookingService.getBookingDate()}"></td>
-                <td th:text="${bookingService.getBookingTime()}"></td>
-                <td th:text="0"></td>
+                <td th:text="${petService.price}"></td>
+                <td th:text="${petService.getCreateTime()}"></td>
+                <td th:text="${petService.updateTime}"></td>
 
 
                 <td>
-<!--                                        <a th:href="@{/api/admin/booking-service/edit/{id}(id=${petService.getPetServiceId()})}" class="edit"-->
-<!--                                           data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
-                    <a href="#deleteEmployeeModal"
-                       th:attr="onclick=|deleteInformation(${bookingService.bookingServiceId},'${bookingService.getCustomer().name}')|"
-                       class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
-                                                             title="Delete">&#xE872;</i></a>
+
+<!--                    <button th:action="@{/api/admin/booking-service/selectService/{customerId}(customerId = ${customer.customerId})}" class="btn btn-group"> Select </button>-->
+
+                    <!--                    <a th:href="@{/api/admin/pet-service/edit/{id}(id=${petService.getPetServiceId()})}" class="edit"-->
+<!--                       data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
+<!--                    <a href="#deleteEmployeeModal"-->
+<!--                       th:attr="onclick=|deleteInformation(${petService.getPetServiceId()},'${petService.name}')|"-->
+<!--                       class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"-->
+<!--                                                             title="Delete">&#xE872;</i></a>-->
 
 
                 </td>
@@ -349,20 +351,20 @@
             </tbody>
         </table>
         <div class="clearfix">
-            <div class="hint-text">Showing <b th:text="${bookingServicePage.numberOfElements}"></b> out of <b
-                    th:text="${bookingServicePage.getTotalElements()}"></b> entries
+            <div class="hint-text">Showing <b th:text="${petServicePage.numberOfElements}"></b> out of <b
+                    th:text="${petServicePage.getTotalElements()}"></b> entries
             </div>
             <ul class="pagination">
-                <li class="page-item "><a th:href="@{/api/admin/booking-service/list/(page=0)}"
-                                          th:if="${bookingServicePage.hasPrevious()}">First</a></li>
-                <li class="page-item" th:if="${bookingServicePage.hasPrevious()}">
-                    <a href="#" class="page-link" th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number - 1})}">Previous</a>
+                <li class="page-item "><a th:href="@{/api/admin/pet-service/list/(page=0)}"
+                                          th:if="${petServicePage.hasPrevious()}">First</a></li>
+                <li class="page-item" th:if="${petServicePage.hasPrevious()}">
+                    <a href="#" class="page-link" th:href="@{/api/admin/pet-service/list/(page = ${petServicePage.number - 1})}">Previous</a>
                 </li>
-                <li class="page-item" th:if="${bookingServicePage.hasNext()}">
-                    <a href="#" class="page-link" th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number + 1})}">Next</a>
+                <li class="page-item" th:if="${petServicePage.hasNext()}">
+                    <a href="#" class="page-link" th:href="@{/api/admin/pet-service/list/(page = ${petServicePage.number + 1})}">Next</a>
                 </li>
-                <li class="page-item "><a th:href="@{/api/admin/booking-service/list/(page=${bookingServicePage.getTotalPages()-1})}"
-                                          th:if="${bookingServicePage.hasNext()}">Last</a></li>
+                <li class="page-item "><a th:href="@{/api/admin/pet-service/list/(page=${petServicePage.getTotalPages()-1})}"
+                                          th:if="${petServicePage.hasNext()}">Last</a></li>
             </ul>
         </div>
     </div>
@@ -372,7 +374,7 @@
 <div id="deleteEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form th:action="@{/api/admin/booking-service/delete}" method="post">
+            <form th:action="@{/api/admin/pet-service/delete}" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Delete Service</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -387,17 +389,20 @@
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn btn-danger" value="Delete">
+
                 </div>
             </form>
         </div>
     </div>
 </div>
-<script>
-    function deleteInformation(id, name) {
-        document.getElementById("id").value = id;
-        document.getElementById("name").innerText = name;
-    }
-</script>
+<!--<script>-->
+<!--    function deleteInformation(id) {-->
+<!--        document.getElementById("id").value = id;-->
+<!--        arr = new Array();-->
+<!--        -->
+<!--        // document.getElementById("name").innerText = name;-->
+<!--    }-->
+<!--</script>-->
 
 <script>
     $(document).ready(function () {

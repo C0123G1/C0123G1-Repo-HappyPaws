@@ -12,6 +12,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
+        input[type="number"] {
+            width: 100px;
+        }
+
+        input + span {
+            padding-right: 30px;
+        }
+
+        input:invalid + span::after {
+            position: absolute;
+            content: "✖";
+            padding-left: 5px;
+        }
+
+        input:valid + span::after {
+            position: absolute;
+            content: "✓";
+            padding-left: 5px;
+        }
         body {
             color: #566787;
             background: #f5f5f5;
@@ -286,10 +305,9 @@
                     <h2>Manage <b>Service</b></h2>
                 </div>
                 <div class="col-sm-6">
-                    <a th:href="@{/api/admin/booking-service/create}" class="btn btn-success" data-toggle="modal"><i
-                            class="material-icons">&#xE147;</i> <span>Add New Booking</span></a>
-                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
-                        <span>Delete</span></a>
+
+<!--                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>-->
+<!--                        <span>Delete</span></a>-->
 
                 </div>
             </div>
@@ -306,9 +324,9 @@
                 </th>
                 <th>ID</th>
                 <th>Customer Name</th>
-                <th>Booking Date</th>
-                <th>Time</th>
-                <th>Total Bill</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Create Time</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -316,7 +334,7 @@
             <a href="">
 
             </a>
-            <tr th:each="bookingService :${bookingServicePage}">
+            <tr th:each="customer :${customerPage}">
                 <td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
@@ -324,23 +342,25 @@
 							</span>
                 </td>
 
-                <td th:text="${bookingService.bookingServiceId}"></td>
+                <td th:text="${customer.customerId}"></td>
 
-                <td><a th:href="@{/pet-service/detail/{id}(id=${bookingService.bookingServiceId})}" title="Detail"
-                       th:text="${bookingService.customer.name}"></a></td>
+                <td th:text="${customer.name}"></td>
 
-                <td th:text="${bookingService.getBookingDate()}"></td>
-                <td th:text="${bookingService.getBookingTime()}"></td>
-                <td th:text="0"></td>
+                <td th:text="${customer.phone}"></td>
+                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.getCreateTime()}"></td>
 
 
                 <td>
-<!--                                        <a th:href="@{/api/admin/booking-service/edit/{id}(id=${petService.getPetServiceId()})}" class="edit"-->
-<!--                                           data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
-                    <a href="#deleteEmployeeModal"
-                       th:attr="onclick=|deleteInformation(${bookingService.bookingServiceId},'${bookingService.getCustomer().name}')|"
-                       class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
-                                                             title="Delete">&#xE872;</i></a>
+<!--                    <button th:href="#deleteEmployeeModal" th:attr="onclick=|deleteInformation(${customer.customerId},'${customer.name}')|" class="btn btn-group"> Select </button>-->
+                    <a href="#deleteEmployeeModal" th:attr="onclick=|deleteInformation(${customer.customerId})|" class="btn btn-success" data-toggle="modal">
+                                                <span>Select</span></a>
+                    <!--                    <a th:href="@{/api/admin/booking-service/edit/{id}(id=${petService.getPetServiceId()})}" class="edit"-->
+                    <!--                       data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
+                    <!--                    <a href="#deleteEmployeeModal"-->
+                    <!--                       th:attr="onclick=|deleteInformation(${bookingService.bookingServiceId},'${bookingService.getCustomer().name}')|"-->
+                    <!--                       class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"-->
+                    <!--                                                             title="Delete">&#xE872;</i></a>-->
 
 
                 </td>
@@ -349,80 +369,146 @@
             </tbody>
         </table>
         <div class="clearfix">
-            <div class="hint-text">Showing <b th:text="${bookingServicePage.numberOfElements}"></b> out of <b
-                    th:text="${bookingServicePage.getTotalElements()}"></b> entries
+            <div class="hint-text">Showing <b th:text="${customerPage.numberOfElements}"></b> out of <b
+                    th:text="${customerPage.getTotalElements()}"></b> entries
             </div>
             <ul class="pagination">
                 <li class="page-item "><a th:href="@{/api/admin/booking-service/list/(page=0)}"
-                                          th:if="${bookingServicePage.hasPrevious()}">First</a></li>
-                <li class="page-item" th:if="${bookingServicePage.hasPrevious()}">
-                    <a href="#" class="page-link" th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number - 1})}">Previous</a>
+                                          th:if="${customerPage.hasPrevious()}">First</a></li>
+                <li class="page-item" th:if="${customerPage.hasPrevious()}">
+                    <a href="#" class="page-link"
+                       th:href="@{/api/admin/booking-service/list/(page = ${customerPage.number - 1})}">Previous</a>
                 </li>
-                <li class="page-item" th:if="${bookingServicePage.hasNext()}">
-                    <a href="#" class="page-link" th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number + 1})}">Next</a>
+                <li class="page-item" th:if="${customerPage.hasNext()}">
+                    <a href="#" class="page-link"
+                       th:href="@{/api/admin/booking-service/list/(page = ${customerPage.number + 1})}">Next</a>
                 </li>
-                <li class="page-item "><a th:href="@{/api/admin/booking-service/list/(page=${bookingServicePage.getTotalPages()-1})}"
-                                          th:if="${bookingServicePage.hasNext()}">Last</a></li>
+                <li class="page-item "><a
+                        th:href="@{/api/admin/booking-service/list/(page=${customerPage.getTotalPages()-1})}"
+                        th:if="${customerPage.hasNext()}">Last</a></li>
             </ul>
         </div>
     </div>
 </div>
 
-<!-- Delete Modal HTML -->
+<!-- Select Modal HTML -->
 <div id="deleteEmployeeModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form th:action="@{/api/admin/booking-service/delete}" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete Service</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <form th:action="@{/api/admin/booking-service/create}" method="post" th:object="${bookingService}">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Service</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Date</label>
+                    <input th:field="*{bookingDate}" type="date" class="form-control Future" id="bookingDate">
+<!--                    <p style="color:red;" th:if="${#fields.hasErrors('bookingDate')}" th:errors="*{bookingDate}"></p>-->
                 </div>
+                <script>$(document).ready(function(){
+                    var todaysDate = new Date();	// Get today's date.
 
-                <div class="modal-body">
-                    <span>Are you sure you want to delete </span> <span style="color: red"
-                                                                        id="name"></span><span>?</span>
-                    <p class="text-warning"><small>This action cannot be undone.</small></p>
-                    <input type="hidden" id="id" name="id">
+                    // Get today's date.
+                    var year = todaysDate.getFullYear();			// yyyy
+                    var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2); // mm
+                    var day = ("0" + todaysDate.getDate()).slice(-2);	// dd
+
+                    var dtToday = (year + "-" + month + "-" + (+day+1));	// Results in yyyy-mm-dd
+
+                    // Now set the max date value for the calendar to be that date.
+                    $("#bookingDate").attr('max', ((1+year) + "-" + month + "-" + day));
+                    $("#bookingDate").attr('min', dtToday);
+                });
+                </script>
+                <div class="form-group">
+                    <input hidden type="number" id="id" name="customerId" >
+
+                        <div>
+                            <label for="appt-time">
+                                Choose an appointment time (opening hours 09:00 to 18:00):
+                            </label>
+                            <input class="times"  th:field="*{bookingTime}"
+                                    id="appt-time"
+                                    type="time"
+                                    name="appt-time"
+                                    min="09:00"
+                                    max="18:00"
+                                    required />
+                            <span class="validity"></span>
+                        </div>
+<!--                        <div>-->
+<!--&lt;!&ndash;                            <input type="submit" value="Submit form" />&ndash;&gt;-->
+<!--                        </div>-->
+
+                    <!--      <p style="color:red;" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>-->
                 </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-danger" value="Delete">
-                </div>
-            </form>
-        </div>
+                <!--    <div class="form-group">-->
+                <!--      <label>Description</label>-->
+                <!--      <textarea th:field="*{description}" class="form-control" ></textarea>-->
+                <!--      <p style="color:red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>-->
+                <!--    </div>-->
+                <!--    <div class="form-group">-->
+                <!--      <label for="thumbnailURL">ThumbnailURL:</label>-->
+                <!--      <input type="hidden" id="thumbnailURL" th:field="*{image}" />-->
+                <!--      <input id="btnThumbnailURL" type="file" class="form-control"/>-->
+                <!--      <progress id="uploader" value="0" max="100">0%</progress>-->
+                <!--    </div>-->
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                <input type="submit" class="btn btn-success" value="Add">
+            </div>
+            <script>$(document).ready(function(){
+                var todaysDate = new Date();	// Get today's date.
+
+                // Get today's date.
+                var year = todaysDate.getFullYear();			// yyyy
+                var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2); // mm
+                var day = ("0" + todaysDate.getDate()).slice(-2);	// dd
+
+                var dtToday = (year + "-" + month + "-" + day);	// Results in yyyy-mm-dd
+
+                // Now set the max date value for the calendar to be that date.
+                $(".Past input").attr('max', dtToday);
+                $(".Future input").attr('min', dtToday);
+            });</script>
+        </form>
     </div>
+  </div>
 </div>
 <script>
-    function deleteInformation(id, name) {
-        document.getElementById("id").value = id;
-        document.getElementById("name").innerText = name;
-    }
+  function deleteInformation(id) {
+    document.getElementById("id").value = id;
+    // document.getElementById("name").innerText = name;
+  }
 </script>
 
-<script>
-    $(document).ready(function () {
-        // Activate tooltip
-        $('[data-toggle="tooltip"]').tooltip();
 
-        // Select/Deselect checkboxes
-        var checkbox = $('table tbody input[type="checkbox"]');
-        $("#selectAll").click(function () {
-            if (this.checked) {
-                checkbox.each(function () {
-                    this.checked = true;
-                });
-            } else {
-                checkbox.each(function () {
-                    this.checked = false;
-                });
-            }
-        });
-        checkbox.click(function () {
-            if (!this.checked) {
-                $("#selectAll").prop("checked", false);
-            }
-        });
-    });
-</script>
+<!--<script>-->
+<!--  $(document).ready(function () {-->
+<!--    // Activate tooltip-->
+<!--    $('[data-toggle="tooltip"]').tooltip();-->
+
+<!--    // Select/Deselect checkboxes-->
+<!--    var checkbox = $('table tbody input[type="checkbox"]');-->
+<!--    $("#selectAll").click(function () {-->
+<!--      if (this.checked) {-->
+<!--        checkbox.each(function () {-->
+<!--          this.checked = true;-->
+<!--        });-->
+<!--      } else {-->
+<!--        checkbox.each(function () {-->
+<!--          this.checked = false;-->
+<!--        });-->
+<!--      }-->
+<!--    });-->
+<!--    checkbox.click(function () {-->
+<!--      if (!this.checked) {-->
+<!--        $("#selectAll").prop("checked", false);-->
+<!--      }-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
 </body>
 </html>

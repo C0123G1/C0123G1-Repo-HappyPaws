@@ -8,6 +8,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +19,7 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @SQLDelete(sql = "UPDATE booking_service SET is_delete = true WHERE booking_service_id=?")
 @Where(clause = "is_delete=false")
-public class BookingService {
+public class BookingService implements Validator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingServiceId;
@@ -24,10 +27,11 @@ public class BookingService {
     @JoinColumn
     private Customer customer;
 
-    @NotNull
+
+
 
     private LocalDate bookingDate;
-    @NotNull
+
     private String bookingTime;
     @Column(name = "createTime", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreationTimestamp
@@ -40,6 +44,12 @@ public class BookingService {
 
     public BookingService() {
 
+    }
+
+    public BookingService(Customer customer, LocalDate bookingDate, String bookingTime) {
+        this.customer = customer;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
     }
 
     public BookingService(Long bookingServiceId, Customer customer, LocalDate bookingDate, String bookingTime, Date createTime, Date updateTime, boolean isDelete) {
@@ -114,5 +124,17 @@ public class BookingService {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        if (this.bookingDate.isAfter(LocalDate.now()) || this.bookingDate.equals(LocalDate.now())){
+            errors.rejectValue("bookingDate","","An appointment can not be in the past or today");
+        }
     }
 }
