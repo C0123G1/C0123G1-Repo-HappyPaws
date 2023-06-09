@@ -53,7 +53,22 @@ public class OrderDetailServicceImpl implements IOrderDetailService {
     }
 
     @Override
-    public Page<Product> searchProductOrderDetail(String name,Long orderId, Pageable pageable) {
+    public Page<OrderDetail> searchProductOrderDetail(String name,Long orderId, Pageable pageable) {
         return iOrderDetailRepository.searchProductOrderDetail('%' + name + '%',orderId,pageable);
+    }
+
+    @Override
+    public boolean delete(Long orderDetailId) {
+        try{
+            iOrderDetailRepository.deleteOrderDetailById(orderDetailId);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Double getTotalPriceOrder(Long orderId) {
+        return iOrderDetailRepository.getTotalPriceOrder(orderId);
     }
 }

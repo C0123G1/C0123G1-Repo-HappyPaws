@@ -1,12 +1,6 @@
 package com.casestudy.happy_paws.dto;
 
 import com.casestudy.happy_paws.model.Customer;
-import com.casestudy.happy_paws.model.OrderDetail;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 public class OrderDTO {
@@ -14,15 +8,16 @@ public class OrderDTO {
     private Customer customer;
 
     private LocalDateTime buyDate;
+    private Double price;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(Long id, Customer customer, LocalDateTime buyDate) {
+    public OrderDTO(Long id, Customer customer, LocalDateTime buyDate,Double price) {
         this.id = id;
         this.customer = customer;
-
         this.buyDate = buyDate;
+        this.price=price;
     }
 
     public Long getId() {
@@ -46,5 +41,13 @@ public class OrderDTO {
 
     public void setBuyDate(LocalDateTime buyDate) {
         this.buyDate = buyDate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

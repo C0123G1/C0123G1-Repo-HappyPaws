@@ -25,6 +25,8 @@ public class OrderDetail {
     @Column(nullable = false,columnDefinition = "TIMESTAMP DEFAULT now()")
     @UpdateTimestamp
     private LocalDateTime updateDate;
+    @Column(columnDefinition = "BIT DEFAULT 0")
+    private boolean idDelete;
 
     public OrderDetail() {
     }
@@ -108,5 +110,13 @@ public class OrderDetail {
 
     public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public boolean isIdDelete() {
+        return idDelete;
+    }
+
+    public void setIdDelete(boolean idDelete) {
+        this.idDelete = idDelete;
     }
 }

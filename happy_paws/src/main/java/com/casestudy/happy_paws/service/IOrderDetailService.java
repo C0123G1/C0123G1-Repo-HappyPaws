@@ -13,5 +13,7 @@ public interface IOrderDetailService {
     Customer findCustomerById(Integer customerId);
     Product findProductById(Long productId);
     boolean saveOrderDetail(OrderDetail orderDetail);
-    Page<Product> searchProductOrderDetail(String name,Long orderId,Pageable pageable);
+    Page<OrderDetail> searchProductOrderDetail(String name,Long orderId,Pageable pageable);
+    boolean delete(Long orderDetailId);
+    Double getTotalPriceOrder(Long orderId);
 }

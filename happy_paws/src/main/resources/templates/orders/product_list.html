@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
-<!--          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
@@ -31,15 +31,23 @@
         </div>
         <div class="row mt-1 container-fluid">
             <div class="dropdown col-2">
+                <button onclick="window.history.back()"  class="btn btn-sm btn-primary material-icons" data-toggle="modal">&#xE5e0;</button>
             </div>
-
-            <form th:action="@{/accessories/search}" method="get" class="col-10">
+            <form th:action="@{/orders/search-product}" method="get" class="col-10">
                 <div class="row">
                     <div class="col-9">
-                        <input class="form-control form-control-sm" type="text" placeholder="Title"
+                        <input class="form-control form-control-sm" type="text" placeholder="Name"
                                aria-label=".form-control-sm example" name="name" th:value="${name}">
                     </div>
                     <div class="col-2">
+                        <select class="btn btn-sm" style="border: 1px solid gray" name="chosePrice" >
+                            <option value="0">Chose Price</option>
+                            <option value="1">1 - 5 $</option>
+                            <option value="2">5 - 10 $</option>
+                            <option value="3">10 - 20 $</option>
+                            <option value="4">20 - 50 $</option>
+                            <option value="5"> > 50 $</option>
+                        </select>
                     </div>
                     <div class="col-1">
                         <button class="btn btn-sm btn-primary">Search</button>
@@ -115,11 +123,52 @@
         </div>
     </div>
 </div>
+
+<div th:if="${statusSave}">
+    <span  hidden id="inputId" th:text="'Successfully'"></span>
+</div>
+<div th:if="${statusSave == false}">
+    <span  hidden id="inputId2" th:text="'Fail'"></span>
+</div>
+
 <script>
     function infoProduct(id,customerId, name){
         document.getElementById('productId').value = id;
         document.getElementById('customerId').value = customerId;
         document.getElementById('name').value = name;
+    }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script th:if="${statusSave}">
+    let inputId = document.getElementById("inputId");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "ADD",
+            text: inputId.innerText,
+            icon: "success",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
+
+<script th:if="${statusSave == false}">
+    let inputId = document.getElementById("inputId2");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "ADD",
+            text: inputId.innerText,
+            icon: "error",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
     }
 </script>
 <div th:replace="~{fragment.html::footer}"></div>

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/order-detail")
@@ -29,7 +30,9 @@ public class OrderDetailController {
     public String showOrderDetail(@RequestParam("orderId") Long orderId, @RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         Page<OrderDetail> orderDetailPage = iOrderDetailService.findAllOrderDetailByOrderId(pageable, orderId);
+        Double totalPrice = iOrderDetailService.getTotalPriceOrder(orderId);
         model.addAttribute("orderDetailPage", orderDetailPage);
+        model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("orderId", orderId);
         model.addAttribute("pageList", true);
         return "orders/order_detail";
@@ -57,21 +60,34 @@ public class OrderDetailController {
         OrderDetail orderDetail = new OrderDetail(product, orders, quantity, product.getPrice());
         boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetail);
         Pageable pageable = PageRequest.of(0, 8);
+        model.addAttribute("statusSave", statusSave);
         model.addAttribute("customerId", customerId);
         model.addAttribute("orders", orders);
         model.addAttribute("productPage", iOrderDetailService.findAllProduct(pageable));
         return "orders/product_list";
     }
-
     @GetMapping("/search")
     public String search(@RequestParam("orderId") Long orderId,@RequestParam("name") String name,@RequestParam(value = "page",defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page,8);
-        model.addAttribute("productPage",iOrderDetailService.searchProductOrderDetail(name,orderId,pageable));
+        model.addAttribute("orderDetailPage",iOrderDetailService.searchProductOrderDetail(name,orderId,pageable));
+        Double totalPrice = iOrderDetailService.getTotalPriceOrder(orderId);
+        model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("name",name);
         model.addAttribute("orderId",orderId);
         model.addAttribute("pageSearch", true);
         return "orders/order_detail";
-        // can fix lai
     }
-
+    @PostMapping("/delete")
+    public String updateInfo(@RequestParam("orderId") Long orderId, @RequestParam("orderDetailId") Long orderDetailId, Model model){
+        boolean statusDelete = iOrderDetailService.delete(orderDetailId);
+        model.addAttribute("statusDelete",statusDelete);
+        Pageable pageable = PageRequest.of(0, 8);
+        Page<OrderDetail> orderDetailPage = iOrderDetailService.findAllOrderDetailByOrderId(pageable, orderId);
+        Double totalPrice = iOrderDetailService.getTotalPriceOrder(orderId);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("orderDetailPage", orderDetailPage);
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("pageList", true);
+        return "orders/order_detail";
+    }
 }

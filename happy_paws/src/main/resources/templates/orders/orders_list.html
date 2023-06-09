@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="../../static/crud_table.css">
     <style th:replace="~{fragment.html::css}"></style>
 </head>
@@ -31,36 +31,29 @@
                     <a th:href="@{/orders/create}" class="btn btn-success" data-toggle="modal"><i
                             class="material-icons">&#xE147;</i>
                         <span>Add New Orders</span></a>
-                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
-                        <span>Delete</span></a>
                 </div>
             </div>
         </div>
         <div class="row mt-1 container-fluid">
             <div class="dropdown col-2">
-                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false" style="width: 100%">
-                    <th:block th:text="'Manager'"></th:block>
-                </button>
-                <ul class="dropdown-menu ">
-                    <!--                    <li th:each="supplies : ${suppliesTypePage}">-->
-                    <!--                        <a  class="dropdown-item" th:href="@{/supplies(suppliesTypeId=${supplies.id})}"-->
-                    <!--                            th:text="${supplies.nameTypeSupplies}" ></a>-->
-                    <!--                    </li>-->
-                    <li>
-                        <a th:href="@{/accessories}" th:if="${searchList}" class="dropdown-item btn btn-sm btn-primary">Home</a>
-                        <a th:href="@{/accessories/create}" class="dropdown-item btn btn-sm btn-primary">Create
-                            Accessories</a>
-                        <a class="dropdown-item btn btn-sm btn-primary" th:href="@{/accessories-type/home}"
-                           th:text="'Accessories Type Mangager'"></a>
-                    </li>
-                </ul>
+<!--                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
+<!--                        aria-expanded="false" style="width: 100%">-->
+<!--                    <th:block th:text="'Manager'"></th:block>-->
+<!--                </button>-->
+<!--                <ul class="dropdown-menu ">-->
+<!--                        <a th:href="@{/accessories}" th:if="${searchList}" class="dropdown-item btn btn-sm btn-primary">Home</a>-->
+<!--                        <a th:href="@{/accessories/create}" class="dropdown-item btn btn-sm btn-primary">Create-->
+<!--                            Accessories</a>-->
+<!--                        <a class="dropdown-item btn btn-sm btn-primary" th:href="@{/accessories-type/home}"-->
+<!--                           th:text="'Accessories Type Mangager'"></a>-->
+<!--                    </li>-->
+<!--                </ul>-->
             </div>
 
             <form th:action="@{/orders/search}" method="get" class="col-10">
                 <div class="row">
                     <div class="col-8">
-                        <input class="form-control form-control-sm" type="text" placeholder="Name search"
+                        <input class="form-control form-control-sm" type="text" placeholder="Name"
                                aria-label=".form-control-sm example" name="name" th:value="${name}">
                     </div>
                     <div class="col-3">

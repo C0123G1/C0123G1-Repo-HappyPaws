@@ -1,7 +1,9 @@
 package com.casestudy.happy_paws.service.impl;
 
+import com.casestudy.happy_paws.dto.OrderDTO;
 import com.casestudy.happy_paws.model.Customer;
 import com.casestudy.happy_paws.model.Orders;
+import com.casestudy.happy_paws.model.Product;
 import com.casestudy.happy_paws.repository.ICustomerRepository;
 import com.casestudy.happy_paws.repository.IOrderRepository;
 import com.casestudy.happy_paws.service.IOrderService;
@@ -18,9 +20,15 @@ public class OrderServiceImpl implements IOrderService {
     private IOrderRepository iOrderRepository;
     @Autowired
     private ICustomerRepository iCustomerRepository;
+
+    @Override
+    public Page<OrderDTO> findAllOrder() {
+        return null;
+    }
+
     @Override
     public Page<Orders> findAll(Pageable pageable) {
-        return iOrderRepository.findAll(pageable);
+        return iOrderRepository.findAllOrders(pageable);
     }
     @Override
     public Page<Customer> findAllCustomer(Pageable pageable) {
@@ -45,5 +53,24 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public Page<Customer> searchCustomerByNameAndPhone(String name, String phone, Pageable pageable) {
         return iOrderRepository.searchCustomerByNameAndPhone('%' + name + '%', '%' +phone + '%',pageable);
+    }
+
+    @Override
+    public Page<Product> searchProductByNameAndPrice(String name, Integer chosePrice, Pageable pageable) {
+        switch (chosePrice){
+            case 1:
+                return iOrderRepository.searchProductByNameAndPrice('%' + name + '%', 1.0,5.0,pageable);
+            case 2:
+                return iOrderRepository.searchProductByNameAndPrice('%' + name + '%',5.0,10.0,pageable);
+            case 3:
+                return iOrderRepository.searchProductByNameAndPrice('%' + name + '%',10.0,20.0,pageable);
+
+            case 4:
+                return iOrderRepository.searchProductByNameAndPrice('%' + name + '%',20.0,50.0,pageable);
+            case 5:
+                return iOrderRepository.searchProductByNameAndPrice('%' + name + '%',50.0,100.0,pageable);
+            default:
+                return iOrderRepository.searchProductByNameAndPrice('%' + name + '%',0.0,100.0,pageable);
+        }
     }
 }
