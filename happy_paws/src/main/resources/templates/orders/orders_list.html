@@ -39,18 +39,6 @@
                 <a class="btn btn-sm btn-primary" th:href="@{/orders}" th:if="${pageSearch}">
                     Reset Search
                 </a>
-<!--                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
-<!--                        aria-expanded="false" style="width: 100%">-->
-<!--                    <th:block th:text="'Manager'"></th:block>-->
-<!--                </button>-->
-<!--                <ul class="dropdown-menu ">-->
-<!--                        <a th:href="@{/accessories}" th:if="${searchList}" class="dropdown-item btn btn-sm btn-primary">Home</a>-->
-<!--                        <a th:href="@{/accessories/create}" class="dropdown-item btn btn-sm btn-primary">Create-->
-<!--                            Accessories</a>-->
-<!--                        <a class="dropdown-item btn btn-sm btn-primary" th:href="@{/accessories-type/home}"-->
-<!--                           th:text="'Accessories Type Mangager'"></a>-->
-<!--                    </li>-->
-<!--                </ul>-->
             </div>
 
             <form th:action="@{/orders/search}" method="get" class="col-10">
@@ -82,11 +70,12 @@
                 <th>Customer Name</th>
                 <th>Phone</th>
                 <th>Buy Date</th>
+                <th>Total Price</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order: ${ordersPage}">
+            <tr th:each="order: ${orderDTOPage}">
                 <td>
                 <span class="custom-checkbox">
                     <input type="checkbox" id="checkbox1" name="options[]" value="1">
@@ -97,29 +86,53 @@
                 <td th:text="${order.customer.name}"></td>
                 <td th:text="${order.customer.phone}"></td>
                 <td th:text="${order.buyDate}"></td>
+                <td th:text="${order.price + ' $ '}"></td>
                 <td>
                     <a class="btn btn-sm btn-info" th:href="@{/order-detail(orderId = ${order.id})}">Detail</a>
                 </td>
             </tr>
             </tbody>
         </table>
-        <div th:if="${pageList == true}">
-            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${ordersPage.number - 1})}" th:if="${ordersPage.hasPrevious()}">Previous</a>
-            <th:block th:each=" pageNo : ${#numbers.sequence(0,ordersPage.getTotalPages() -1)}">
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${pageNo})}" th:text="${pageNo +1}"></a>
-            </th:block>
-            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${ordersPage.number + 1})}" th:if="${ordersPage.hasNext()}">Next</a>
-        </div>
+        <div th:if="${orderDTOPage.getTotalPages() > 0}">
+            <div th:if="${pageList == true}">
+                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${orderDTOPage.number - 1})}" th:if="${orderDTOPage.hasPrevious()}">Previous</a>
+                <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDTOPage.getTotalPages() -1)}">
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                </th:block>
+                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${orderDTOPage.number + 1})}" th:if="${orderDTOPage.hasNext()}">Next</a>
+            </div>
 
-        <div th:if="${pageSearch == true}">
-            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${ordersPage.number - 1})}" th:if="${ordersPage.hasPrevious()}">Previous</a>
-            <th:block th:each=" pageNo : ${#numbers.sequence(0,ordersPage.getTotalPages() -1)}">
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}"></a>
-            </th:block>
-            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${ordersPage.number + 1})}" th:if="${ordersPage.hasNext()}">Next</a>
+            <div th:if="${pageSearch == true}">
+                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${orderDTOPage.number - 1})}" th:if="${orderDTOPage.hasPrevious()}">Previous</a>
+                <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDTOPage.getTotalPages() -1)}">
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                </th:block>
+                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${orderDTOPage.number + 1})}" th:if="${orderDTOPage.hasNext()}">Next</a>
+            </div>
         </div>
     </div>
 </div>
+
 <div th:replace="~{fragment.html::footer}"></div>
+<div th:if="${statusSaveOrderDetail}">
+    <span hidden id="inputId" th:text="'Successfully'"></span>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script th:if="${statusSaveOrderDetail}">
+    let inputId = document.getElementById("inputId");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "Payment",
+            text: inputId.innerText,
+            icon: "success",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
 </body>
 </html>

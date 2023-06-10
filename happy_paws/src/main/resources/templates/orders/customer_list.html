@@ -30,9 +30,8 @@
 <!--                <a th:attr="onclick=|infoProduct(${product.id},${customerId},'${product.name}')|" href="#addEmployeeModal" class="add" data-toggle="modal"><i class="material-icons"-->
 <!--                                                                                                                                                              data-toggle="tooltip"-->
 <!--                                                                                                                                                              title="Add">&#xE145;</i></a>-->
-
                 <div class="col-sm-6">
-                    <a th:href="@{/orders/create-customer}" class="btn btn-success" data-toggle="modal"><i
+                    <a th:href="@{/orders/add-customer}" class="btn btn-success" data-toggle="modal"><i
                             class="material-icons">&#xE147;</i>
                         <span>Add New Customer</span></a>
                 </div>
@@ -41,6 +40,7 @@
         <div class="row mt-1 container-fluid">
             <div class="col-2">
                 <button onclick="window.history.back()"  class="btn btn-sm btn-primary material-icons" data-toggle="modal">&#xE5e0;</button>
+                <a th:href="@{/orders}"  class="btn btn-sm btn-primary " data-toggle="modal">Home</a>
             </div>
             <form th:action="@{/orders/search-customer}" method="get" class="col-10">
                 <div class="row">

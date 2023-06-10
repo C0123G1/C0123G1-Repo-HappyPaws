@@ -3,6 +3,7 @@ package com.casestudy.happy_paws.service.impl;
 import com.casestudy.happy_paws.dto.OrderDetailDAO;
 import com.casestudy.happy_paws.model.Customer;
 import com.casestudy.happy_paws.model.OrderDetail;
+import com.casestudy.happy_paws.model.Orders;
 import com.casestudy.happy_paws.model.Product;
 import com.casestudy.happy_paws.repository.ICustomerRepository;
 import com.casestudy.happy_paws.repository.IOrderDetailRepository;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class OrderDetailServicceImpl implements IOrderDetailService {
@@ -43,9 +46,12 @@ public class OrderDetailServicceImpl implements IOrderDetailService {
     }
 
     @Override
-    public boolean saveOrderDetail(OrderDetail orderDetail) {
+    public boolean saveOrderDetail(List<OrderDetail> cart, Orders orders) {
         try{
-            iOrderDetailRepository.save(orderDetail);
+            for (OrderDetail c : cart){
+                c.setOrder(orders);
+            }
+           iOrderDetailRepository.saveAll(cart);
         }catch (Exception e){
             return false;
         }

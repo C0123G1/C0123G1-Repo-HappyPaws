@@ -31,9 +31,10 @@
         </div>
         <div class="row mt-1 container-fluid">
             <div class="col-2">
-                <button onclick="window.history.back()" class="btn btn-sm btn-primary material-icons"
+                <a th:href="@{/orders}" class="btn btn-sm btn-primary material-icons"
                         data-toggle="modal">&#xE5e0;
-                </button>
+                </a>
+                <a th:href="@{/orders}"  class="btn btn-sm btn-primary " data-toggle="modal">Home</a>
             </div>
             <form th:action="@{/order-detail/search}" method="get" class="col-10">
                 <div class="row">
@@ -96,37 +97,37 @@
             </tbody>
         </table>
 
-        <div class="row">
-            <div class="col-10" th:if="${pageList == true}">
-                <a class="btn btn-sm btn-outline-primary"
-                   th:href="@{/order-detail(orderId = ${orderId},page = ${orderDetailPage.number - 1})}"
-                   th:if="${orderDetailPage.hasPrevious()}">Previous</a>
-                <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDetailPage.getTotalPages() -1)}">
+        <div class="row" th:if="${orderDetailPage.getTotalPages()>0}">
+                <div class="col-10" th:if="${pageList == true}">
                     <a class="btn btn-sm btn-outline-primary"
-                       th:href="@{/order-detail(orderId = ${orderId},page = ${pageNo})}" th:text="${pageNo +1}"></a>
-                </th:block>
-                <a class="btn btn-sm btn-outline-primary"
-                   th:href="@{/order-detail(orderId = ${orderId},page = ${orderDetailPage.number + 1})}"
-                   th:if="${orderDetailPage.hasNext()}">Next</a>
-            </div>
+                       th:href="@{/order-detail(orderId = ${orderId},page = ${orderDetailPage.number - 1})}"
+                       th:if="${orderDetailPage.hasPrevious()}">Previous</a>
+                    <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDetailPage.getTotalPages() -1)}">
+                        <a class="btn btn-sm btn-outline-primary"
+                           th:href="@{/order-detail(orderId = ${orderId},page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                    </th:block>
+                    <a class="btn btn-sm btn-outline-primary"
+                       th:href="@{/order-detail(orderId = ${orderId},page = ${orderDetailPage.number + 1})}"
+                       th:if="${orderDetailPage.hasNext()}">Next</a>
+                </div>
 
-            <div class="col-10" th:if="${pageSearch == true}">
-                <a class="btn btn-sm btn-outline-primary"
-                   th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${orderDetailPage.number - 1})}"
-                   th:if="${orderDetailPage.hasPrevious()}">Previous</a>
-                <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDetailPage.getTotalPages() -1)}">
+                <div class="col-10" th:if="${pageSearch == true}">
                     <a class="btn btn-sm btn-outline-primary"
-                       th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${pageNo})}"
-                       th:text="${pageNo +1}"></a>
-                </th:block>
-                <a class="btn btn-sm btn-outline-primary"
-                   th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${orderDetailPage.number + 1})}"
-                   th:if="${orderDetailPage.hasNext()}">Next</a>
-            </div>
-            <div class="col-2">
-                <p style="font-weight: bold" th:if="${totalPrice != null}" th:text="${ 'Total : ' + totalPrice + ' $ '}"></p>
-                <p style="font-weight: bold" th:if="${totalPrice == null}" th:text="${ 'Total : 0 $ '}"></p>
-            </div>
+                       th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${orderDetailPage.number - 1})}"
+                       th:if="${orderDetailPage.hasPrevious()}">Previous</a>
+                    <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDetailPage.getTotalPages() -1)}">
+                        <a class="btn btn-sm btn-outline-primary"
+                           th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${pageNo})}"
+                           th:text="${pageNo +1}"></a>
+                    </th:block>
+                    <a class="btn btn-sm btn-outline-primary"
+                       th:href="@{/order-detail/search(name= ${name},orderId = ${orderId},page = ${orderDetailPage.number + 1})}"
+                       th:if="${orderDetailPage.hasNext()}">Next</a>
+                </div>
+                <div class="col-2">
+                    <p style="font-weight: bold" th:if="${totalPrice != null}" th:text="${ 'Total : ' + totalPrice + ' $ '}"></p>
+                    <p style="font-weight: bold" th:if="${totalPrice == null}" th:text="${ 'Total : 0 $ '}"></p>
+                </div>
         </div>
     </div>
 </div>
@@ -186,24 +187,6 @@
         });
     }
 </script>
-<!--<script>-->
-<!--        let statusDelete = "${statusDelete}"-->
-<!--        localStorage.setItem("statusDelete", statusDelete);-->
-<!--</script>-->
-
-<!--<script>-->
-<!--    // Kiểm tra giá trị của biến statusSave trong localStorage-->
-<!--    var statusDelete = localStorage.getItem('statusDelete');-->
-
-<!--    // Kiểm tra nếu giá trị là null (đã bị xóa) hoặc không tồn tại-->
-<!--    if (statusDelete === null) {-->
-<!--        // Thực hiện xử lý khi giá trị đã bị xóa-->
-<!--        alert('statusDelete')-->
-<!--    } else {-->
-<!--        // Thực hiện xử lý khi giá trị còn tồn tại-->
-<!--        alert(statusDelete)-->
-<!--    }-->
-<!--</script>-->
 
 <script th:if="${statusDelete == false}">
     let inputId = document.getElementById("inputId2");
