@@ -47,7 +47,7 @@
             <input type="text"  th:field="*{account.password}" class="form-control" style="width: 20vw;" required>
             <p style="color: red"  th:if="${#fields.hasErrors('account.password')}" th:errors="*{account.password}"></p>
         </div>
-<!--        <p style="color: red" th:text="${result}" ></p>-->
+        <p style="color: red" th:text="${result}" ></p>
 
         <button type="submit" class="btn btn-outline-success" style="text-align: center">Create</button>
         <a th:href="@{/}">

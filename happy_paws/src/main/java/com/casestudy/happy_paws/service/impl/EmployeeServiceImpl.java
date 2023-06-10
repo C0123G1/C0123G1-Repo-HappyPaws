@@ -59,30 +59,37 @@ public class EmployeeServiceImpl implements IEmployeeService {
         return iEmployeeRepo.findEmployeeB(name, phone, pageable);
     }
 
-//    @Transactional(rollbackOn = Throwable.class)
-//    @Override
-//    public boolean saveEmployee(Employee employee) {
-//        try {
-//            List<Employee> staffList = iEmployeeRepo.findAll();
-//            List<Account> users = iAccountRepository.findAll();
-////            Role role=iRoleRepository.getReferenceById(2);
-//            Account account = employee.getAccount();
-//            for (int i = 0; i < users.size(); i++) {
-//                if (users.get(i).getUsername().equals(employee.getAccount().getUsername())) {
-//                    return false;
-//                }
-//            }
-//            for (int i = 0; i < staffList.size(); i++) {
-//                if (staffList.get(i).getEmail().equals(employee.getEmail()) || staffList.get(i).getPhone().equals(employee.getPhone())) {
-//                    return false;
-//                }
-//            }
-//            iAccountRepository.save(account);
-//            iEmployeeRepo.save(employee);
-//        } catch (Exception e) {
-//            return false;
-//        }
-//        return true;
-//    }
+    @Transactional(rollbackOn = Throwable.class)
+    @Override
+    public boolean checkEmployee(Employee employee) {
+        try {
+            List<Employee> staffList = iEmployeeRepo.findAll();
+            List<Account> users = iAccountRepository.findAll();
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getUsername().equals(employee.getAccount().getUsername())) {
+                    return false;
+                }
+            }
+            for (int i = 0; i < staffList.size(); i++) {
+                if (staffList.get(i).getEmail().equals(employee.getEmail()) || staffList.get(i).getPhone().equals(employee.getPhone())) {
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkEditEmployee(Employee employee) {
+        List<Employee> staffList = iEmployeeRepo.findAll();
+        for (int i = 0; i < staffList.size(); i++) {
+            if(staffList.get(i).getEmail().equals(employee.getEmail())||staffList.get(i).getPhone().equals(employee.getPhone())){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

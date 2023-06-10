@@ -11,5 +11,6 @@ public interface IEmployeeService {
     Employee findById(Long id);
     void update(Employee employee);
     Page<Employee> findEmployee(String name , String phone,Pageable pageable);
-//    boolean saveEmployee(Employee employee);
+    boolean checkEmployee(Employee employee);
+    boolean checkEditEmployee(Employee employee);
 }
