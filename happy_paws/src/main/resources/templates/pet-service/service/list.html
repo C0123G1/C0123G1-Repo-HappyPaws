@@ -286,6 +286,10 @@
                     <h2>Manage <b>Service</b></h2>
                 </div>
                 <div class="col-sm-6">
+                    <form th:action="@{/api/admin/pet-service/search}" method="get">
+                        <input th:value=" ${search} " style="color: black" type="text"  name="search" >
+                        <button style="color: black" type="submit">Search</button>
+                    </form>
                     <a th:href="@{/api/admin/pet-service/create}" class="btn btn-success" data-toggle="modal"><i
                             class="material-icons">&#xE147;</i> <span>Add New Service</span></a>
                     <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
@@ -347,7 +351,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="clearfix">
+        <div class="clearfix" th:if="${search} == null">
             <div class="hint-text">Showing <b th:text="${petServicePage.numberOfElements}"></b> out of <b
                     th:text="${petServicePage.getTotalElements()}"></b> entries
             </div>
@@ -357,6 +361,11 @@
                 <li class="page-item" th:if="${petServicePage.hasPrevious()}">
                     <a href="#" class="page-link" th:href="@{/api/admin/pet-service/list/(page = ${petServicePage.number - 1})}">Previous</a>
                 </li>
+                <li>
+                    <th:block th:each=" pageNo : ${#numbers.sequence(0,petServicePage.getTotalPages() -1)}">
+                        <a class="btn btn-sm btn-outline-primary" th:href="@{/api/admin/pet-service/search/(search=${search},page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                    </th:block>
+                </li>
                 <li class="page-item" th:if="${petServicePage.hasNext()}">
                     <a href="#" class="page-link" th:href="@{/api/admin/pet-service/list/(page = ${petServicePage.number + 1})}">Next</a>
                 </li>
@@ -364,6 +373,35 @@
                                           th:if="${petServicePage.hasNext()}">Last</a></li>
             </ul>
         </div>
+
+        <div class="clearfix" th:if="${search} != null">
+
+<!--            <input type="hidden" name="search" th:value="${search}">-->
+            <div class="hint-text">Showing <b th:text="${petServicePage.numberOfElements}"></b> out of <b
+                    th:text="${petServicePage.getTotalElements()}"></b> entries
+            </div>
+            <ul class="pagination">
+                <li class="page-item "><a th:href="@{/api/admin/pet-service/search/(search=${search},page=0)}"
+                                          th:if="${petServicePage.hasPrevious()}">First</a></li>
+                <li class="page-item" th:if="${petServicePage.hasPrevious()}">
+                    <a href="#" class="page-link" th:href="@{/api/admin/pet-service/search/(search=${search},page = ${petServicePage.number - 1})}">Previous</a>
+                </li>
+                <li>
+                <th:block th:each=" pageNo : ${#numbers.sequence(0,petServicePage.getTotalPages() -1)}">
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/api/admin/pet-service/search/(search=${search},page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                </th:block>
+                </li>
+                <li class="page-item" th:if="${petServicePage.hasNext()}">
+                    <a href="#" class="page-link" th:href="@{/api/admin/pet-service/search/(search=${search}, page = ${petServicePage.number + 1})}">Next</a>
+                </li>
+
+                <li class="page-item "><a th:href="@{/api/admin/pet-service/search/(search=${search},page=${petServicePage.getTotalPages()-1})}"
+                                          th:if="${petServicePage.hasNext()}">Last</a></li>
+            </ul>
+        </div>
+
+
+
     </div>
 </div>
 

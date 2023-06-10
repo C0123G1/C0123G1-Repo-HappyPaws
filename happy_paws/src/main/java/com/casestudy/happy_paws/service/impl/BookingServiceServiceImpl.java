@@ -42,4 +42,9 @@ public class BookingServiceServiceImpl implements IBookingServiceService {
     public void save(BookingService bookingService) {
         iBookingServiceRepository.save(bookingService);
     }
+
+    @Override
+    public BookingService findBookingServiceById(Long bookingServiceId) {
+        return iBookingServiceRepository.findById(bookingServiceId).get();
+    }
 }

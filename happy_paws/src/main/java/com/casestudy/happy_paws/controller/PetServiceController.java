@@ -6,10 +6,7 @@ import com.casestudy.happy_paws.service.IPetServiceService;
 import com.casestudy.happy_paws.service.impl.BookingEmailService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +33,31 @@ public class PetServiceController {
         model.addAttribute("petServicePage", petServicePage);
         return "pet-service/service/list";
     }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("search") String search,@RequestParam(value = "page", defaultValue = "0") Optional<Integer> page, Model model){
+        Pageable pageable = PageRequest.of(page.orElse(0),5,Sort.by(Sort.Order.desc("updateTime")));
+
+        Page<PetService> petServicePage = iPetServiceService.searchPage(search,pageable);
+        model.addAttribute("petServicePage",petServicePage);
+        model.addAttribute("search",search);
+        return "pet-service/service/list";
+    }
+
+
+    @GetMapping("/search/{search}/{page}")
+    public String searchPage(@PathVariable("search") String search,@PathVariable(value = "page") Optional<Integer> page, Model model){
+        Pageable pageable = PageRequest.of(page.orElse(0),5,Sort.by(Sort.Order.desc("updateTime")));
+
+        Page<PetService> petServicePage = iPetServiceService.searchPage(search,pageable);
+        model.addAttribute("petServicePage",petServicePage);
+        model.addAttribute("search",search);
+        return "pet-service/service/list";
+    }
+
+
+
+
 
     @GetMapping("/create")
     public String createView(@ModelAttribute("petServiceDTO") PetServiceDTO petServiceDTO) {

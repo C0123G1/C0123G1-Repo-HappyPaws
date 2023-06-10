@@ -30,4 +30,9 @@ public class PetServiceService implements IPetServiceService {
     public void deleteById(Long id) {
         iPetServiceRepository.deleteById(id);
     }
+
+    @Override
+    public Page<PetService> searchPage(String search,Pageable pageable) {
+        return iPetServiceRepository.searchPage('%'+search+'%',pageable);
+    }
 }

@@ -278,8 +278,10 @@
         }
     </style>
 <body>
-<form  th:action="@{/api/admin/booking-service/bookingServiceDetail/{bookingServiceId}(bookingServiceId=${bookingService.bookingServiceId})}"
-       method="post">
+
+    <input type="hidden"  name="bookingServiceId" th:value="${bookingService.bookingServiceId}">
+<!--    <input type="hidden"  name="customerId" th:value="${bookingService.customer.customerId}">-->
+
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
@@ -340,13 +342,13 @@
 
 
                 <td>
-                    <span class="custom-checkbox">
-								<input th:value="${petService.petServiceId}" th:checked="${checked}" type="checkbox" id="checkbox1"
-                                       name="checked">
-								<label for="checkbox1"></label>
-							</span>
-
-                    <!--                    <button th:action="@{/api/admin/booking-service/selectService/{customerId}(customerId = ${customer.customerId})}" class="btn btn-group"> Select </button>-->
+<!--                    <span class="custom-checkbox">-->
+<!--								<input th:value="${petService.petServiceId}" th:checked="${checked}" type="checkbox" id="checkbox1"-->
+<!--                                       name="checked">-->
+<!--								<label for="checkbox1"></label>-->
+<!--							</span>-->
+                    <a th:attr="onclick=|deleteInformation(${petService.getPetServiceId()},'${petService.name}')|" href="#deleteEmployeeModal" class="btn btn-success" data-toggle="modal">
+                       Add</a>
 
                     <!--                    <a th:href="@{/api/admin/pet-service/edit/{id}(id=${petService.getPetServiceId()})}" class="edit"-->
                     <!--                       data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
@@ -361,7 +363,7 @@
             </tr>
             </tbody>
         </table>
-
+<!--phan trang khong search-->
         <div class="clearfix">
             <div class="hint-text">Showing <b th:text="${petServicePage.numberOfElements}"></b> out of <b
                     th:text="${petServicePage.getTotalElements()}"></b> entries
@@ -386,33 +388,38 @@
 </div>
 
 
-<!-- Delete Modal HTML -->
+<!-- xac nhan Modal HTML -->
 <div id="deleteEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form th:action="@{/api/admin/booking-service/bookingServiceDetail/{bookingServiceId}(bookingServiceId=${bookingService.bookingServiceId})}"
                   method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Service</h4>
+                    <h4 class="modal-title">Confirmation</h4>
                     <button  type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
 
                 <div class="modal-body">
-                    <span>Are you sure with those choosing? </span> <span style="color: red"
+                    <span>Are you sure with service </span> <span style="color: red"
                                                                           id="name"></span><span>?</span>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
-                    <input hidden type="hidden" id="array" name="array">
+                    <input hidden type="hidden" id="petServiceId" name="petServiceId">
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-danger" value="Delete">
+                    <input type="submit" class="btn btn-success" value="OK">
 
                 </div>
             </form>
         </div>
     </div>
 </div>
-
+    <script>
+        function deleteInformation(id, name) {
+            document.getElementById("petServiceId").value = id;
+            document.getElementById("name").innerText = name;
+        }
+    </script>
 <!--<script>-->
 <!--    // Pass the checkbox name to the function-->
 <!--    function getCheckedBoxes(options) {-->
@@ -467,6 +474,6 @@
     }
 
 </script>
-</form>
+
 </body>
 </html>

@@ -17,4 +17,6 @@ public interface IBookingServiceService {
     Customer findCustomerById(Integer customerId);
 
     void save(BookingService bookingService);
+
+    BookingService findBookingServiceById(Long bookingServiceId);
 }

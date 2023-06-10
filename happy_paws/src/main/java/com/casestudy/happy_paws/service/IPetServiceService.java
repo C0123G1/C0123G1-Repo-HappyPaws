@@ -12,4 +12,6 @@ public interface IPetServiceService {
     PetService findById(Long id);
 
     void deleteById(Long id);
+
+    Page<PetService> searchPage(String search,Pageable pageable);
 }
