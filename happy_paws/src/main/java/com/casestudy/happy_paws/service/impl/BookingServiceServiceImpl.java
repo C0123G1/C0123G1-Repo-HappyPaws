@@ -64,4 +64,9 @@ public class BookingServiceServiceImpl implements IBookingServiceService {
 
         return iBookingServiceRepository.findAll();
     }
+
+    @Override
+    public List<BookingService> searchByDateWithTotal(LocalDate date) {
+        return iBookingServiceRepository.searchByDateWithTotal(date);
+    }
 }

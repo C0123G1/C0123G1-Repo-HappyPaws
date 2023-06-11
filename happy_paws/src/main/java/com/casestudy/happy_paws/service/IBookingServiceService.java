@@ -30,4 +30,5 @@ public interface IBookingServiceService {
 
     List<BookingService> findAll();
 
+    List<BookingService> searchByDateWithTotal(LocalDate date);
 }
