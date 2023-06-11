@@ -36,9 +36,9 @@
         </div>
         <div class="row mt-1 container-fluid">
             <div class="dropdown col-2">
-                <a class="btn btn-sm btn-primary" th:href="@{/orders}" th:if="${pageSearch}">
-                    Reset Search
-                </a>
+<!--                <a class="btn btn-sm btn-primary" th:href="@{/orders}" th:if="${pageSearch}">-->
+<!--                    Reset Search-->
+<!--                </a>-->
             </div>
 
             <form th:action="@{/orders/search}" method="get" class="col-10">
@@ -93,8 +93,8 @@
             </tr>
             </tbody>
         </table>
-        <div th:if="${orderDTOPage.getTotalPages() > 0}">
-            <div th:if="${pageList == true}">
+        <div class="row" th:if="${orderDTOPage.getTotalPages() > 0}">
+            <div class="col-10" th:if="${pageList == true}">
                 <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${orderDTOPage.number - 1})}" th:if="${orderDTOPage.hasPrevious()}">Previous</a>
                 <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDTOPage.getTotalPages() -1)}">
                     <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${pageNo})}" th:text="${pageNo +1}"></a>
@@ -102,14 +102,19 @@
                 <a class="btn btn-sm btn-outline-primary" th:href="@{/orders(page = ${orderDTOPage.number + 1})}" th:if="${orderDTOPage.hasNext()}">Next</a>
             </div>
 
-            <div th:if="${pageSearch == true}">
+            <div class="col-10" th:if="${pageSearch == true}">
                 <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${orderDTOPage.number - 1})}" th:if="${orderDTOPage.hasPrevious()}">Previous</a>
                 <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDTOPage.getTotalPages() -1)}">
                     <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}"></a>
                 </th:block>
                 <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${orderDTOPage.number + 1})}" th:if="${orderDTOPage.hasNext()}">Next</a>
             </div>
+            <div class="col-2">
+                <p style="font-weight: bold" th:if="${totalPriceOrderDetail != null}" th:text="${ 'Total : ' + totalPriceOrderDetail + ' $ '}"></p>
+                <p style="font-weight: bold" th:if="${totalPriceOrderDetail == null}" th:text="${ 'Total : 0 $ '}"></p>
+            </div>
         </div>
+
     </div>
 </div>
 

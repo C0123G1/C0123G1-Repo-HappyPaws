@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IOrderDetailService {
+    Double findTotalPriceOrderDetail();
     Page<Product> findAllProduct(Pageable pageable);
     Page<OrderDetail> findAllOrderDetailByOrderId(Pageable pageable,Long orderId);
     Customer findCustomerById(Integer customerId);

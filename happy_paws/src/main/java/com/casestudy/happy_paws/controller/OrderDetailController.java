@@ -171,4 +171,8 @@ public class OrderDetailController {
         }
         return "redirect:/order-detail/create?customerId=" + customerId;
     }
+    @GetMapping("/update")
+    public String update(){
+        return "orders/order_detail";
+    }
 }

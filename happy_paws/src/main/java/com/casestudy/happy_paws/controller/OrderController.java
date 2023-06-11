@@ -36,12 +36,15 @@ public class OrderController {
     public String showList(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         Page<Orders> ordersPage = iOrderService.findAll(pageable);
+
         List<OrderDTO> orderDTOList = new ArrayList<>();
         for (Orders o : ordersPage) {
             OrderDTO orderDTO = new OrderDTO(o.getId(), o.getCustomer(), o.getBuyDate(), iOrderDetailService.getTotalPriceOrder(o.getId()));
             orderDTOList.add(orderDTO);
         }
         Page<OrderDTO> orderDTOPage = new PageImpl<>(orderDTOList, pageable, ordersPage.getTotalElements());
+        Double totalPriceOrderDetail = iOrderDetailService.findTotalPriceOrderDetail();
+        model.addAttribute("totalPriceOrderDetail", totalPriceOrderDetail);
         model.addAttribute("orderDTOPage", orderDTOPage);
         model.addAttribute("pageList", true);
         return "orders/orders_list";
@@ -51,9 +54,17 @@ public class OrderController {
     public String search(@RequestParam("name") String name, @RequestParam("phone") String phone, @RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         Page<Orders> ordersPage = iOrderService.searchByNameAndPhone(name, phone, pageable);
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+        for (Orders o : ordersPage) {
+            OrderDTO orderDTO = new OrderDTO(o.getId(), o.getCustomer(), o.getBuyDate(), iOrderDetailService.getTotalPriceOrder(o.getId()));
+            orderDTOList.add(orderDTO);
+        }
+        Page<OrderDTO> orderDTOPage = new PageImpl<>(orderDTOList, pageable, ordersPage.getTotalElements());
+        Double totalPriceOrderDetail = iOrderDetailService.findTotalPriceOrderDetail();
+        model.addAttribute("totalPriceOrderDetail", totalPriceOrderDetail);
+        model.addAttribute("orderDTOPage", orderDTOPage);
         model.addAttribute("name", name);
         model.addAttribute("phone", phone);
-        model.addAttribute("ordersPage", ordersPage);
         model.addAttribute("pageSearch", true);
         return "orders/orders_list";
     }

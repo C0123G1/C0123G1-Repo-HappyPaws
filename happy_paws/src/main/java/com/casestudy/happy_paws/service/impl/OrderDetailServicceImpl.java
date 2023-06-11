@@ -25,6 +25,12 @@ public class OrderDetailServicceImpl implements IOrderDetailService {
     private ICustomerRepository iCustomerRepository;
     @Autowired
     private IOrderDetailRepository iOrderDetailRepository;
+
+    @Override
+    public Double findTotalPriceOrderDetail() {
+        return iOrderDetailRepository.findTotalPriceOrderDetail();
+    }
+
     @Override
     public Page<Product> findAllProduct(Pageable pageable) {
         return iProductRepository.findAll(pageable);
