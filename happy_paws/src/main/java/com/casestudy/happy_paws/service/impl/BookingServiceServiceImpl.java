@@ -1,5 +1,6 @@
 package com.casestudy.happy_paws.service.impl;
 
+import com.casestudy.happy_paws.dto.BookingServiceDTO;
 import com.casestudy.happy_paws.model.BookingService;
 import com.casestudy.happy_paws.model.Customer;
 import com.casestudy.happy_paws.repository.IBookingServiceRepository;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class BookingServiceServiceImpl implements IBookingServiceService {
@@ -20,7 +24,7 @@ public class BookingServiceServiceImpl implements IBookingServiceService {
 
     @Override
     public Page<BookingService> findPage(Pageable pageable) {
-        return iBookingServiceRepository.findAll(pageable);
+        return iBookingServiceRepository.findAllWithTotal(pageable);
     }
 
     @Override
@@ -46,5 +50,18 @@ public class BookingServiceServiceImpl implements IBookingServiceService {
     @Override
     public BookingService findBookingServiceById(Long bookingServiceId) {
         return iBookingServiceRepository.findById(bookingServiceId).get();
+    }
+
+    @Override
+    public Page<BookingService> searchByDate(Pageable pageable, LocalDate searchDate) {
+        return iBookingServiceRepository.searchByDate(pageable, searchDate);
+    }
+
+
+
+    @Override
+    public List<BookingService> findAll() {
+
+        return iBookingServiceRepository.findAll();
     }
 }

@@ -13,4 +13,9 @@ public class BookingServiceServiceDetail implements IBookingServiceServiceDetail
     public void save(BookingServiceDetail bookingServiceDetail) {
         iBookingServiceServiceDetailRepository.save(bookingServiceDetail);
     }
+
+    @Override
+    public Double getTotalByIdBooking(Long bookingServiceId) {
+        return iBookingServiceServiceDetailRepository.getTotal(bookingServiceId);
+    }
 }

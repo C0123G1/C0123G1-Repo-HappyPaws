@@ -277,7 +277,9 @@
             font-weight: normal;
         }
     </style>
+    <style th:replace="~{fragment.html::css}"></style>
 <body>
+<!--<div th:replace="~{fragment.html::header}"></div>-->
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
@@ -462,5 +464,6 @@
         });
     });
 </script>
+<div th:replace="~{fragment.html::footer}"></div>
 </body>
 </html>

@@ -283,9 +283,14 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Manage <b>Service</b></h2>
+                    <h2>Manage <b>Booking</b></h2>
+                    <h3 style="color: white"><b>Revenue: $</b><b style="color: red" th:text="${revenue}"></b></h3>
                 </div>
                 <div class="col-sm-6">
+                    <form th:action="@{/api/admin/booking-service/searchByDate}" method="get">
+                        <input style="color: black" type="date" name="searchDate" th:value="${searchDate}">
+                        <button type="submit" class="btn-success">Search</button>
+                    </form>
                     <a th:href="@{/api/admin/booking-service/create}" class="btn btn-success" data-toggle="modal"><i
                             class="material-icons">&#xE147;</i> <span>Add New Booking</span></a>
                     <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
@@ -316,7 +321,7 @@
             <a href="">
 
             </a>
-            <tr th:each="bookingService :${bookingServicePage}">
+            <tr th:each="bookingService :${bookingServicePage.content}">
                 <td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
@@ -331,12 +336,12 @@
 
                 <td th:text="${bookingService.getBookingDate()}"></td>
                 <td th:text="${bookingService.getBookingTime()}"></td>
-                <td th:text="0"></td>
+                <td th:text="${bookingService.total}"></td>
 
 
                 <td>
-<!--                                        <a th:href="@{/api/admin/booking-service/edit/{id}(id=${petService.getPetServiceId()})}" class="edit"-->
-<!--                                           data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
+                    <!--                                        <a th:href="@{/api/admin/booking-service/edit/{id}(id=${petService.getPetServiceId()})}" class="edit"-->
+                    <!--                                           data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
                     <a href="#deleteEmployeeModal"
                        th:attr="onclick=|deleteInformation(${bookingService.bookingServiceId},'${bookingService.getCustomer().name}')|"
                        class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
@@ -348,7 +353,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="clearfix">
+        <div th:if="${search == false}"  class="clearfix">
             <div class="hint-text">Showing <b th:text="${bookingServicePage.numberOfElements}"></b> out of <b
                     th:text="${bookingServicePage.getTotalElements()}"></b> entries
             </div>
@@ -356,13 +361,39 @@
                 <li class="page-item "><a th:href="@{/api/admin/booking-service/list/(page=0)}"
                                           th:if="${bookingServicePage.hasPrevious()}">First</a></li>
                 <li class="page-item" th:if="${bookingServicePage.hasPrevious()}">
-                    <a href="#" class="page-link" th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number - 1})}">Previous</a>
+                    <a class="page-link"
+                       th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number - 1})}">Previous</a>
                 </li>
                 <li class="page-item" th:if="${bookingServicePage.hasNext()}">
-                    <a href="#" class="page-link" th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number + 1})}">Next</a>
+                    <a href="#" class="page-link"
+                       th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number + 1})}">Next</a>
                 </li>
-                <li class="page-item "><a th:href="@{/api/admin/booking-service/list/(page=${bookingServicePage.getTotalPages()-1})}"
-                                          th:if="${bookingServicePage.hasNext()}">Last</a></li>
+                <li class="page-item "><a
+                        th:href="@{/api/admin/booking-service/list/(page=${bookingServicePage.getTotalPages()-1})}"
+                        th:if="${bookingServicePage.hasNext()}">Last</a></li>
+            </ul>
+        </div>
+
+
+
+        <div th:if="${search == true}" class="clearfix">
+            <div class="hint-text">Showing <b th:text="${bookingServicePage.numberOfElements}"></b> out of <b
+                    th:text="${bookingServicePage.getTotalElements()}"></b> entries
+            </div>
+            <ul class="pagination">
+                <li class="page-item "><a th:href="@{/api/admin/booking-service/list/(page=0)}"
+                                          th:if="${bookingServicePage.hasPrevious()}">First</a></li>
+                <li class="page-item" th:if="${bookingServicePage.hasPrevious()}">
+                    <a href="#" class="page-link"
+                       th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number - 1})}">Previous</a>
+                </li>
+                <li class="page-item" th:if="${bookingServicePage.hasNext()}">
+                    <a href="#" class="page-link"
+                       th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number + 1})}">Next</a>
+                </li>
+                <li class="page-item "><a
+                        th:href="@{/api/admin/booking-service/list/(page=${bookingServicePage.getTotalPages()-1})}"
+                        th:if="${bookingServicePage.hasNext()}">Last</a></li>
             </ul>
         </div>
     </div>

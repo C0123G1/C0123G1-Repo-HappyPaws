@@ -4,4 +4,6 @@ import com.casestudy.happy_paws.model.BookingServiceDetail;
 
 public interface IBookingServiceServiceDetail {
     void save(BookingServiceDetail bookingServiceDetail);
+
+    Double getTotalByIdBooking(Long bookingServiceId);
 }
