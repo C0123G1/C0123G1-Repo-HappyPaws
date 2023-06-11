@@ -64,7 +64,12 @@ public class OrderDetailController {
 //            orders = new Orders(orderId, customer);
 //        }
 //        model.addAttribute("orders", orders);
+        double totalPriceCart = 0.0;
+        for (OrderDetail c : cart){
+            totalPriceCart += c.getProducts().getPrice() * c.getQuantity();
+        }
         session.setAttribute("cart", cart);
+        model.addAttribute("totalPriceCart", totalPriceCart);
         model.addAttribute("session", session);
         model.addAttribute("customer", customer);
         model.addAttribute("pageList", true);
@@ -84,14 +89,25 @@ public class OrderDetailController {
         } else {
             orders = new Orders(orderId, customer);
         }
-//        boolean statusSave = iOrderService.saveOrder(orders);
+//       boolean statusSave = iOrderService.saveOrder(orders);
         List<OrderDetail> cart = (List<OrderDetail>) session.getAttribute("cart");
         Product product = iOrderDetailService.findProductById(productId);
         OrderDetail orderDetail = new OrderDetail(product, orders, quantity, product.getPrice());
-        cart.add(orderDetail);
+        int count = 0;
+        for (OrderDetail c : cart) {
+            if (orderDetail.getProducts().getId().equals(c.getProducts().getId())) {
+                c.setQuantity(orderDetail.getQuantity() + c.getQuantity());
+                break;
+            } else {
+                count++;
+            }
+        }
+        if(count == cart.size()){
+            cart.add(orderDetail);
+        }
         session.setAttribute("cart", cart);
 //        boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetail);
-        Pageable pageable = PageRequest.of(0, 8);
+//        Pageable pageable = PageRequest.of(0, 8);
 //        model.addAttribute("session", session);
 //        model.addAttribute("customer", customer);
 //        model.addAttribute("orders", orders);
@@ -141,9 +157,18 @@ public class OrderDetailController {
 //        model.addAttribute("pageList", true);
         return "redirect:/order-detail?orderId=" + orderId;
     }
+
     @GetMapping("/delete-cart")
-    public String deleteCart(@RequestParam("index") Integer index){
-        System.out.println(index);
-        return "redirect:/order-detail/create";
+    public String deleteCart(@RequestParam("index") Integer index, HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        List<OrderDetail> cart = (List<OrderDetail>) session.getAttribute("cart");
+        Integer customerId = cart.get(0).getOrder().getCustomer().getCustomerId();
+        for (int i = 0; i < cart.size(); i++) {
+            if (index == i) {
+                cart.remove(i);
+                break;
+            }
+        }
+        return "redirect:/order-detail/create?customerId=" + customerId;
     }
 }

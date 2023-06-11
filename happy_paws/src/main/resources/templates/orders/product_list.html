@@ -85,6 +85,7 @@
                 <th>ID</th>
                 <th>Product Name</th>
                 <th>Origin</th>
+                <th>Image</th>
                 <th>Price</th>
                 <th>Types</th>
             </tr>
@@ -100,6 +101,7 @@
                 <td th:text="${product.id}"></td>
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.origin}"></td>
+                <td><img th:src="${product.image}" alt="" width="50vw"></td>
                 <td th:text="${product.price}"></td>
                 <td th:text="${product.productType.nameTypeProduct}"></td>
                 <td>
@@ -197,17 +199,22 @@
                         <td th:text="${cart.products.name}"></td>
                         <td th:text="${cart.quantity}"></td>
                         <td th:text="${cart.price * cart.quantity}"></td>
-                        <td><a class=" delete" style="cursor: pointer">
-                            <i class="material-icons"
-                               data-toggle="tooltip"
-                               title="Delete">&#xE872;</i>
-                        </a>
+                        <td>
+                            <a id="deleteProduct" class="delete" style="cursor: pointer">
+                                <input type="text" id="index" th:value="${index.index}" hidden>
+                                <i class="material-icons"
+                                   data-toggle="tooltip"
+                                   title="Delete">&#xE872;</i>
+                            </a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
+                <div>
+                    <p style="margin: 0;" th:text="${'Total : ' + totalPriceCart + ' $ '}"></p>
+                </div>
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                 <a th:href="@{/order-detail/payment/{customerId}(customerId = ${customer.customerId})}"
                    class="btn btn-danger" th:text="'Payment'"></a>
@@ -252,22 +259,27 @@
             total.style.color = 'red';
             total.innerText = "Quantity greater than 0";
             add.hidden = true;
-        } else {
+        } else if(quantity > 999999999 ){
+            total.style.color = 'red';
+            total.innerText = "Too large a quantity";
+            add.hidden = true;
+        } else{
             total.innerText = (quantity * price) + '$';
             add.hidden = false;
         }
     });
-    function deleteProduct(index) {
-        alert("123")
+    // xoa product cart -> reload page
+    $(document).on('click', '#deleteProduct', function () {
+        let index = $(this).find('#index').val();
         $.ajax({
-            url:'http://localhost:8080/order-detail/delete-cart?index=' + encodeURIComponent(index),
+            url: 'http://localhost:8080/order-detail/delete-cart?index=' + encodeURIComponent(index),
             Type: "DELETE",
-            success : function (data){
-
+            success: function (data) {
+                location.reload();
             }
         })
-    }
-//    nghien cuu them de xoa bang ajax
+    });
+    //    nghien cuu them de xoa bang ajax
 </script>
 
 
