@@ -31,7 +31,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public List<Account> findAll() {
-        return null;
+        return accountRepository.findAll();
     }
 
 //    @Override
@@ -47,6 +47,16 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public Account findById(Integer id) {
         return accountRepository.findById(id).get();
+    }
+
+    @Override
+    public void update(Account account) {
+        accountRepository.save(account);
+    }
+
+    @Override
+    public void delete(Integer accountId) {
+        accountRepository.deleteById(accountId);
     }
 
     @Override
@@ -69,7 +79,6 @@ public class AccountService implements IAccountService, UserDetailsService {
         return userDetails;
 
     }
-
 
 //    @Override
 //    public void save(Account user) {

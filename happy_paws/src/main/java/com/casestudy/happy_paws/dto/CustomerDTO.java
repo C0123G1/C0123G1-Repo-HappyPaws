@@ -20,7 +20,7 @@ public class CustomerDTO implements Validator {
     private String name;
 
     @Size(max = 11, message = "Phone number cannot 11 number !!!")
-    @Pattern(regexp = "^0[0-9]{9,10}$", message = "Invalid phone number")
+    @Pattern(regexp = "^((\\+84)|0)[0-9]{9}$", message = "Invalid phone number")
 
     private String phone;
     @Email(message = "email is incorrect . Please type abc@gmail.com ")

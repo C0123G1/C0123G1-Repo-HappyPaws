@@ -15,9 +15,10 @@ public class Customer {
 
     @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(100)")
     private String name;
-    @Column(name = "phone", nullable = false, columnDefinition = "VARCHAR(10)")
+    @Column(name = "phone", nullable = false,unique = true, columnDefinition = "VARCHAR(10)")
+
     private String phone;
-    @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(100)")
+    @Column(name = "email", nullable = false,unique = true, columnDefinition = "VARCHAR(100)")
     private String email;
     @Column(name = "address", nullable = false, columnDefinition = "VARCHAR(100)")
     private String address;

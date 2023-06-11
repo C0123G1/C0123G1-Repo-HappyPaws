@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
 //Sử dụng thuật toán Bcrypt để mã hóa password.
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -28,31 +29,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
+//        http.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll();
+
 
         // Các trang không yêu cầu login
-        http.authorizeRequests().antMatchers("/login").permitAll();
+        http.authorizeRequests().antMatchers("/account/login").permitAll();
 
         http.authorizeRequests()
                 .antMatchers("/customer")
                 .access("hasAnyRole('CUSTOMER', 'ADMIN')");
 
         http.authorizeRequests()
-                .antMatchers("/customer/create", "/customer/*")
+                .antMatchers("*", "/customer/*")
                 .access("hasRole('ADMIN')");
+        http.authorizeRequests()
+                .antMatchers("/customer/", "/customer/")
+                .access("hasRole('CUSTOMER')");
+        http.authorizeRequests()
+                .antMatchers("/account/", "/account/")
+                .access("hasAnyRole('CUSTOMER','ADMIN')");
 
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/customers/403");
 
         // Cấu hình cho Login Form.
         http.authorizeRequests().and().formLogin()//
                 // Submit URL của trang login
-                .loginProcessingUrl("/security") // Submit URL
-                .loginPage("/login")//
+                .loginProcessingUrl("/account/security") // Submit URL
+                .loginPage("/account/login")//
                 .defaultSuccessUrl("/customer")//
-                .failureUrl("/login?error=true")//
+                .failureUrl("/account/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")
+
                 // Cấu hình cho Logout Page.
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+                .and().logout().logoutUrl("/account/logout").logoutSuccessUrl("/account/logoutSuccessful");
 
         // Cấu hình Remember Me.
         http.authorizeRequests().and() //

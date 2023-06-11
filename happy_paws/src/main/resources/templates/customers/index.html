@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+    <title></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!--    Bỏ thư viện ni là mất icon ở dưới -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
@@ -286,7 +291,6 @@
 <body>
 <div th:replace="fragment.html::header"></div>
 
-
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
@@ -295,24 +299,23 @@
                     <h2>Manage <b>Customer</b></h2>
                 </div>
 
-                <!--                <form th:action="@{/customer/search}" method="post" th:object="${customerList}">-->
-                <!--                    <input type="text" name="name" placeholder="name">-->
-                <!--                    <input type="text" name="phone" placeholder="phone">-->
-                <!--                    <input type="text" name="username" placeholder="name">-->
 
-                <!--                    <button>Search</button>-->
-                <!--                </form>-->
-                <!--&lt;!&ndash;                <div>&ndash;&gt;-->
-                <!--&lt;!&ndash;                    <a th:href="@{/customer}">&ndash;&gt;-->
-                <!--&lt;!&ndash;                        <button>Back</button>&ndash;&gt;-->
-                <!--&lt;!&ndash;                    </a>&ndash;&gt;-->
-                <!--&lt;!&ndash;                </div>&ndash;&gt;-->
-                <div class="col-sm-6">
+                <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="col-sm-6">
                     <a th:href="@{/customer/create}" class="btn btn-success" data-toggle="modal"><i
                             class="material-icons">&#xE147;</i>
-                        <span>Add New Product</span></a>
-                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
-                        <span>Delete</span></a>
+                        <span>Add New Customer</span></a>
+
+                        <a th:href="@{/customer/admin-create}" class="btn btn-success" data-toggle="modal"><i
+                                class="material-icons">&#xE147;</i>
+                            <span>Add New Customer</span></a>
+                    <a th:href="@{/account}" class="btn btn-success" data-toggle="modal"><i
+                            class="material-icons">&#xE147;</i>
+                        <span>Add New acount</span></a>
+<!--                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>-->
+<!--                        <span>Delete</span></a>-->
+<!--                    <a th:href="@{/account}" class="btn btn-success" data-toggle="modal"><i-->
+<!--                            class="material-icons">&#xE147;</i>-->
+<!--                        <span>Manage Account</span></a>-->
                 </div>
 
 
@@ -329,11 +332,11 @@
                                aria-label=".form-control-sm example" name="name">
                     </div>
                     <div class="col-3">
-                        <input class="form-control form-control-sm" type="text" placeholder="Title"
+                        <input class="form-control form-control-sm" type="text" placeholder="phone"
                                aria-label=".form-control-sm example" name="phone">
                     </div>
                     <div class="col-3">
-                        <input class="form-control form-control-sm" type="text" placeholder="Title"
+                        <input class="form-control form-control-sm" type="text" placeholder="username"
                                aria-label=".form-control-sm example" name="username">
                     </div>
 
@@ -361,6 +364,7 @@
             <tbody>
 
 
+
             <tr th:each="customers,loop  :  ${customerList}">
                 <td>
 							<span class="custom-checkbox">
@@ -380,16 +384,21 @@
                 <td th:text="${customers.getAccount().getRole().getNameRole()}"></td>
 
                 <td>
-                    <a th:href="@{/customer/edit/{customerId}(customerId=${customers.customerId})}" class="edit"
+                    <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/customer/edit/{customerId}(customerId=${customers.customerId})}" class="edit"
                        data-toggle="modal"><i class="material-icons"
                                               data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                    <a th:attr="onclick=|infoDelete(${customers.customerId},'${customers.name}')|"
+                    <a  sec:authorize="hasAuthority('ROLE_ADMIN')" th:attr="onclick=|infoDelete(${customers.customerId},'${customers.name}')|"
                        href="#deleteEmployeeModal" class="delete" data-toggle="modal">
                         <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 
-
                 </td>
+                <td>
+
+                    <button  sec:authorize="hasAuthority('ROLE_ADMIN')" type="button" style="background-color: palevioletred" th:attr="onclick=|inforDelete(${customers.getCustomerId()},'${customers.getName()}')|">Delete</button>
+                    <a style="display: none" id="actionDelete"></a>
+                </td>
+
             </tr>
 
 
@@ -411,18 +420,7 @@
             </div>
 
         </div>
-        <!--        <div class="clearfix">-->
-        <!--            <div class="hint-text">Showing <b>5</b> out of <b>10</b> entries</div>-->
-        <!--            <ul class="pagination">-->
-        <!--                <li class="page-item disabled">-->
-        <!--                    <a th:href="@{/customers(page=${customerList.number -1})}" th:if="${customerList.hasPrevious()}" >Previous</a>-->
-        <!--                </li>-->
 
-        <!--                <li class="page-item">-->
-        <!--                    <a class="page-link" th:href="@{/customers(page=${customerList.number + 1})}" th:if="${customerList.hasNext()}" >Next</a>-->
-        <!--                </li>-->
-        <!--            </ul>-->
-        <!--        </div>-->
 
     </div>
 
@@ -485,9 +483,27 @@
         });
     }
 </script>
+<script>
+    function inforDelete(customerId, name) {
+        swal({
+            title: `Are you sure delete blog "${name}"?`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((isDelete) => {
+                if (isDelete) {
+                    const actionDelete = document.getElementById('actionDelete');
+                    actionDelete.setAttribute('href',`/customer/delete?customerId=${customerId}`)
+                    actionDelete.click();
+                }
+            });
+    }
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</script>
+
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -514,6 +530,7 @@
         });
     });
 </script>
+
 
 </body>
 </html>

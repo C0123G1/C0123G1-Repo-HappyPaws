@@ -24,8 +24,19 @@
       <button>Sign Up</button>
     </form>
   </div>
+  <!-- /login?error=true -->
+  <div th:if="${#request.getParameter('error') == 'true'}"
+       style="color:red;margin:10px 0px;">
+    Login Failed!!!<br />
+    Reason :
+    <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+          th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+                Static summary
+         </span>
+
+  </div>
   <div class="form-container sign-in-container">
-    <form th:action="@{security}"  method="post">
+    <form th:action="@{/account/security}"  method="post">
       <h1>Sign in</h1>
       <div class="social-container">
         <a target="_blank" href="https://www.facebook.com/login" class="social"><i class="fab fa-facebook-f"></i></a>

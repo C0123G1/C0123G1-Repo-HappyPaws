@@ -5,10 +5,13 @@ import com.casestudy.happy_paws.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ICustomerService {
+    List<Customer> getAll();
     Page<Customer> getAllPage(int page);
 
-    void save(Customer customer);
+    boolean save(Customer customer);
 
     Customer findById(Integer customerId);
 

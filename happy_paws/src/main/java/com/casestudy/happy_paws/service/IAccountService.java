@@ -20,4 +20,8 @@ public interface IAccountService {
 
 
     Account findById(Integer id);
+
+    void update(Account account);
+
+    void delete(Integer accountId);
 }

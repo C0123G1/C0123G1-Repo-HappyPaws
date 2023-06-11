@@ -1,46 +1,48 @@
 package com.casestudy.happy_paws.controller;
 
 import com.casestudy.happy_paws.model.Account;
+import com.casestudy.happy_paws.model.Role;
 import com.casestudy.happy_paws.service.IAccountService;
+import com.casestudy.happy_paws.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
-@SessionAttributes("accountController")
+@RequestMapping("/account")
 public class AccountController {
 
     @Autowired
     private IAccountService accountService;
 
-
+    @Autowired
+    private IRoleService  roleService;
 
     @GetMapping("")
     public String index( Model model){
         List<Account> accountList = accountService.findAll();
         model.addAttribute("accountList", accountList);
-        return "/customers/user";
+        System.out.println(accountList);
+        return "/customers/account";
     }
-//    @GetMapping("/create")
-//    public  String create(Model model){
-//        model.addAttribute("user" , new AccountDTO() );
-//        return "/customers/account-create";
-//    }
-//    @PostMapping("/save")
-//    public String save(@ModelAttribute("user") AccountDTO userDTO , RedirectAttributes redirectAttributes){
-//       Account user = new Account();
-//        BeanUtils.copyProperties(userDTO,user) ;
-//        Role role =  new Role(user.getRole().getRoleId(),user.getRole().getNameRole());
-//        userService.save(role);
-//        Role role1 = uss
-//       userService.save(user);
-//       redirectAttributes.addFlashAttribute("mess","Add New Successfully");
-//        return "redirect:/user";
-//    }
-//
+    @GetMapping("/create")
+    public  String create(Model model){
+        model.addAttribute("account" , new Account());
+        model.addAttribute("roleList" , roleService.findAll());
+        return "/customers/account-create";
+    }
+    @PostMapping("/save")
+    public String save(@ModelAttribute("account") Account account,@ModelAttribute("role") Role role , RedirectAttributes redirectAttributes){
+        roleService.save(role);
+        accountService.save(account);
+       redirectAttributes.addFlashAttribute("mess","Add New Successfully");
+        return "redirect:/account";
+    }
+
 
 
 //
@@ -57,6 +59,24 @@ public class AccountController {
         return "redirect:/customer";
     }
 
+    @GetMapping("/{accountId}/edit")
+    public String edit(@PathVariable("accountId")Integer accountId ,Model model){
+        model.addAttribute("account",accountService.findById(accountId));
+        model.addAttribute("roleList",roleService.findAll());
+        return "/customers/account-edit";
+    }
+    @PostMapping("/update")
+    public String update(@ModelAttribute("account") Account account , RedirectAttributes redirectAttributes){
+        accountService.update(account);
+        redirectAttributes.addFlashAttribute("mess","Update Successfully");
+        return "redirect:/account";
+    }
+    @GetMapping("/delete")
+    public String delete(@RequestParam("accountId")Integer accountId,RedirectAttributes redirectAttributes){
+        accountService.delete(accountId);
+        redirectAttributes.addFlashAttribute("mess","Delete Successfully");
+        return "redirect:/account";
+    }
 
 //
 //    @GetMapping("/")
