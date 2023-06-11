@@ -288,7 +288,7 @@
                 </div>
                 <div class="col-sm-6">
                     <form th:action="@{/api/admin/booking-service/searchByDate}" method="get">
-                        <input style="color: black" type="date" name="searchDate" th:value="${searchDate}">
+                        <input required style="color: black" type="date" name="searchDate" th:value="${searchDate}">
                         <button type="submit" class="btn-success">Search</button>
                     </form>
                     <a th:href="@{/api/admin/booking-service/create}" class="btn btn-success" data-toggle="modal"><i
