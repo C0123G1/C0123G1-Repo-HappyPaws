@@ -90,7 +90,7 @@ public class EmployeeController {
             Employee employee = new Employee();
             BeanUtils.copyProperties(employeeDTO, employee);
             boolean check ;
-            check = iEmployeeService.checkEmployee(employee);
+            check = iEmployeeService.checkEditEmployee(employee);
             if(!check){
                 model.addAttribute("result", "Email hoặc số điện thoại hoặc account bị trùng lặp!!!!");
                 return "/employee_view/update_employee";

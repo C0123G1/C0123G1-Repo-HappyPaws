@@ -85,11 +85,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public boolean checkEditEmployee(Employee employee) {
         List<Employee> staffList = iEmployeeRepo.findAll();
         for (int i = 0; i < staffList.size(); i++) {
-            if(staffList.get(i).getEmail().equals(employee.getEmail())||staffList.get(i).getPhone().equals(employee.getPhone())){
-                return true;
+            if (employee.getEmployeeId() != staffList.get(i).getEmployeeId()) {
+                if ((staffList.get(i).getEmail().equals(employee.getEmail()) || staffList.get(i).getPhone().equals(employee.getPhone()))) {
+                    return false;
+                }
             }
         }
-        return false;
+        return true;
     }
 
 }
