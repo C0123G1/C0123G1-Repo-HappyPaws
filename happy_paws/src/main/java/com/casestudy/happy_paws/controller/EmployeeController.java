@@ -82,7 +82,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/edit")
-    public String updateBlog(@Validated @ModelAttribute(value = "employee") EmployeeDTO employeeDTO, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model) {
+    public String updateBlog(@Validated @ModelAttribute(value = "employee") EmployeeDTO employeeDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes ,Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employeeDTO);
             return "/employee_view/update_employee";
