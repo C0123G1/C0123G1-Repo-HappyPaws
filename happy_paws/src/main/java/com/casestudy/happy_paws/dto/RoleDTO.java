@@ -1,26 +1,23 @@
-package com.casestudy.happy_paws.model;
+package com.casestudy.happy_paws.dto;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
-@Entity
-public class Role {
+public class RoleDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
 
 
-    @Column(name = "name_role", nullable = false, columnDefinition = "VARCHAR(100)")
+    @Size(max = 100 , message = "name role cannot longger than 100 character !!!!")
     private String nameRole;
 
-    public Role(Integer roleId, String nameRole) {
+    public RoleDTO(Integer roleId, String nameRole) {
         this.roleId = roleId;
         this.nameRole = nameRole;
     }
 
-    public Role() {
+    public RoleDTO() {
     }
-
 
     public Integer getRoleId() {
         return roleId;

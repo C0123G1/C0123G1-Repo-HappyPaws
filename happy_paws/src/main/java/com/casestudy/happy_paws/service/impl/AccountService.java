@@ -4,24 +4,36 @@ import com.casestudy.happy_paws.model.Account;
 import com.casestudy.happy_paws.repository.IAccountRepository;
 import com.casestudy.happy_paws.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AccountService implements IAccountService{
+public class AccountService implements IAccountService, UserDetailsService {
     @Autowired
-    private IAccountRepository accountRepository ;
+    private IAccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void save(Account account) {
-accountRepository.save(account);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        accountRepository.save(account);
     }
 
     @Override
     public List<Account> findAll() {
-        return null;
+        return accountRepository.findAll();
     }
 
 //    @Override
@@ -39,8 +51,41 @@ accountRepository.save(account);
         return accountRepository.findById(id).get();
     }
 
+    @Override
+    public void update(Account account) {
+        accountRepository.save(account);
+    }
 
+    @Override
+    public void delete(Integer accountId) {
+        accountRepository.deleteByIdAccount(accountId);
+    }
 
+    @Override
+    public Page<Account> getAllPage(int page) {
+        return accountRepository.findAllAccount(PageRequest.of(page, 5));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //Tìm đối tượng đang đăng nhập trong DB
+        Account account = this.accountRepository.findUser(username);
+
+        if (account == null) {
+            System.out.println("Account not found! " + username);
+            throw new UsernameNotFoundException("Account " + username + " was not found in the database");
+        }
+
+        List<GrantedAuthority> grantList = new ArrayList<>();
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + account.getRole().getNameRole());
+        grantList.add(authority);
+        System.out.println(grantList);
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(account.getUsername(),
+                account.getPassword(), grantList);
+
+        return userDetails;
+
+    }
 
 //    @Override
 //    public void save(Account user) {
@@ -53,8 +98,6 @@ accountRepository.save(account);
 //    public List<Account> findAll() {
 //        return accountRepository.findAll();
 //    }
-
-
 
 
     //    @Override

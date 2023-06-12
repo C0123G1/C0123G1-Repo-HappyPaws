@@ -2,6 +2,7 @@ package com.casestudy.happy_paws.service;
 
 
 import com.casestudy.happy_paws.model.Account;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -20,4 +21,10 @@ public interface IAccountService {
 
 
     Account findById(Integer id);
+
+    void update(Account account);
+
+    void delete(Integer accountId);
+
+    Page<Account> getAllPage(int page);
 }
