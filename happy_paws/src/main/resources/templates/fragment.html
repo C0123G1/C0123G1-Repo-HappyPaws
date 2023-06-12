@@ -216,40 +216,24 @@
                         <a class="nav-link" href="#">contact</a>
                     </li>
                 </ul>
-                <!-- Left links -->
-            </div>
-            <!-- Collapsible wrapper -->
-
-            <!-- Right elements -->
-            <div class="d-flex align-items-center">
-                <!-- Icon -->
-
-                <!-- Avatar -->
-                <div class="dropdown">
-                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow"
-                            href="#"
-                            id="navbarDropdownMenuAvatar"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false" >
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                                class="rounded-circle"
-                                height="25"
-                                alt="Black and White Portrait of a Man"
-                                loading="lazy"/>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuAvatar">
-                        <li>
-                            <a class="dropdown-item" href="#">My profile</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Settings</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </li>
-                    </ul>
+                <div class="d-flex flex-column sim" style="float: right">
+                    <!--                    <span style="color: black">Info Admin Here</span>-->
+                    <!--                    <small class="text-primary">view your quote</small>-->
+                    <div class="dropdown dropstart" style="margin-top: 0.7vh">
+                        <button style="border-radius: 20px;background-color: white;border: 1px solid #f8b8be" class="btn dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu text-dark">
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i>
+                                <!--                                <b th:text="${#authentication.getName()}"></b>-->
+                                <b th:text="'Admin'"></b>
+                            </a></li>
+                            <li><a class="dropdown-item" th:href="@{/account/logout}"><i
+                                    class="fa-sharp fa-solid fa-right-from-bracket"></i>Logout </a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

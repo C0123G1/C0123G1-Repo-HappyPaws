@@ -1,5 +1,6 @@
 package com.casestudy.happy_paws.model;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -38,3 +39,4 @@ public class Role {
         this.nameRole = nameRole;
     }
 }
+
