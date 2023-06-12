@@ -15,36 +15,55 @@ public class Employee {
     private String phone;
     private String email;
     private String address;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Account account;
     @Column(name = "date_create", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreationTimestamp
     private LocalDateTime dateCreate;
     @Column(name = "date_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @UpdateTimestamp
     private LocalDateTime dateUpdate;
+    @Column(name = "is_delete",columnDefinition = "BIT DEFAULT 0")
+    private boolean isDelete;
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
 
     public Employee() {
     }
 
-    public Employee(Long employeeId, String name, String phone, String email, String address, User user, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
+    public Employee(Long employeeId, String name, String phone, String email, String address, Account account, LocalDateTime dateCreate, LocalDateTime dateUpdate, boolean isDelete) {
         this.employeeId = employeeId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.user = user;
+        this.account = account;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
+        this.isDelete = isDelete;
     }
 
-    public Employee(String name, String phone, String email, String address, User user) {
+    public Employee(Long employeeId, String name, String phone, String email, String address) {
+        this.employeeId = employeeId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.user = user;
+    }
+
+    public Employee(String name, String phone, String email, String address, Account account) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.account = account;
     }
 
     public Long getEmployeeId() {
@@ -87,12 +106,12 @@ public class Employee {
         this.address = address;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public LocalDateTime getDateCreate() {

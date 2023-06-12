@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Employee list</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Cart list</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,12 +25,11 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Manage <b>Employees</b></h2>
+                    <h2>Manage <b>Cart</b></h2>
                 </div>
                 <div class="col-sm-6">
-                    <a th:href="@{/create-employee}" class="btn btn-success" data-toggle="modal"><i
-                            class="material-icons">&#xE147;</i>
-                        <span>Add New Employee</span></a>
+                    <a th:href="@{/create-cart}" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
+                        <span>Add New Cart</span></a>
                 </div>
             </div>
         </div>
@@ -39,9 +37,9 @@
         <div class="row mt-1 container-fluid">
             <div class="dropdown col-2">
             </div>
-            <form th:action="@{/search-employee}" method="get" class="col-10">
+            <form th:action="@{/search-cart}" method="get" class="col-10">
                 <div class="row">
-                    <a th:href="@{/employee}" class="col-1">
+                    <a th:href="@{/cart}" class="col-1">
                         <button type="button" class="btn btn-outline-secondary">Reset</button>
                     </a>
                     <div class="col-7">
@@ -68,58 +66,55 @@
 							</span>
                 </th>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>email</th>
-                <th>address</th>
-                <th>Account</th>
+                <th>Product Name</th>
+                <th>Customer ID</th>
+                <th>quantity</th>
+                <th>Day Create</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="employee: ${employeeList}">
+            <tr th:each="cart: ${cartList}">
                 <td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
                 </td>
-                <td th:text="${employee.getEmployeeId()}"></td>
-                <td th:text="${employee.name}"></td>
-                <td th:text="${employee.phone}"></td>
-                <td th:text="${employee.email}"></td>
-                <td th:text="${employee.address}"></td>
-                <td th:text="${employee.account.username}"></td>
+                <td th:text="${cart.cartId}"></td>
+                <td th:text="${cart.product.name}"></td>
+                <td th:text="${cart.customer.customerId}"></td>
+                <td th:text="${cart.quantity}"></td>
+                <td th:text="${cart.dateCreate}"></td>
 
                 <td>
-                    <a th:href="@{/update-employee/{id}(id=${employee.employeeId})}" class="edit" data-toggle="modal"><i
-                            class="material-icons"
-                            data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons"
-                                                                                         data-toggle="tooltip"
-                                                                                         th:attr="onclick=|deleteByID(${employee.employeeId},'${employee.name}')|"
+                    <a th:href="@{/update/{id}(id=${cart.cartId})}" class="edit" data-toggle="modal"><i class="material-icons"
+                                                                                                                data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="#deleteCartModal" class="delete" data-toggle="modal"><i class="material-icons"
+                                                                                         data-toggle="tooltip" th:attr="onclick=|deleteByID(${cart.cartId},'${cart.product.name}')|"
                                                                                          title="Delete">&#xE872;</i></a>
                 </td>
             </tr>
             </tbody>
         </table>
         <div >
-            <a class="btn btn-outline-secondary" th:href="@{/employee/(page = ${employeeList.number -1})}" th:if="${employeeList.hasPrevious()}">Previous</a>
-            <span th:each="pageNo: ${#numbers.sequence(0,employeeList.getTotalPages()-1)}">
-        <a class="btn btn-outline-secondary" th:text="${pageNo}" th:href="@{/employee/(page=${pageNo})}" th:classappend="${pageNo == employeeList.number ? 'active' : ''}"></a></span>
-            <a class="btn btn-outline-secondary" th:href="@{/employee/(page=${employeeList.number + 1 })}" th:if="${employeeList.hasNext()}">Next</a>
+            <a th:href="@{/(page = ${cartList.number -1})}" th:if="${cartList.hasPrevious()}">Previous</a>
+            <span th:each="pageNo: ${#numbers.sequence(0,cartList.getTotalPages()-1)}">
+        <a th:text="${pageNo}" th:href="@{/(page=${pageNo})}"></a></span>
+            <a th:href="@{/(page=${cartList.number + 1 })}" th:if="${cartList.hasNext()}">Next</a>
         </div>
+
     </div>
 
     <!-- Delete Modal HTML -->
-    <div id="deleteEmployeeModal" class="modal fade">
+    <div id="deleteCartModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Employee</h4>
+                    <h4 class="modal-title">Delete Cart</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <form th:action="@{/delete-employee}" method="get">
+                <form th:action="@{/delete-cart}" method="get">
                     <div class="modal-body">
                         <input type="text" id="id" name="id" hidden>
                         <p>Are you sure you want to delete <span style="color: red" id="name"></span>?</p>
@@ -136,53 +131,15 @@
 </div>
 
 
+
 <script src="/static/crud_table.js"></script>
 <script>
-    function deleteByID(id, name) {
+    function deleteByID(id,name){
         document.getElementById("id").value = id;
-        document.getElementById("name").innerText = name;
+        document.getElementById("name").innerText=name;
     }
 </script>
 
-<!--notification delete-->
-<div th:if="${statusDelete}">
-    <span hidden id="inputId" th:text="'Successfully'"></span>
-</div>
-<div th:if="${statusDelete == false}">
-    <span hidden id="inputId2" th:text="'Fail'"></span>
-</div>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<script th:if="${statusDelete}">
-    let inputId = document.getElementById("inputId");
-    if (inputId && inputId.innerText != null) {
-        swal({
-            title: "Delete",
-            text: inputId.innerText,
-            icon: "success",
-            button: "OK",
-        }).then((idOk) => {
-            if (idOk) {
-                inputId.innerText = '';
-            }
-        });
-    }
-</script>
-<script th:if="${statusDelete == false}">
-    let inputId = document.getElementById("inputId2");
-    if (inputId && inputId.innerText != null) {
-        swal({
-            title: "DELETE",
-            text: inputId.innerText,
-            icon: "error",
-            button: "OK",
-        }).then((idOk) => {
-            if (idOk) {
-                inputId.innerText = '';
-            }
-        });
-    }
-</script>
 <!--notification create-->
 <script th:if="${mess}">
     swal({

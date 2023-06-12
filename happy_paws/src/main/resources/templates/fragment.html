@@ -12,17 +12,15 @@
     <style th:fragment="css">
         .footer-dark {
             padding: 50px 0;
-            color: #000000;
-            background-color: #fce7ea;
+            color: #ffffff;
+            background-color: #f8b8be;
         }
-
         .footer-dark h3 {
             margin-top: 0;
             margin-bottom: 12px;
             font-weight: bold;
             font-size: 16px;
         }
-
         .footer-dark ul {
             padding: 0;
             list-style: none;
@@ -30,50 +28,41 @@
             font-size: 14px;
             margin-bottom: 0;
         }
-
         .footer-dark ul a {
             color: inherit;
             text-decoration: none;
             opacity: 0.6;
         }
-
         .footer-dark ul a:hover {
             opacity: 0.8;
         }
-
         @media (max-width: 767px) {
             .footer-dark .item:not(.social) {
                 text-align: center;
                 padding-bottom: 20px;
             }
         }
-
         .footer-dark .item.text {
             margin-bottom: 36px;
         }
-
         @media (max-width: 767px) {
             .footer-dark .item.text {
                 margin-bottom: 0;
             }
         }
-
         .footer-dark .item.text p {
             opacity: 0.6;
             margin-bottom: 0;
         }
-
         .footer-dark .item.social {
             text-align: center;
         }
-
         @media (max-width: 991px) {
             .footer-dark .item.social {
                 text-align: center;
                 margin-top: 20px;
             }
         }
-
         .footer-dark .item.social > a {
             font-size: 20px;
             width: 36px;
@@ -82,16 +71,14 @@
             display: inline-block;
             text-align: center;
             border-radius: 50%;
-            box-shadow: 0 0 0 1px rgb(0, 0, 0);
+            box-shadow: 0 0 0 1px rgb(255, 255, 255);
             margin: 0 8px;
-            color: #000000;
+            color: #ffffff;
             opacity: 0.75;
         }
-
         .footer-dark .item.social > a:hover {
             opacity: 0.9;
         }
-
         .footer-dark .copyright {
             text-align: center;
             padding-top: 24px;
@@ -99,93 +86,125 @@
             font-size: 13px;
             margin-bottom: 0;
         }
-    </style>
+        @import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap');
+        body {
+            background-color: #eee;
+        }
 
+        .navbar-nav > li > a {
+
+            text-transform: uppercase;
+            font-size: 12px;
+            margin-right: 20px;
+            color: #fff;
+        }
+        .navbar-toggler {
+            padding: .20rem .50rem;
+            font-size: 1.25rem;
+            line-height: 1;
+            background-color: transparent;
+            border: 1px solid white;
+        }
+        .nav-link {
+            color: #fff !important;
+        }
+        .wrapper {
+            width: 100%;
+            position: absolute;
+            height: 100%;
+            background-color: #ffffff;
+            clip-path: polygon(81% 0, 100% 0, 100% 50%, 100% 100%, 71% 100%);
+            transition: 1s all;
+        }
+        .navbar-brand {
+            color: #fff;
+            font-family: 'Allerta Stencil', sans-serif;
+            margin-bottom: 4px;
+            font-size: 27px;
+        }
+
+        .navbar-red:hover .wrapper {
+            clip-path: polygon(81% 0, 100% 0, 100% 50%, 100% 100%, 65% 100%);
+        }
+
+        .navbar-brand:hover {
+            color: #fff;
+        }
+
+        .navbar-red {
+            background-color: #f8b8be;
+            color: #ffffff;
+        }
+        .all-show {
+            z-index: 10;
+        }
+    </style>
 </head>
 <body>
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white p-0">
-        <!-- Container wrapper -->
-        <div class="container-fluid" style="background-color: #fce7ea;height: 10vh">
-            <!-- Toggle button -->
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <i class="fas fa-bars"></i>
+    <nav class="navbar navbar-expand-lg navbar-red navbar-dark">
+        <div class="wrapper">
+        </div>
+        <div class="container-fluid all-show">
+            <a class="navbar-brand" href="#" style="margin-top: -2.3vh">Happy <br>Paws<img
+                    src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/19454/cat-s-paw-clipart-md.png"
+                    height="45"
+                    alt="MDB Logo"
+                    loading="lazy" style="transform: rotate(-18deg);margin-top: -5.5vh;margin-left: 6vw"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-
-            <!-- Collapsible wrapper -->
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" style="background-color:#f8b8be;color: white " type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    MANAGER
+                </button>
+                <ul class="dropdown-menu text-dark">
+                    <li><a class="dropdown-item active" href="#">Products</a></li>
+                    <li><a class="dropdown-item" href="#">Services</a></li>
+                    <li><a class="dropdown-item" href="#">Employees</a></li>
+                    <li><a class="dropdown-item" href="#">Customers</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Orders</a></li>
+                </ul>
+            </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Navbar brand -->
-                <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                    <img
-                            src="https://th.bing.com/th/id/R.4e870cce2c3c17995f81c45e65210045?rik=KEwdrgIIdO3u8g&pid=ImgRaw&r=0"
-                            height="50"
-                            alt="MDB Logo"
-                            loading="lazy" style="transform: rotate(-18deg);margin-top: 0vh;"
-                    />
-                </a>
-                <!-- Left links -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Dashboard</a>
+                        <a class="nav-link active" aria-current="page" href="#">About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Team</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Projects</a>
+                        <a class="nav-link" href="#">contact</a>
                     </li>
                 </ul>
-                <!-- Left links -->
-            </div>
-            <!-- Collapsible wrapper -->
-
-            <!-- Right elements -->
-            <div class="d-flex align-items-center">
-                <!-- Icon -->
-
-                <!-- Avatar -->
-                <div class="dropdown">
-                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow"
-                            href="#"
-                            id="navbarDropdownMenuAvatar"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false" >
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                                class="rounded-circle"
-                                height="25"
-                                alt="Black and White Portrait of a Man"
-                                loading="lazy"/>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuAvatar">
-                        <li>
-                            <a class="dropdown-item" href="#">My profile</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Settings</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </li>
-                    </ul>
+                <div class="d-flex flex-column sim" style="float: right">
+                    <!--                    <span style="color: black">Info Admin Here</span>-->
+                    <!--                    <small class="text-primary">view your quote</small>-->
+                    <div class="dropdown dropstart" style="margin-top: 0.7vh">
+                        <button style="border-radius: 20px;background-color: white;border: 1px solid #f8b8be"
+                                class="btn dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu text-dark">
+                            <li><a class="dropdown-item" href="#">
+                                <i class="material-icons">&#xE7fd;</i>
+                                <!--                                <b th:text="${#authentication.getName()}"></b>-->
+                                <b th:text="'Admin'"></b>
+                            </a></li>
+                            <li><a class="dropdown-item" th:href="@{/account/logout}"><i class="material-icons">&#xE9ba;</i>Logout </a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <!-- Right elements -->
         </div>
-        <!-- Container wrapper -->
     </nav>
-    <!-- Navbar -->
 </div>
-
 <div th:fragment="footer">
     <div class="footer-dark">
         <footer>
@@ -200,9 +219,9 @@
                         </ul>
                     </div>
                     <div class="col-md-3 item">
-                        <h3>Services</h3>
+                        <h3>Address</h3>
                         <ul>
-                            <li><a href="#">Web design</a></li>
+                            <li><a href="#">Address</a></li>
                             <li><a href="#">Development</a></li>
                             <li><a href="#">Hosting</a></li>
                         </ul>
