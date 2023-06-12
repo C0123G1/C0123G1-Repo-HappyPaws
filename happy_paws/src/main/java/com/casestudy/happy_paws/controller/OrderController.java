@@ -36,7 +36,6 @@ public class OrderController {
     public String showList(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         Page<Orders> ordersPage = iOrderService.findAll(pageable);
-
         List<OrderDTO> orderDTOList = new ArrayList<>();
         for (Orders o : ordersPage) {
             OrderDTO orderDTO = new OrderDTO(o.getId(), o.getCustomer(), o.getBuyDate(), iOrderDetailService.getTotalPriceOrder(o.getId()));
@@ -70,7 +69,7 @@ public class OrderController {
     }
 
     @GetMapping("/create")
-    private String create(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model,HttpServletRequest httpServletRequest) {
+    private String create(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model, HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         session.invalidate();
         Pageable pageable = PageRequest.of(page, 8);
@@ -99,10 +98,10 @@ public class OrderController {
         Pageable pageable = PageRequest.of(page, 8);
         Page<Product> productPage = iOrderService.searchProductByNameAndPrice(name, chosePrice, pageable);
         List<OrderDetail> productList = new ArrayList<>();
-        if(session.getAttribute("cart") != null){
+        if (session.getAttribute("cart") != null) {
             productList = (List<OrderDetail>) session.getAttribute("cart");
         }
-        session.setAttribute("cart",productList);
+        session.setAttribute("cart", productList);
         model.addAttribute("session", session);
         model.addAttribute("customer", iOrderDetailService.findCustomerById(customerId));
         model.addAttribute("productPage", productPage);

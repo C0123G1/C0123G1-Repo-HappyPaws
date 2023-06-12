@@ -48,28 +48,24 @@ public class OrderDetailController {
     }
 
     @GetMapping("/create")
-    public String create(@RequestParam("customerId") Integer customerId, @RequestParam(value = "orderId", defaultValue = "0") Long orderId, @RequestParam(value = "page", defaultValue = "0") Integer page,
+    public String create(@RequestParam("customerId") Integer customerId, @RequestParam(value = "orderId", defaultValue = "0") Long orderId, @RequestParam(value = "now", defaultValue = "noCart") String now, @RequestParam(value = "page", defaultValue = "0") Integer page,
                          Model model, HttpServletRequest httpServletRequest) {
+
         HttpSession session = httpServletRequest.getSession();
         Pageable pageable = PageRequest.of(page, 8);
         Customer customer = iOrderDetailService.findCustomerById(customerId);
         List<OrderDetail> cart = new ArrayList<>();
-        if (session.getAttribute("cart") != null) {
-            cart = (List<OrderDetail>) session.getAttribute("cart");
-        }
-//        Orders orders;
-//        if (orderId == 0) {
-//            orders = new Orders(customer);
-//        } else {
-//            orders = new Orders(orderId, customer);
-//        }
-//        model.addAttribute("orders", orders);
-        double totalPriceCart = 0.0;
-        for (OrderDetail c : cart){
-            totalPriceCart += c.getProducts().getPrice() * c.getQuantity();
+        if (now.equals("cart")) {
+            if (session.getAttribute("cart") != null) {
+                cart = (List<OrderDetail>) session.getAttribute("cart");
+            }
+            double totalPriceCart = 0.0;
+            for (OrderDetail c : cart) {
+                totalPriceCart += c.getProducts().getPrice() * c.getQuantity();
+            }
+            model.addAttribute("totalPriceCart", totalPriceCart);
         }
         session.setAttribute("cart", cart);
-        model.addAttribute("totalPriceCart", totalPriceCart);
         model.addAttribute("session", session);
         model.addAttribute("customer", customer);
         model.addAttribute("pageList", true);
@@ -89,7 +85,6 @@ public class OrderDetailController {
         } else {
             orders = new Orders(orderId, customer);
         }
-//       boolean statusSave = iOrderService.saveOrder(orders);
         List<OrderDetail> cart = (List<OrderDetail>) session.getAttribute("cart");
         Product product = iOrderDetailService.findProductById(productId);
         OrderDetail orderDetail = new OrderDetail(product, orders, quantity, product.getPrice());
@@ -102,20 +97,11 @@ public class OrderDetailController {
                 count++;
             }
         }
-        if(count == cart.size()){
+        if (count == cart.size()) {
             cart.add(orderDetail);
         }
         session.setAttribute("cart", cart);
-//        boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetail);
-//        Pageable pageable = PageRequest.of(0, 8);
-//        model.addAttribute("session", session);
-//        model.addAttribute("customer", customer);
-//        model.addAttribute("orders", orders);
-//        model.addAttribute("pageList", true);
-//        model.addAttribute("productPage", iOrderDetailService.findAllProduct(pageable));
-//        redirectAttributes.addFlashAttribute("statusSave", statusSave);
-//        return "orders/product_list";
-        return "redirect:/order-detail/create?customerId=" + customer.getCustomerId();
+        return "redirect:/order-detail/create?customerId=" + customer.getCustomerId() + "&now=cart";
     }
 
     @GetMapping("/payment/{customerId}")
@@ -148,13 +134,6 @@ public class OrderDetailController {
     public String updateInfo(@RequestParam("orderId") Long orderId, @RequestParam("orderDetailId") Long orderDetailId, RedirectAttributes redirectAttributes) {
         boolean statusDelete = iOrderDetailService.delete(orderDetailId);
         redirectAttributes.addFlashAttribute("statusDelete", statusDelete);
-//        Pageable pageable = PageRequest.of(0, 8);
-//        Page<OrderDetail> orderDetailPage = iOrderDetailService.findAllOrderDetailByOrderId(pageable, orderId);
-//        Double totalPrice = iOrderDetailService.getTotalPriceOrder(orderId);
-//        model.addAttribute("totalPrice", totalPrice);
-//        model.addAttribute("orderDetailPage", orderDetailPage);
-//        model.addAttribute("orderId", orderId);
-//        model.addAttribute("pageList", true);
         return "redirect:/order-detail?orderId=" + orderId;
     }
 
@@ -171,8 +150,9 @@ public class OrderDetailController {
         }
         return "redirect:/order-detail/create?customerId=" + customerId;
     }
+
     @GetMapping("/update")
-    public String update(){
+    public String update() {
         return "orders/order_detail";
     }
 }
