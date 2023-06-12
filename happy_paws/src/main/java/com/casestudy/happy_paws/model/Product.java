@@ -16,7 +16,7 @@ public class Product {
     @Column(columnDefinition = "text")
     private String description;
     @NotNull
-    private Long price;
+    private Double price;
     @NotNull
     private String origin;
     @Column(columnDefinition = "text")
@@ -35,7 +35,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String name, String description, Long price, String origin, String image, ProductType productType, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
+    public Product(Long id, String name, String description, Double price, String origin, String image, ProductType productType, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -82,11 +82,11 @@ public class Product {
         this.description = description;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
