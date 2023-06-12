@@ -43,9 +43,10 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public String create(@Validated @ModelAttribute("productDTO") ProductDTO productDTO, BindingResult bindingResult,RedirectAttributes redirectAttributes) {
+    public String create(@Validated @ModelAttribute("productDTO") ProductDTO productDTO, BindingResult bindingResult,RedirectAttributes redirectAttributes, Model model) {
         new ProductDTO().validate(productDTO, bindingResult);
         if (bindingResult.hasErrors()) {
+            model.addAttribute("productTypeList",productTypeService.findAll());
             return "product/create";
         }
         Product product = new Product();

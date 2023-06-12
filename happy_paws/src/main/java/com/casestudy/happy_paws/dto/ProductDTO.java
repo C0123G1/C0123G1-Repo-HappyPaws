@@ -19,7 +19,6 @@ public class ProductDTO implements Validator {
     private Double price;
     @NotBlank
     private String origin;
-    @NotBlank
     private String image;
     private ProductType productType;
 
