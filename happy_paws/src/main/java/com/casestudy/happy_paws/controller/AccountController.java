@@ -1,10 +1,12 @@
 package com.casestudy.happy_paws.controller;
 
 import com.casestudy.happy_paws.model.Account;
+import com.casestudy.happy_paws.model.Customer;
 import com.casestudy.happy_paws.model.Role;
 import com.casestudy.happy_paws.service.IAccountService;
 import com.casestudy.happy_paws.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +25,10 @@ public class AccountController {
     private IRoleService  roleService;
 
     @GetMapping("")
-    public String index( Model model){
-        List<Account> accountList = accountService.findAll();
+    public String index(@RequestParam(value = "page",defaultValue = "0") int page, Model model){
+        Page<Account> accountList = accountService.getAllPage(page);
+
         model.addAttribute("accountList", accountList);
-        System.out.println(accountList);
         return "/customers/account";
     }
     @GetMapping("/create")

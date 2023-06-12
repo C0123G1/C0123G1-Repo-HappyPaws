@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ICustomerRepository extends JpaRepository<Customer,Integer> {
 
 
-    @Query(value = "SELECT * FROM customer c INNER JOIN account u ON u.account_id = c.account_account_id  WHERE  c.name LIKE :name AND c.phone LIKE  :phone AND u.username  LIKE :username  ",nativeQuery = true)
+    @Query(value = "SELECT * FROM customer c INNER JOIN account u ON u.account_id = c.account_account_id  WHERE  c.name LIKE :name AND c.phone LIKE  :phone AND u.username  LIKE :username  AND c.id_delete = false ",nativeQuery = true)
     Page<Customer> findByCustomer(String name, String phone, String username, Pageable pageable);
 
 //    @Query(value = "UPDATE customer   SET is_delete =true WHERE customer_id = :customerId",nativeQuery = true)

@@ -14,6 +14,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +22,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-@ControllerAdvice
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
@@ -38,7 +39,6 @@ public class CustomerController {
 
     @GetMapping("")
     public String index(@RequestParam(value = "page", defaultValue = "0") int page, Model model) {
-
 
         Page<Customer> customerList = customerService.getAllPage(page);
         model.addAttribute("customerList", customerList);
@@ -142,11 +142,10 @@ public class CustomerController {
     @PostMapping("/check")
     public String check(@RequestParam("accountId") Integer id, @RequestParam("code") int code, Model model) {
         Account account = accountService.findById(id);
-        Customer customer = new Customer();
         if (code == account.getCode()) {
             account.setEnable(true);
             account.setCode(code);
-            accountService.save(account);
+            accountService.update(account);
             model.addAttribute("account", account);
 
             model.addAttribute("mess", "Create Successfully");
@@ -163,7 +162,7 @@ public class CustomerController {
         int result = customerService.getRandom(10000, 999999);
         emailService.sendEmail(customer.getEmail(), "Hello ", "Bạn vui lòng nhập mã số xác nhận : " + result);
         account.setCode(result);
-        accountService.save(account);
+        accountService.update(account);
         model.addAttribute("account", account);
         model.addAttribute("customerId", customerId);
         return "/customers/pageCheck";

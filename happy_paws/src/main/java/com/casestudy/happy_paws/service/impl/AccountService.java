@@ -4,6 +4,8 @@ import com.casestudy.happy_paws.model.Account;
 import com.casestudy.happy_paws.repository.IAccountRepository;
 import com.casestudy.happy_paws.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,7 +58,12 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public void delete(Integer accountId) {
-        accountRepository.deleteById(accountId);
+        accountRepository.deleteByIdAccount(accountId);
+    }
+
+    @Override
+    public Page<Account> getAllPage(int page) {
+        return accountRepository.findAllAccount(PageRequest.of(page, 5));
     }
 
     @Override

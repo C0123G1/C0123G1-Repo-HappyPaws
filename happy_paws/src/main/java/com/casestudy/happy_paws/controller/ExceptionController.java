@@ -8,11 +8,10 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
-public class ExceptionController {
+public class ExceptionController  {
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public String nullPointer(Exception e){
-
+    public String handleNoFoundException(Exception e){
         return "/customers/404";
     }
 

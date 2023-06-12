@@ -22,6 +22,8 @@ public class Account {
     @NotNull
     private boolean enable ;
 
+    private boolean isDelete;
+
    @ManyToOne
     private Role role;
 
@@ -36,16 +38,17 @@ public class Account {
     public Account() {
     }
 
-    public Account(Integer accountId, String username, String password, int code, boolean enable, Role role) {
+    public Account(Integer accountId, String username, String password, int code, boolean enable, Role role,boolean  isDelete) {
         this.accountId = accountId;
         this.username = username;
         this.password = password;
         this.code = code;
         this.enable = enable;
         this.role = role;
+        this.isDelete = isDelete;
     }
 
-    public Account(Integer accountId, String username, String password, int code, boolean enable, Role role, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Account(Integer accountId, String username, String password, int code, boolean enable, Role role, LocalDateTime createTime, LocalDateTime updateTime,boolean isDelete) {
         this.accountId = accountId;
         this.username = username;
         this.password = password;
@@ -54,12 +57,22 @@ public class Account {
         this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.isDelete = isDelete;
     }
 
     public Account(String username, String password, Role admin) {
         this.username = username;
         this.password = password;
         this.role=admin;
+    }
+
+    public Account(Integer accountId, String username, String password, int code, boolean enable, Role role) {
+        this.accountId = accountId;
+        this.username = username;
+        this.password = password;
+        this.code = code;
+        this.enable = enable;
+        this.role = role;
     }
 
     public Integer getAccountId() {
@@ -124,5 +137,13 @@ public class Account {
 
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 }

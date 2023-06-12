@@ -9,16 +9,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style th:fragment="css">
         .footer-dark {
             padding: 50px 0;
-            color: #000000;
-            background-color: #fce7ea;
+            color: #ffffff;
+            background-color: #f8b8be;
         }
 
         .footer-dark h3 {
@@ -87,9 +82,9 @@
             display: inline-block;
             text-align: center;
             border-radius: 50%;
-            box-shadow: 0 0 0 1px rgb(0, 0, 0);
+            box-shadow: 0 0 0 1px rgb(255, 255, 255);
             margin: 0 8px;
-            color: #000000;
+            color: #ffffff;
             opacity: 0.75;
         }
 
@@ -104,110 +99,148 @@
             font-size: 13px;
             margin-bottom: 0;
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap');
+
+        body {
+
+            background-color: #eee;
+        }
+
+        .navbar-nav > li > a {
+
+            text-transform: uppercase;
+            font-size: 12px;
+            margin-right: 20px;
+            color: #fff;
+        }
+
+
+        .navbar-toggler {
+            padding: .20rem .50rem;
+            font-size: 1.25rem;
+            line-height: 1;
+            background-color: transparent;
+            border: 1px solid white;
+
+        }
+
+        .nav-link {
+
+            color: #fff !important;
+        }
+
+
+        .wrapper {
+            width: 100%;
+            position: absolute;
+            height: 100%;
+            background-color: #ffffff;
+            clip-path: polygon(81% 0, 100% 0, 100% 50%, 100% 100%, 71% 100%);
+            transition: 1s all;
+        }
+
+        .navbar-brand {
+
+            color: #fff;
+            font-family: 'Allerta Stencil', sans-serif;
+            margin-bottom: 4px;
+            font-size: 27px;
+        }
+
+        .navbar-red:hover .wrapper {
+
+            clip-path: polygon(81% 0, 100% 0, 100% 50%, 100% 100%, 65% 100%);
+
+        }
+
+        .navbar-brand:hover {
+
+            color: #fff;
+
+        }
+
+        .navbar-red {
+
+            background-color: #f8b8be;
+            color: #ffffff;
+
+        }
+
+        .all-show {
+
+            z-index: 10;
+        }
     </style>
+
 </head>
 <body>
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white p-0">
-        <!-- Container wrapper -->
-        <div class="container-fluid" style="background-color: #fce7ea;height: 10vh">
-            <!-- Toggle button -->
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <i class="fas fa-bars"></i>
-            </button>
+    <nav class="navbar navbar-expand-lg navbar-red navbar-dark">
+        <div class="wrapper">
 
-            <!-- Collapsible wrapper -->
+        </div>
+        <div class="container-fluid all-show">
+            <a class="navbar-brand" href="#" style="margin-top: -2.3vh">Happy <br>Paws<img
+                    src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/19454/cat-s-paw-clipart-md.png"
+                    height="45"
+                    alt="MDB Logo"
+                    loading="lazy" style="transform: rotate(-18deg);margin-top: -5.5vh;margin-left: 6vw"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" style="background-color:#f8b8be;color: white " type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    MANAGER
+                </button>
+                <ul class="dropdown-menu text-dark">
+                    <li><a class="dropdown-item active" href="#">Products</a></li>
+                    <li><a class="dropdown-item" href="#">Services</a></li>
+                    <li><a class="dropdown-item" href="#">Employees</a></li>
+                    <li><a class="dropdown-item" href="#">Customers</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Orders</a></li>
+                </ul>
+            </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Navbar brand -->
-                <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                    <img
-                            src="https://th.bing.com/th/id/R.4e870cce2c3c17995f81c45e65210045?rik=KEwdrgIIdO3u8g&pid=ImgRaw&r=0"
-                            height="50"
-                            alt="MDB Logo"
-                            loading="lazy" style="transform: rotate(-18deg);margin-top: 0vh;"
-                    />
-                </a>
-                <!-- Left links -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Dashboard</a>
+                        <a class="nav-link active" aria-current="page" href="#">About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Team</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Projects</a>
+                        <a class="nav-link" href="#">contact</a>
                     </li>
                 </ul>
-                <!-- Left links -->
-            </div>
-            <!-- Collapsible wrapper -->
-
-            <!-- Right elements -->
-            <div class="d-flex align-items-center">
-                <!-- Icon -->
-                <a class="link-secondary me-3" href="#">
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-
-                <!-- Notifications -->
-                <div class="dropdown">
-                    <a
-                            class="link-secondary me-3 dropdown-toggle hidden-arrow"
-                            href="#"
-                            id="navbarDropdownMenuLink"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false"
-                    >
-                        <i class="fas fa-bell"></i>
-                        <span class="badge rounded-pill badge-notification bg-danger">1</span>
-                    </a>
-                    <ul
-                            class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuLink"
-                    >
-                        <li>
-                            <a class="dropdown-item" href="#">Some news</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Another news</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Avatar -->
-
-                    <div class="dropdown">
-                        <button  style="border-radius: 20px;" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
+                <div class="d-flex flex-column sim" style="float: right">
+                    <!--                    <span style="color: black">Info Admin Here</span>-->
+                    <!--                    <small class="text-primary">view your quote</small>-->
+                    <div class="dropdown dropstart" style="margin-top: 0.7vh">
+                        <button style="border-radius: 20px;background-color: white;border: 1px solid #f8b8be"
+                                class="btn dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
                         </button>
-                        <div style="    width: 25%;  height: 25%;border-radius: 23px;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i>
-                                <b th:text="${#authentication.getName()}"></b>
-                            </a>
-                            <a class="dropdown-item" th:href="@{/logout}"><i class="fa-sharp fa-solid fa-right-from-bracket"></i>Logout </a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+                        <ul class="dropdown-menu text-dark">
+                            <li><a class="dropdown-item" href="#">
+                                <i class="material-icons">&#xE7fd;</i>
+                                <!--                                <b th:text="${#authentication.getName()}"></b>-->
+                                <b th:text="'Admin'"></b>
+                            </a></li>
+                            <li><a class="dropdown-item" th:href="@{/account/logout}"><i class="material-icons">&#xE9ba;</i>Logout </a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
                     </div>
-
+                </div>
             </div>
-            <!-- Right elements -->
         </div>
-        <!-- Container wrapper -->
     </nav>
-    <!-- Navbar -->
 </div>
+
 <div th:fragment="footer">
     <div class="footer-dark">
         <footer>
@@ -222,9 +255,9 @@
                         </ul>
                     </div>
                     <div class="col-md-3 item">
-                        <h3>Services</h3>
+                        <h3>Address</h3>
                         <ul>
-                            <li><a href="#">Web design</a></li>
+                            <li><a href="#">Address</a></li>
                             <li><a href="#">Development</a></li>
                             <li><a href="#">Hosting</a></li>
                         </ul>
@@ -238,28 +271,20 @@
                         </ul>
                     </div>
                     <div class="col-md-3 item text">
-                        <h3>BBBootstrap.com</h3>
+                        <h3>HappyPaws.com</h3>
                         <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus.</p>
                     </div>
                     <div class="col item social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i
                             class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-youtube"></i></a><a href="#"><i
                             class="fa fa-instagram"></i></a><a href="#"><i class="fa fa-google"></i></a></div>
                 </div>
-                <p class="copyright">BBBootstrap.com &copy; 2020</p>
+                <p class="copyright">HappyPaws.com &copy; 2020</p>
             </div>
         </footer>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>
