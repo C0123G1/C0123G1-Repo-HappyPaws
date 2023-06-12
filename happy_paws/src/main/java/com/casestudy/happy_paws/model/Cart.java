@@ -25,29 +25,34 @@ public class Cart {
     @Column(name = "date_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @UpdateTimestamp
     private LocalDateTime dateUpdate;
-    @Column(name = "pending_status",columnDefinition = "BIT DEFAULT 0")
-    private boolean pendingStatus;
+//    @Column(name = "pending_status",columnDefinition = "BIT DEFAULT 0")
+//    private boolean pendingStatus;
+
 
     public Cart() {
     }
 
-    public Cart(Long cartId, Product product, Customer customer, Integer quantity, LocalDateTime dateCreate, LocalDateTime dateUpdate, boolean pendingStatus) {
+    public Cart(Long cartId, Product product, Customer customer, Integer quantity, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
         this.cartId = cartId;
         this.product = product;
         this.customer = customer;
         this.quantity = quantity;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
-        this.pendingStatus = pendingStatus;
     }
 
-    public Cart(Product product, Customer customer, Integer quantity, LocalDateTime dateCreate, LocalDateTime dateUpdate, boolean pendingStatus) {
+    public Cart(Product product, Customer customer, Integer quantity) {
+        this.product = product;
+        this.customer = customer;
+        this.quantity = quantity;
+    }
+
+    public Cart(Product product, Customer customer, Integer quantity, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
         this.product = product;
         this.customer = customer;
         this.quantity = quantity;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
-        this.pendingStatus = pendingStatus;
     }
 
     public Long getCartId() {
@@ -96,13 +101,5 @@ public class Cart {
 
     public void setDateUpdate(LocalDateTime dateUpdate) {
         this.dateUpdate = dateUpdate;
-    }
-
-    public boolean isPendingStatus() {
-        return pendingStatus;
-    }
-
-    public void setPendingStatus(boolean pendingStatus) {
-        this.pendingStatus = pendingStatus;
     }
 }
