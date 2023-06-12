@@ -1,5 +1,4 @@
 package com.casestudy.happy_paws.model;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,12 +7,12 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-public class Supplies {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    private String nameSupplies;
+    private String name;
     @Column(columnDefinition = "text")
     private String description;
     @NotNull
@@ -24,31 +23,40 @@ public class Supplies {
     private String image;
     @ManyToOne
     @JoinColumn
-    private SuppliesType suppliesType;
-    @Column(nullable = false, updatable = false,columnDefinition = "TIMESTAMP DEFAULT now()")
+    private ProductType productType;
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreationTimestamp
     private LocalDateTime createDate;
-    @Column(nullable = false,columnDefinition = "TIMESTAMP DEFAULT now()")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @UpdateTimestamp
     private LocalDateTime updateDate;
     private boolean isDelete;
 
-    public Supplies() {
+    public Product() {
     }
 
-    public Supplies(Long id, String nameSupplies, String description, Long price, String origin,String image, SuppliesType suppliesType, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
+    public Product(Long id, String name, String description, Long price, String origin, String image, ProductType productType, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
         this.id = id;
-        this.nameSupplies = nameSupplies;
+        this.name = name;
         this.description = description;
         this.price = price;
         this.origin = origin;
         this.image = image;
-        this.suppliesType = suppliesType;
+        this.productType = productType;
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.isDelete = isDelete;
     }
 
+    public Product(Long id, String name, String description, Long price, String origin, String image, ProductType productType) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.origin = origin;
+        this.image = image;
+        this.productType = productType;
+    }
 
     public Long getId() {
         return id;
@@ -58,12 +66,12 @@ public class Supplies {
         this.id = id;
     }
 
-    public String getNameSupplies() {
-        return nameSupplies;
+    public String getName() {
+        return name;
     }
 
-    public void setNameSupplies(String nameSupplies) {
-        this.nameSupplies = nameSupplies;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -98,12 +106,12 @@ public class Supplies {
         this.image = image;
     }
 
-    public SuppliesType getSuppliesType() {
-        return suppliesType;
+    public ProductType getProductType() {
+        return productType;
     }
 
-    public void setSuppliesType(SuppliesType suppliesType) {
-        this.suppliesType = suppliesType;
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public LocalDateTime getCreateDate() {
@@ -130,3 +138,4 @@ public class Supplies {
         isDelete = delete;
     }
 }
+

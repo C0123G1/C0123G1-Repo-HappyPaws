@@ -1,43 +1,41 @@
 package com.casestudy.happy_paws.dto;
 
-import com.casestudy.happy_paws.model.SuppliesType;
+import com.casestudy.happy_paws.model.ProductType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.time.LocalDateTime;
 
-
-public class SuppliesDTO implements Validator {
+public class ProductDTO implements Validator {
     private Long id;
-    private String nameSupplies;
+    private String name;
     private String description;
     private Long price;
     private String origin;
     private String image;
 
-    private SuppliesType suppliesType;
+    private ProductType productType;
 
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
     private boolean isDelete;
 
-    public SuppliesDTO() {
+    public ProductDTO() {
     }
 
-    public SuppliesDTO(Long id, String nameSupplies, String description, Long price, String origin, String image, SuppliesType suppliesType, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
+    public ProductDTO(Long id, String name, String description, Long price, String origin, String image, ProductType productType, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
         this.id = id;
-        this.nameSupplies = nameSupplies;
+        this.name = name;
         this.description = description;
         this.price = price;
         this.origin = origin;
         this.image = image;
-        this.suppliesType = suppliesType;
+        this.productType = productType;
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.isDelete = isDelete;
     }
-
 
     public Long getId() {
         return id;
@@ -47,12 +45,12 @@ public class SuppliesDTO implements Validator {
         this.id = id;
     }
 
-    public String getNameSupplies() {
-        return nameSupplies;
+    public String getName() {
+        return name;
     }
 
-    public void setNameSupplies(String nameSupplies) {
-        this.nameSupplies = nameSupplies;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -87,12 +85,12 @@ public class SuppliesDTO implements Validator {
         this.image = image;
     }
 
-    public SuppliesType getSuppliesType() {
-        return suppliesType;
+    public ProductType getProductType() {
+        return productType;
     }
 
-    public void setSuppliesType(SuppliesType suppliesType) {
-        this.suppliesType = suppliesType;
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public LocalDateTime getCreateDate() {
@@ -111,6 +109,14 @@ public class SuppliesDTO implements Validator {
         this.updateDate = updateDate;
     }
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -119,13 +125,5 @@ public class SuppliesDTO implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean delete) {
-        isDelete = delete;
     }
 }
