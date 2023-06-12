@@ -40,16 +40,20 @@ public class BookingServiceController {
 
         Page<BookingService> bookingServicePage1 = iBookingServiceService.findPage(pageable);
         List<BookingService> bookingServiceListToGetTotal = iBookingServiceService.findAll();
-    for (BookingService b : bookingServiceListToGetTotal){
-        BookingService bookingService = new BookingService(b.getBookingServiceId(),b.getCustomer(),b.getBookingDate(),b.getBookingTime(),b.getCreateTime(),b.getUpdateTime(),b.isDelete(),iBookingServiceServiceDetail.getTotalByIdBooking(b.getBookingServiceId()));
-        iBookingServiceService.save(bookingService);
-    }
-        double revenue=0;
+        for (int i = 0; i < bookingServiceListToGetTotal.size(); i++) {
+           bookingServiceListToGetTotal.get(i).setTotal(  iBookingServiceServiceDetail.getTotalByIdBooking( bookingServiceListToGetTotal.get(i).getBookingServiceId()));
+           iBookingServiceService.save( bookingServiceListToGetTotal.get(i));
+        }
+        Double revenue = 0.0;
         for (int i = 0; i < iBookingServiceService.findAll().size(); i++) {
             revenue = revenue + bookingServiceListToGetTotal.get(i).getTotal();
         }
 
 
+//        for (int i = 0; i < bookingServiceList.size(); i++) {
+//            revenue = revenue + bookingServiceList.get(i).getTotal();
+//        }
+        model.addAttribute("revenue" ,revenue );
         List<BookingServiceDTO> bookingServiceList = new ArrayList<>();
         for (BookingService b: bookingServicePage1){
             BookingServiceDTO bookingServiceDTO = new BookingServiceDTO(b.getBookingServiceId(), b.getCustomer(), b.getBookingDate(),b.getBookingTime(),b.getCreateTime(),b.getUpdateTime(),iBookingServiceServiceDetail.getTotalByIdBooking(b.getBookingServiceId()));
@@ -58,7 +62,6 @@ public class BookingServiceController {
         Page<BookingServiceDTO> bookingServiceDTOPage = new PageImpl<>(bookingServiceList, pageable, bookingServicePage1.getTotalElements());
         model.addAttribute("bookingServicePage", bookingServiceDTOPage);
         model.addAttribute("search" , false);
-        model.addAttribute("revenue" ,revenue );
 
 
         return "pet-service/booking/list";
@@ -68,30 +71,28 @@ public class BookingServiceController {
     public String searchByDate(@RequestParam("searchDate") String searchDate,@RequestParam(value = "page", defaultValue = "0") Optional<Integer> page, Model model){
         LocalDate date = LocalDate.parse(searchDate);
         Pageable pageable = PageRequest.of(page.orElse(0), 5, Sort.by(Sort.Order.asc("bookingDate")));
-
-        Page<BookingService> bookingServicePage1 = iBookingServiceService.searchByDate(pageable, date);
         List<BookingService> bookingServiceListToGetTotal = iBookingServiceService.searchByDateWithTotal(date);
-        for (BookingService b : bookingServiceListToGetTotal){
-            BookingService bookingService = new BookingService(b.getBookingServiceId(),b.getCustomer(),b.getBookingDate(),b.getBookingTime(),b.getCreateTime(),b.getUpdateTime(),b.isDelete(),iBookingServiceServiceDetail.getTotalByIdBooking(b.getBookingServiceId()));
-            iBookingServiceService.save(bookingService);
+        for (int i = 0; i < bookingServiceListToGetTotal.size(); i++) {
+            bookingServiceListToGetTotal.get(i).setTotal(  iBookingServiceServiceDetail.getTotalByIdBooking( bookingServiceListToGetTotal.get(i).getBookingServiceId()));
+            iBookingServiceService.save( bookingServiceListToGetTotal.get(i));
         }
-        double revenue=0;
-        for (int i = 0; i < iBookingServiceService.searchByDateWithTotal(date).size(); i++) {
+        Double revenue = 0.0;
+        for (int i = 0; i < bookingServiceListToGetTotal.size(); i++) {
             revenue = revenue + bookingServiceListToGetTotal.get(i).getTotal();
         }
+        Page<BookingService> bookingServicePage1 = iBookingServiceService.searchByDate(pageable, date);
         List<BookingServiceDTO> bookingServiceList = new ArrayList<>();
         for (BookingService b: bookingServicePage1){
             BookingServiceDTO bookingServiceDTO = new BookingServiceDTO(b.getBookingServiceId(), b.getCustomer(), b.getBookingDate(),b.getBookingTime(),b.getCreateTime(),b.getUpdateTime(),iBookingServiceServiceDetail.getTotalByIdBooking(b.getBookingServiceId()));
             bookingServiceList.add(bookingServiceDTO);
         }
 
+
+        model.addAttribute("revenue" ,revenue );
         Page<BookingServiceDTO> bookingServiceDTOPage = new PageImpl<>(bookingServiceList, pageable, bookingServicePage1.getTotalElements());
         model.addAttribute("bookingServicePage", bookingServiceDTOPage);
         model.addAttribute("searchDate", searchDate);
         model.addAttribute("search" , true);
-        model.addAttribute("revenue" ,revenue );
-
-
         return "pet-service/booking/list";
     }
 

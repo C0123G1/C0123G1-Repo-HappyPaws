@@ -31,7 +31,7 @@ public class PetServiceController {
         Pageable pageable = PageRequest.of(page.orElse(0), 5, Sort.by(Sort.Order.desc("updateTime")));
         Page<PetService> petServicePage = iPetServiceService.findPage(pageable);
         model.addAttribute("petServicePage", petServicePage);
-        return "pet-service/service/list";
+        return "pet-service/service/pet-service-list-moi";
     }
 
     @GetMapping("/search")
@@ -41,7 +41,7 @@ public class PetServiceController {
         Page<PetService> petServicePage = iPetServiceService.searchPage(search,pageable);
         model.addAttribute("petServicePage",petServicePage);
         model.addAttribute("search",search);
-        return "pet-service/service/list";
+        return "pet-service/service/pet-service-list-moi";
     }
 
 
@@ -52,7 +52,7 @@ public class PetServiceController {
         Page<PetService> petServicePage = iPetServiceService.searchPage(search,pageable);
         model.addAttribute("petServicePage",petServicePage);
         model.addAttribute("search",search);
-        return "pet-service/service/list";
+        return "pet-service/service/pet-service-list-moi";
     }
 
 
@@ -61,13 +61,13 @@ public class PetServiceController {
 
     @GetMapping("/create")
     public String createView(@ModelAttribute("petServiceDTO") PetServiceDTO petServiceDTO) {
-        return "pet-service/service/create";
+        return "pet-service/service/create-moi";
     }
 
     @PostMapping("/create")
     public String saveService(@Validated @ModelAttribute("petServiceDTO") PetServiceDTO petServiceDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "pet-service/service/create";
+            return "pet-service/service/create-moi";
         }
 
         PetService petService = new PetService();
@@ -83,13 +83,13 @@ public class PetServiceController {
         PetServiceDTO petServiceDTO = new PetServiceDTO();
         BeanUtils.copyProperties(petService, petServiceDTO);
         model.addAttribute("petServiceDTO", petServiceDTO);
-        return "pet-service/service/update";
+        return "pet-service/service/update-moi";
     }
 
     @PostMapping("/edit")
     public String edit(@Validated @ModelAttribute("petServiceDTO") PetServiceDTO petServiceDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
-            return "pet-service/service/update";
+            return "pet-service/service/update-moi";
         }
         PetService petService = new PetService();
         BeanUtils.copyProperties(petServiceDTO, petService);

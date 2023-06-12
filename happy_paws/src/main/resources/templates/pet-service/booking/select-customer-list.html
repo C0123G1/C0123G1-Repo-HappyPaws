@@ -403,7 +403,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Date</label>
-                    <input th:field="*{bookingDate}" type="date" class="form-control Future" id="bookingDate">
+                    <input required th:field="*{bookingDate}" type="date" class="form-control Future" id="bookingDate">
 <!--                    <p style="color:red;" th:if="${#fields.hasErrors('bookingDate')}" th:errors="*{bookingDate}"></p>-->
                 </div>
                 <script>$(document).ready(function(){
@@ -414,7 +414,7 @@
                     var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2); // mm
                     var day = ("0" + todaysDate.getDate()).slice(-2);	// dd
 
-                    var dtToday = (year + "-" + month + "-" + (+day+1));	// Results in yyyy-mm-dd
+                    var dtToday = (year + "-" + month + "-" + (+ day+1));	// Results in yyyy-mm-dd
 
                     // Now set the max date value for the calendar to be that date.
                     $("#bookingDate").attr('max', ((1+year) + "-" + month + "-" + day));

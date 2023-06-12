@@ -381,18 +381,18 @@
                     th:text="${bookingServicePage.getTotalElements()}"></b> entries
             </div>
             <ul class="pagination">
-                <li class="page-item "><a th:href="@{/api/admin/booking-service/list/(page=0)}"
+                <li class="page-item "><a th:href="@{/api/admin/booking-service/searchByDate(searchDate = ${searchDate},page=0)}"
                                           th:if="${bookingServicePage.hasPrevious()}">First</a></li>
                 <li class="page-item" th:if="${bookingServicePage.hasPrevious()}">
                     <a href="#" class="page-link"
-                       th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number - 1})}">Previous</a>
+                       th:href="@{/api/admin/booking-service/searchByDate(searchDate = ${searchDate},page = ${bookingServicePage.number - 1})}">Previous</a>
                 </li>
                 <li class="page-item" th:if="${bookingServicePage.hasNext()}">
                     <a href="#" class="page-link"
-                       th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number + 1})}">Next</a>
+                       th:href="@{/api/admin/booking-service/searchByDate(searchDate = ${searchDate},page = ${bookingServicePage.number + 1})}">Next</a>
                 </li>
                 <li class="page-item "><a
-                        th:href="@{/api/admin/booking-service/list/(page=${bookingServicePage.getTotalPages()-1})}"
+                        th:href="@{/api/admin/booking-service/searchByDate(searchDate = ${searchDate},page=${bookingServicePage.getTotalPages()-1})}"
                         th:if="${bookingServicePage.hasNext()}">Last</a></li>
             </ul>
         </div>
