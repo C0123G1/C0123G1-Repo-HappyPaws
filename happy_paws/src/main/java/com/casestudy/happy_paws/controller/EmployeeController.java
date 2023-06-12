@@ -27,7 +27,7 @@ public class EmployeeController {
     @Autowired
     private IAccountService iAccountService;
 
-    @GetMapping("/")
+    @GetMapping("/employee")
     public String display(Model model, @RequestParam(value = "page", defaultValue = "0") Integer page) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("dateCreate").descending());
         Page<Employee> list = iEmployeeService.getAll(pageable);
@@ -35,13 +35,13 @@ public class EmployeeController {
         return "employee_view/employee_list";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/create-employee")
     public String createEmployee(Model model) {
         model.addAttribute("employee", new EmployeeDTO());
         return "/employee_view/create_employee";
     }
 
-    @PostMapping("/save_employee")
+    @PostMapping("/save-employee")
     public String saveEmployee(@Validated @ModelAttribute(value = "employee") EmployeeDTO employeeDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employeeDTO);
@@ -61,27 +61,27 @@ public class EmployeeController {
             iAccountService.save(account);
             iEmployeeService.save(employee);
             redirectAttributes.addFlashAttribute("mess", true);
-            return "redirect:/";
+            return "redirect:/employee";
         }
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/delete-employee")
     public String deleteEmployee(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         boolean statusDelete = iEmployeeService.delete(id);
         redirectAttributes.addFlashAttribute("statusDelete", statusDelete);
         redirectAttributes.addFlashAttribute("pageList", true);
-        return "redirect:/";
+        return "redirect:/employee";
     }
 
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/update-employee/{id}")
     public String getEmployeeById(@PathVariable Long id, Model model) {
         Employee employee = iEmployeeService.findById(id);
         model.addAttribute("employee", employee);
         return "employee_view/update_employee";
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/edit-employee")
     public String updateBlog(@Validated @ModelAttribute(value = "employee") EmployeeDTO employeeDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes ,Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employeeDTO);
@@ -97,11 +97,11 @@ public class EmployeeController {
             }
             iEmployeeService.save(employee);
             redirectAttributes.addFlashAttribute("mess", true);
-            return "redirect:/";
+            return "redirect:/employee";
         }
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search-employee")
     public String searchEmployee(@RequestParam("name") String name,
                                  @RequestParam("phone") String phone, Model model, Pageable pageable) {
         pageable = PageRequest.of(0, 10);

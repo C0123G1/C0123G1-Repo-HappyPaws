@@ -24,6 +24,11 @@ public class ProductType {
         this.isDelete = isDelete;
     }
 
+    public ProductType(Long id, String nameTypeProduct) {
+        this.id = id;
+        this.nameTypeProduct = nameTypeProduct;
+    }
+
     public Long getId() {
         return id;
     }

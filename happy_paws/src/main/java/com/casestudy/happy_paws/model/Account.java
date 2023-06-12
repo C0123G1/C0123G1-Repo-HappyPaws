@@ -69,6 +69,10 @@ public class Account {
 
     }
 
+    public Account(Integer accountId) {
+        this.accountId = accountId;
+    }
+
     public Integer getAccountId() {
         return accountId;
     }
