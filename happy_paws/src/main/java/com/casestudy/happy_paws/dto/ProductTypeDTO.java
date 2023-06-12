@@ -4,10 +4,12 @@ package com.casestudy.happy_paws.dto;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class ProductTypeDTO implements Validator {
     private Long id;
+    @NotBlank
     private String nameTypeProduct;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;

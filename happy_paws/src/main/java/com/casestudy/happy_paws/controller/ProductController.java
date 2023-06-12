@@ -30,6 +30,8 @@ public class ProductController {
     public String showList(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 10);
         model.addAttribute("productList", productService.findAll(pageable));
+        model.addAttribute("pageList", true);
+        model.addAttribute("productTypeList",productTypeService.findAll());
         return "product/list";
     }
 
@@ -80,12 +82,15 @@ public class ProductController {
         return "redirect:/api/admin/product";
     }
     @GetMapping("/search")
-    public String search(@RequestParam("name") String name, @RequestParam("origin") String origin, @RequestParam(value = "page",defaultValue = "0")Integer page,Model model ){
+    public String search(@RequestParam("productType") String nameProductType,@RequestParam("name") String name, @RequestParam("origin") String origin, @RequestParam(value = "page",defaultValue = "0")Integer page,Model model ){
         Pageable pageable=PageRequest.of(page,10);
-        Page<Product> productPage=productService.search("%"+name+"%","%"+origin+"%",pageable);
+        Page<Product> productPage=productService.search("%"+name+"%","%"+origin+"%","%"+nameProductType+"%",pageable);
         model.addAttribute("productList",productPage);
         model.addAttribute("name",name);
         model.addAttribute("origin",origin);
+        model.addAttribute("nameProductType",nameProductType);
+        model.addAttribute("productTypeList",productTypeService.findAll());
+        model.addAttribute("pageSearch",true);
         return "product/list";
     }
     @GetMapping("/detail/{id}")

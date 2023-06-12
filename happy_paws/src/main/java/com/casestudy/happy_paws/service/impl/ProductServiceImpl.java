@@ -44,7 +44,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Page<Product> search(String name, String origin,Pageable pageable) {
-        return productRepository.findByNameAndOrigin(name,origin,pageable);
+    public Page<Product> search(String name, String origin,String nameProductType,Pageable pageable) {
+        return productRepository.findByNameAndOrigin(name,origin,nameProductType,pageable);
     }
 }

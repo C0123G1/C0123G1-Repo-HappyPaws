@@ -4,16 +4,23 @@ import com.casestudy.happy_paws.model.ProductType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class ProductDTO implements Validator {
     private Long id;
+    @NotBlank
     private String name;
     private String description;
+    @Min(value = 1, message = "price must be greater than 1")
+    @NotNull
     private Double price;
+    @NotBlank
     private String origin;
+    @NotBlank
     private String image;
-
     private ProductType productType;
 
     private LocalDateTime createDate;

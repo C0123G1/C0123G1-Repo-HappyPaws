@@ -19,7 +19,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select p from Product p where p.isDelete = false")
     Page<Product> findAllProduct(Pageable pageable);
 
-    @Query(value = "select p from Product p where p.name like :name and p.origin like :origin")
-    Page<Product> findByNameAndOrigin(@Param("name") String name,@Param("origin") String origin,Pageable pageable);
+    @Query(value = "select p from Product p where p.name like :name and p.origin like :origin and p.productType.nameTypeProduct like :nameProductType and p.isDelete=false ")
+    Page<Product> findByNameAndOrigin(@Param("name") String name,@Param("origin") String origin,@Param("nameProductType") String nameProductType,Pageable pageable);
 }
 
