@@ -12,7 +12,7 @@
     <style th:fragment="css">
         .footer-dark {
             padding: 50px 0;
-            color: #ffffff;
+            color: #000000;
             background-color: #f8b8be;
         }
 
@@ -82,9 +82,9 @@
             display: inline-block;
             text-align: center;
             border-radius: 50%;
-            box-shadow: 0 0 0 1px rgb(255, 255, 255);
+            box-shadow: 0 0 0 1px rgb(0, 0, 0);
             margin: 0 8px;
-            color: #ffffff;
+            color: #000000;
             opacity: 0.75;
         }
 
@@ -112,7 +112,7 @@
             text-transform: uppercase;
             font-size: 12px;
             margin-right: 20px;
-            color: #fff;
+            color: #000000;
         }
 
 
@@ -127,7 +127,7 @@
 
         .nav-link {
 
-            color: #fff !important;
+            color: #000000 !important;
         }
 
 
@@ -142,7 +142,7 @@
 
         .navbar-brand {
 
-            color: #fff;
+            color: #000000;
             font-family: 'Allerta Stencil', sans-serif;
             margin-bottom: 4px;
             font-size: 27px;
@@ -156,14 +156,14 @@
 
         .navbar-brand:hover {
 
-            color: #fff;
+            color: #000000;
 
         }
 
         .navbar-red {
 
             background-color: #f8b8be;
-            color: #ffffff;
+            color: #000000;
 
         }
 
@@ -192,13 +192,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="dropdown">
-                <button class="btn dropdown-toggle" style="background-color:#f8b8be;color: white " type="button"
+                <button class="btn dropdown-toggle" style="background-color:#f8b8be;color: #000000 " type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     MANAGER
                 </button>
                 <ul class="dropdown-menu text-dark">
                     <li><a class="dropdown-item active" th:href="@{/api/admin/product}">Products</a></li>
                     <li><a class="dropdown-item" th:href="@{/api/admin/pet-service/list}">Services</a></li>
+                    <li><a class="dropdown-item" th:href="@{/api/admin/booking-service/list}">Booking</a></li>
                     <li><a class="dropdown-item" th:href="@{/employee}">Employees</a></li>
                     <li><a class="dropdown-item" th:href="@{/customer}">Customers</a></li>
                     <li>

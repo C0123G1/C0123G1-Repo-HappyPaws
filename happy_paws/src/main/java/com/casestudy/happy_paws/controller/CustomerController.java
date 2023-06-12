@@ -70,7 +70,7 @@ public class CustomerController {
             }
             Customer customer = new Customer();
             BeanUtils.copyProperties(customerDTO, customer);
-            Account account = new Account(customerDTO.getAccountDTO().getUsername(), customerDTO.getAccountDTO().getPassword(), new Role(2, "CUSTOMER"));
+            Account account = new Account(customerDTO.getAccountDTO().getUsername(), customerDTO.getAccountDTO().getPassword(), new Role(1, "CUSTOMER"));
             accountService.save(account);
             Account account1 = accountService.findAccount(account.getAccountId());
             int result = customerService.getRandom(10000, 999999);
