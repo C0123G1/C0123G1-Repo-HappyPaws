@@ -1,4 +1,6 @@
 package com.casestudy.happy_paws.model;
+
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,7 @@ public class Role {
     public Role() {
     }
 
+
     public Integer getRoleId() {
         return roleId;
     }
@@ -36,3 +39,4 @@ public class Role {
         this.nameRole = nameRole;
     }
 }
+

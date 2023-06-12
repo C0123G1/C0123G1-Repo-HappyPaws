@@ -15,7 +15,7 @@ public class Employee {
     private String phone;
     private String email;
     private String address;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
     @Column(name = "date_create", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
@@ -24,11 +24,21 @@ public class Employee {
     @Column(name = "date_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @UpdateTimestamp
     private LocalDateTime dateUpdate;
+    @Column(name = "is_delete",columnDefinition = "BIT DEFAULT 0")
+    private boolean isDelete;
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
 
     public Employee() {
     }
 
-    public Employee(Long employeeId, String name, String phone, String email, String address, Account account, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
+    public Employee(Long employeeId, String name, String phone, String email, String address, Account account, LocalDateTime dateCreate, LocalDateTime dateUpdate, boolean isDelete) {
         this.employeeId = employeeId;
         this.name = name;
         this.phone = phone;
@@ -37,6 +47,15 @@ public class Employee {
         this.account = account;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
+        this.isDelete = isDelete;
+    }
+
+    public Employee(Long employeeId, String name, String phone, String email, String address) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
     }
 
     public Employee(String name, String phone, String email, String address, Account account) {

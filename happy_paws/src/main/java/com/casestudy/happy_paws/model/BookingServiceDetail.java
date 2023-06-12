@@ -1,9 +1,9 @@
 package com.casestudy.happy_paws.model;
 import javax.persistence.*;
 @Entity
-@Table(uniqueConstraints = {
-        @UniqueConstraint(name = "UK" , columnNames = {"pet_service_id", "booking_service_id"})
-})
+//@Table(uniqueConstraints = {
+//        @UniqueConstraint(name = "UK" , columnNames = {"pet_service_id", "booking_service_id"})
+//})
 public class BookingServiceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

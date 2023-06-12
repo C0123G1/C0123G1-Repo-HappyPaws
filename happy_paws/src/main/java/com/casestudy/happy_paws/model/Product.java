@@ -48,6 +48,16 @@ public class Product {
         this.isDelete = isDelete;
     }
 
+    public Product(Long id, String name, String description, Double price, String origin, String image, ProductType productType) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.origin = origin;
+        this.image = image;
+        this.productType = productType;
+    }
+
     public Long getId() {
         return id;
     }
