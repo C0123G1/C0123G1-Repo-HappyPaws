@@ -1,10 +1,11 @@
 package com.casestudy.happy_paws.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 @Entity
 public class ProductType {
@@ -13,15 +14,28 @@ public class ProductType {
     private Long id;
     @NotEmpty
     private String nameTypeProduct;
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
+    @CreationTimestamp
+    private LocalDateTime createDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
     private boolean isDelete;
 
     public ProductType() {
     }
 
-    public ProductType(Long id, String nameTypeProduct, boolean isDelete) {
+    public ProductType(Long id, String nameTypeProduct, LocalDateTime createDate, LocalDateTime updateDate, boolean isDelete) {
         this.id = id;
         this.nameTypeProduct = nameTypeProduct;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
         this.isDelete = isDelete;
+    }
+
+    public ProductType(Long id, String nameTypeProduct) {
+        this.id = id;
+        this.nameTypeProduct = nameTypeProduct;
     }
 
     public Long getId() {
@@ -38,6 +52,22 @@ public class ProductType {
 
     public void setNameTypeProduct(String nameTypeProduct) {
         this.nameTypeProduct = nameTypeProduct;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public LocalDateTime getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
     }
 
     public boolean isDelete() {

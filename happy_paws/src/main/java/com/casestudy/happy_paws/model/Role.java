@@ -22,6 +22,7 @@ public class Role {
     public Role() {
     }
 
+
     public Integer getRoleId() {
         return roleId;
     }
