@@ -70,7 +70,7 @@ public class OrderServiceImpl implements IOrderService {
             case 5:
                 return iOrderRepository.searchProductByNameAndPrice('%' + name + '%',50.0,100.0,pageable);
             default:
-                return iOrderRepository.searchProductByNameAndPrice('%' + name + '%',0.0,100.0,pageable);
+                return iOrderRepository.searchProductByNameAndPrice('%' + name + '%',0.0,999999.0,pageable);
         }
     }
 }

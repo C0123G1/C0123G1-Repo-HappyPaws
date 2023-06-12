@@ -16,6 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../static/crud_table.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style th:replace="~{fragment.html::css}"></style>
 </head>
 <body>
@@ -96,18 +97,18 @@
             </tbody>
         </table>
             <div th:if="${pageList == true}">
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/create(page = ${customerPage.number - 1})}" th:if="${customerPage.hasPrevious()}">Previous</a>
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/create(page = ${customerPage.number - 1})}" th:if="${customerPage.hasPrevious()}">Previous</a>
                 <th:block th:each=" pageNo : ${#numbers.sequence(0,customerPage.getTotalPages() -1)}">
-                    <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/create(page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                    <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/create(page = ${pageNo})}" th:text="${pageNo +1}" th:classappend="${pageNo == customerPage.number ? 'active' : ''}"></a>
                 </th:block>
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/create(page = ${customerPage.number + 1})}" th:if="${customerPage.hasNext()}">Next</a>
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/create(page = ${customerPage.number + 1})}" th:if="${customerPage.hasNext()}">Next</a>
             </div>
         <div th:if="${pageSearch == true}">
-            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${customerPage.number - 1})}" th:if="${customerPage.hasPrevious()}">Previous</a>
+            <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${customerPage.number - 1})}" th:if="${customerPage.hasPrevious()}">Previous</a>
             <th:block th:each=" pageNo : ${#numbers.sequence(0,customerPage.getTotalPages() -1)}">
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}"></a>
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}" th:classappend="${pageNo == customerPage.number ? 'active' : ''}"></a>
             </th:block>
-            <a class="btn btn-sm btn-outline-primary" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${customerPage.number + 1})}" th:if="${customerPage.hasNext()}">Next</a>
+            <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${customerPage.number + 1})}" th:if="${customerPage.hasNext()}">Next</a>
         </div>
     </div>
 </div>
