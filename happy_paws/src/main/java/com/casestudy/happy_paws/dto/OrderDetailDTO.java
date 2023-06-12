@@ -1,54 +1,39 @@
-package com.casestudy.happy_paws.model;
+package com.casestudy.happy_paws.dto;
 
+import com.casestudy.happy_paws.model.Orders;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-public class OrderDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OrderDetailDTO {
+
     private Long id;
-    @ManyToOne
-    @JoinColumn
-    private Product products;
-    @ManyToOne
-    @JoinColumn
+    private Long productsId;
+
     private Orders order;
     private Integer quantity;
     private Double price;
-    @Column(nullable = false,updatable = false,columnDefinition = "TIMESTAMP DEFAULT now()")
-    @CreationTimestamp
+
     private LocalDateTime createDate;
-    @Column(nullable = false,columnDefinition = "TIMESTAMP DEFAULT now()")
-    @UpdateTimestamp
+
     private LocalDateTime updateDate;
-    @Column(columnDefinition = "BIT DEFAULT 0")
-    private boolean isDelete;
 
-    public OrderDetail() {
+    public OrderDetailDTO() {
     }
 
-    public OrderDetail(Product products, Orders order, Integer quantity, Double price) {
-        this.products = products;
-        this.order = order;
-        this.quantity = quantity;
-        this.price = price;
-    }
-
-    public OrderDetail(Product products, Orders order, Integer quantity, Double price, LocalDateTime createDate, LocalDateTime updateDate) {
-        this.products = products;
+    public OrderDetailDTO( Long productsId, Orders order, Integer quantity, Double price, LocalDateTime createDate, LocalDateTime updateDate) {
+        this.productsId = productsId;
         this.order = order;
         this.quantity = quantity;
         this.price = price;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
-    public OrderDetail(Long id, Product products, Orders order, Integer quantity, Double price, LocalDateTime createDate, LocalDateTime updateDate) {
+    public OrderDetailDTO(Long id, Long productsId, Orders order, Integer quantity, Double price, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
-        this.products = products;
+        this.productsId = productsId;
         this.order = order;
         this.quantity = quantity;
         this.price = price;
@@ -64,12 +49,12 @@ public class OrderDetail {
         this.id = id;
     }
 
-    public Product getProducts() {
-        return products;
+    public Long getProductsId() {
+        return productsId;
     }
 
-    public void setProducts(Product products) {
-        this.products = products;
+    public void setProductsId(Long productsId) {
+        this.productsId = productsId;
     }
 
     public Orders getOrder() {
@@ -110,13 +95,5 @@ public class OrderDetail {
 
     public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
     }
 }
