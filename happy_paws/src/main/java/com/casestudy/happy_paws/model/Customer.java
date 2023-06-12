@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Customer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerId;
@@ -44,15 +45,6 @@ public class Customer {
     }
 
     public Customer() {
-    }
-
-    public Customer(Integer customerId, String name, String phone, String email, String address, Account account) {
-        this.customerId = customerId;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.account = account;
     }
 
     public Customer(String name, String phone, String email, String address, Account account, LocalDateTime createTime, LocalDateTime updateTime) {

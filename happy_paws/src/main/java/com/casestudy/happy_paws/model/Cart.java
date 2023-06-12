@@ -28,6 +28,7 @@ public class Cart {
 //    @Column(name = "pending_status",columnDefinition = "BIT DEFAULT 0")
 //    private boolean pendingStatus;
 
+
     public Cart() {
     }
 

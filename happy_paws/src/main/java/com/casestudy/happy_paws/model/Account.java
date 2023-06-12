@@ -1,5 +1,4 @@
 package com.casestudy.happy_paws.model;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,33 +13,32 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer accountId;
-    @NotBlank
-    @Column(name = "username", nullable = false, unique = true, columnDefinition = "VARCHAR(100)")
-    private String username;
-    @NotBlank
-    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(100)")
-    private String password;
+
+    @Column(name = "username",nullable = false,unique = true,columnDefinition = "VARCHAR(100)")
+    private String username ;
+    @Column(name = "password",nullable = false,columnDefinition = "VARCHAR(100)")
+    private String password ;
 
     @NotNull
-    private int code;
+    private int code ;
     @NotNull
-    private boolean enable;
+    private boolean enable ;
 
     @ManyToOne
     private Role role;
 
-    @Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
+    @Column(name = "create_time",nullable = false,updatable = false,columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreationTimestamp
-    private LocalDateTime createTime;
+    private LocalDateTime createTime ;
 
-    @Column(name = "update_time", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
+    @Column(name = "update_time",nullable = false,updatable = false,columnDefinition = "TIMESTAMP DEFAULT now()")
     @UpdateTimestamp
-    private LocalDateTime updateTime;
+    private LocalDateTime updateTime ;
 
     public Account() {
     }
 
-    public Account(Integer accountId, String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime, int code, boolean enable) {
+    public Account(Integer accountId, String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime ,int code,boolean enable) {
         this.accountId = accountId;
         this.username = username;
         this.password = password;
@@ -48,18 +46,18 @@ public class Account {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.code = code;
-        this.enable = enable;
+        this.enable=enable;
 
     }
 
-    public Account(String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime, int code, boolean enable) {
+    public Account(String username, String password, Role role, LocalDateTime createTime, LocalDateTime updateTime,int code , boolean enable) {
         this.username = username;
         this.password = password;
         this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
-        this.code = code;
-        this.enable = enable;
+        this.code= code;
+        this.enable=enable;
     }
 
     public Account(String username, String password, Role role) {
@@ -67,10 +65,6 @@ public class Account {
         this.password = password;
         this.role = role;
 
-    }
-
-    public Account(Integer accountId) {
-        this.accountId = accountId;
     }
 
     public Integer getAccountId() {
