@@ -41,12 +41,12 @@ public class CartController {
         redirectAttributes.addFlashAttribute("mess", true);
         return "redirect:/cart";
     }
-    @GetMapping("/create-cart")
-    public String createEmployee(Model model) {
-        model.addAttribute("cart", new Cart());
-        model.addAttribute("productList",iProductService.getAll());
-        return "/cart_view/create_cart";
-    }
+//    @GetMapping("/create-cart")
+//    public String createEmployee(Model model) {
+//        model.addAttribute("cart", new Cart());
+//        model.addAttribute("productList",iProductService.getAll());
+//        return "/cart_view/create_cart";
+//    }
     @PostMapping("/save-cart")
     public String saveCreateCart(@ModelAttribute("cart")Cart cart,BindingResult bindingResult,Model model,RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){

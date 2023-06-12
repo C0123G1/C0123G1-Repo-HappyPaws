@@ -48,7 +48,7 @@ public class Product {
         this.isDelete = isDelete;
     }
 
-    public Product(Long id, String name, String description, Long price, String origin, String image, ProductType productType) {
+    public Product(Long id, String name, String description, Double price, String origin, String image, ProductType productType) {
         this.id = id;
         this.name = name;
         this.description = description;

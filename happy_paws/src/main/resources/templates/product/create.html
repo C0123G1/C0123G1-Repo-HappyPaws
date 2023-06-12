@@ -244,7 +244,7 @@
         <span id="card-header">Price</span>
         <div class="row-1">
             <div class="row row-2">
-                <input  type="text" th:field="*{price}">
+                <input  type="number" th:field="*{price}">
                 <p style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
             </div>
         </div>
