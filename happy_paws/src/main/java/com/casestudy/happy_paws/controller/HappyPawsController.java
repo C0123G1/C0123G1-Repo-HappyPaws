@@ -1,5 +1,7 @@
 package com.casestudy.happy_paws.controller;
 
+import com.casestudy.happy_paws.service.IBookingServiceService;
+import com.casestudy.happy_paws.service.IPetServiceService;
 import com.casestudy.happy_paws.service.IProductService;
 import com.casestudy.happy_paws.service.IProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,14 @@ public class HappyPawsController {
     private IProductService iProductService;
     @Autowired
     private IProductTypeService iProductTypeService;
+    @Autowired
+    private IPetServiceService iPetServiceService;
     @GetMapping("")
     public String showHome(@RequestParam(value = "page",defaultValue = "0")Integer page, Model model){
-        Pageable pageable = PageRequest.of(page,6);
+        Pageable pageable = PageRequest.of(page,100);
         model.addAttribute("productPage",iProductService.findAll(pageable));
         model.addAttribute("productTypeList",iProductTypeService.findAll());
+        model.addAttribute("petServiceList",iPetServiceService.findPage(PageRequest.of(0,6)));
         return "/happy_paws/index";
     }
 }

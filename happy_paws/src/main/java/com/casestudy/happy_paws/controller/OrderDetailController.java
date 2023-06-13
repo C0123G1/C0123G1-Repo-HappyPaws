@@ -33,7 +33,9 @@ public class OrderDetailController {
     public String showOrderDetail(@RequestParam("orderId") Long orderId, @RequestParam(value = "page", defaultValue = "0") Integer page,
                                   Model model, HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
-        session.invalidate();
+        if(session.getAttribute("cart") != null){
+            session.removeAttribute("cart");
+        }
         Pageable pageable = PageRequest.of(page, 8);
         Page<OrderDetail> orderDetailPage = iOrderDetailService.findAllOrderDetailByOrderId(pageable, orderId);
         Double totalPrice = iOrderDetailService.getTotalPriceOrder(orderId);
@@ -47,7 +49,6 @@ public class OrderDetailController {
     @GetMapping("/create")
     public String create(@RequestParam("customerId") Integer customerId, @RequestParam(value = "orderId", defaultValue = "0") Long orderId, @RequestParam(value = "now", defaultValue = "noCart") String now, @RequestParam(value = "page", defaultValue = "0") Integer page,
                          Model model, HttpServletRequest httpServletRequest) {
-
         HttpSession session = httpServletRequest.getSession();
         Pageable pageable = PageRequest.of(page, 8);
         Customer customer = iOrderDetailService.findCustomerById(customerId);
@@ -114,7 +115,7 @@ public class OrderDetailController {
         boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(cart, orders);
         session.invalidate();
         redirectAttributes.addFlashAttribute("statusSaveOrderDetail", statusSaveOrderDetail);
-        return "redirect:/orders";
+        return "redirect:/orders/";
     }
 
     @GetMapping("/search")

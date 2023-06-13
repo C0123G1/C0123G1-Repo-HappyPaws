@@ -204,7 +204,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="cart,index : ${session.cart}">
-                        <td th:text="${cart.products.name}"></td>
+                        <td th:text="${cart.products.name}" style="width:51vw"></td>
                         <td class="d-flex">
                             <a id="delete" style="cursor: pointer">
                                 <input type="text" id="indexDelete" th:value="${index.index}" hidden>
@@ -236,7 +236,7 @@
             </div>
             <div class="modal-footer">
                 <div>
-                    <p style="margin: 0;" th:text="${'Total : ' + totalPriceCart + ' $ '}"></p>
+                    <h5 style=" color: black;margin: 0;" th:text="${'Total : ' + totalPriceCart + ' $ '}"></h5>
                 </div>
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                 <a th:href="@{/order-detail/payment/{customerId}(customerId = ${customer.customerId})}"

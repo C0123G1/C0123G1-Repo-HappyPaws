@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/account", "/account/**")
                 .access("hasAnyRole('CUSTOMER','ADMIN')");
         http.authorizeRequests()
-                .antMatchers("/orders*(", "/orders/*")
+                .antMatchers("/orders*", "/orders/**","order-detail/*","/order-detail/**")
                 .access("hasAnyRole('ADMIN')");
         http.authorizeRequests()
                 .antMatchers("/api/admin/product", "/api/admin/product/*")
@@ -70,7 +70,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/account/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")
-
                 // Cấu hình cho Logout Page.
                 .and().logout().logoutUrl("/account/logout").logoutSuccessUrl("/account/logoutSuccessful");
 
