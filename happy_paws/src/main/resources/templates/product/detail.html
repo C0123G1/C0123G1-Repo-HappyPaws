@@ -21,11 +21,11 @@
 <style th:replace="~{fragment.html::css}"></style>
 <link rel="stylesheet" href="detail.html">
 
-<body>
+<body4>
 <div th:replace="~{fragment.html::header}"></div>
 <div th:object="${product}" class="container">
     <div class="row m-0">
-        <div class="col-lg-7 pb-5 pe-lg-5"  style="background-color: #f8f9fa!important">
+        <div class="col-lg-7 pb-5 pe-lg-5" style="background-color: #f8f9fa!important">
             <div class="row">
                 <div class="col-12 p-5">
                     <img style="width: 30vw; height: 25vw" th:src="*{image}" class="rounded float-start" alt="...">
@@ -35,35 +35,42 @@
                     <div class="col-md-4 col-6 ps-30 pe-0 my-4">
                         <p class="text-muted">
                             Products Name</p>
-                        <p class="h5" th:text="*{name}"></p>
+                        <p style="font-size: 2.25rem;" class="h5" th:text="*{name}"></p>
                     </div>
                     <div class="col-md-4 col-6  ps-30 my-4">
                         <p class="text-muted">ID</p>
-                        <p class="h5 m-0" th:text="*{id}"></p>
+                        <p style="font-size: 2.25rem;" class="h5 m-0" th:text="*{id}"></p>
                     </div>
                     <div class="col-md-4 col-6 ps-30 my-4">
                         <p class="text-muted">Price</p>
-                        <p class="h5 m-0" th:text="*{price+'$'}"></p>
+                        <p style="font-size: 2.25rem;" class="h5 m-0" th:text="*{price+'$'}"></p>
                     </div>
                     <div class="col-md-6 col-6 ps-30 my-4">
                         <p class="text-muted">Create Date</p>
-                        <p class="h5 m-0" th:text="*{createDate}"></p>
+                        <p style="font-size: 2.25rem;" class="h5 m-0" th:text="*{createDate}"></p>
                     </div>
                     <div class="col-md-6 col-6 ps-30 my-4">
                         <p class="text-muted">Update Date</p>
-                        <p class="h5 m-0" th:text="*{createDate}"></p>
+                        <p style="font-size: 2.25rem;" class="h5 m-0" th:text="*{createDate}"></p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-5 p-0 ps-lg-4" style="background-color: #f8f9fa!important">
-            <div class="row m-0" >
+            <div class="row m-0">
                 <div class="col-12 px-4">
                     <div class="d-flex align-items-end mt-4 mb-2">
                         <p class="h4 m-0"><span class="pe-1">Description</span></p>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <p class="textmuted" th:text="*{description}"></p>
+                    </div>
+                    <div class="row m-0">
+                        <a th:href="@{/api/admin/product}">
+                            <button style="    width: 100%;height: 55px;border-radius: 0;padding: 13px 0;background-color: black;
+                            border: none;font-weight: 600; margin-top: 20vw" type="button" class="btn btn-dark">Back
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -76,6 +83,6 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous">
 </script>
-</body>
+</body4>
 </html>
 
