@@ -1,83 +1,88 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<!-- Font Awesome -->
-<link
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        rel="stylesheet"
-/>
-<!-- Google Fonts -->
-<link
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        rel="stylesheet"
-/>
-<!-- MDB -->
-<link
-        href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
-        rel="stylesheet"
-/>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="../static/detail.css">
 </head>
-<body th:object="${product}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CVarela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../static/crud_table.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style th:replace="~{fragment.html::css}"></style>
+<link rel="stylesheet" href="detail.html">
 
-<div style="width: 100%;  height: 800px" class="row">
-    <div style="background-color: #e0e0e0" class="col-lg-2 col-md-1 col-sm"></div>
-    <div class="col-lg-8 col-md-10 col-sm-12">
-        <div style="width: 100%; height: auto" class="row">
-            <div class="row" style="height: auto; text-align: center; padding-bottom: 30px"><h1>Product Information</h1>
-            </div>
-            <div style="background-color: white" class="col-lg-6 col-md-12"><img width="100%" ; th:src="*{image}"
-                                                                                 class="rounded float-start" alt="...">
-            </div>
-            <div style="background-color: white" class="col-lg-6 col-md-12">
-                <div style="height: 100px" class="row">
-                    <h2 th:text="*{name}"></h2>
-                </div>
-                <div style="height: auto" class="row">
-                    <table class="table table-borderless">
-                        <tr>
-                            <td>ID</td>
-                            <td th:text="*{id}"></td>
-                        </tr>
-                        <tr>
-                            <td>Price</td>
-                            <td th:text="*{price}"></td>
-                        </tr>
-                        <tr>
-                            <td>Create Date</td>
-                            <td th:text="*{createDate}"></td>
-                        </tr>
-                        <tr>
-                            <td>Update Date</td>
-                            <td th:text="*{updateDate}"></td>
-                        </tr>
-                    </table>
+<body4>
+<div th:replace="~{fragment.html::header}"></div>
+<div th:object="${product}" class="container">
+    <div class="row m-0">
+        <div class="col-lg-7 pb-5 pe-lg-5" style="background-color: #f8f9fa!important">
+            <div class="row">
+                <div class="col-12 p-5">
+                    <img style="width: 30vw; height: 25vw" th:src="*{image}" class="rounded float-start" alt="...">
 
                 </div>
-                <div class="row" style="height: auto">
-                    <h3>Description</h3>
-                    <p th:text="*{description}"></p></div>
-                <!--                <a th:href="@{/addToCart/{id}(id=*{id})}">-->
-                <!--                    <button class="btn-dark">Thêm vào giỏ</button>-->
-                <!--                </a>-->
-
+                <div class="row m-0 bg-light">
+                    <div class="col-md-4 col-6 ps-30 pe-0 my-4">
+                        <p class="text-muted">
+                            Products Name</p>
+                        <p style="font-size: 2.25rem;" class="h5" th:text="*{name}"></p>
+                    </div>
+                    <div class="col-md-4 col-6  ps-30 my-4">
+                        <p class="text-muted">ID</p>
+                        <p style="font-size: 2.25rem;" class="h5 m-0" th:text="*{id}"></p>
+                    </div>
+                    <div class="col-md-4 col-6 ps-30 my-4">
+                        <p class="text-muted">Price</p>
+                        <p style="font-size: 2.25rem;" class="h5 m-0" th:text="*{price+'$'}"></p>
+                    </div>
+                    <div class="col-md-6 col-6 ps-30 my-4">
+                        <p class="text-muted">Create Date</p>
+                        <p style="font-size: 2.25rem;" class="h5 m-0" th:text="*{createDate}"></p>
+                    </div>
+                    <div class="col-md-6 col-6 ps-30 my-4">
+                        <p class="text-muted">Update Date</p>
+                        <p style="font-size: 2.25rem;" class="h5 m-0" th:text="*{createDate}"></p>
+                    </div>
+                </div>
             </div>
         </div>
-
+        <div class="col-lg-5 p-0 ps-lg-4" style="background-color: #f8f9fa!important">
+            <div class="row m-0">
+                <div class="col-12 px-4">
+                    <div class="d-flex align-items-end mt-4 mb-2">
+                        <p class="h4 m-0"><span class="pe-1">Description</span></p>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <p class="textmuted" th:text="*{description}"></p>
+                    </div>
+                    <div class="row m-0">
+                        <a th:href="@{/api/admin/product}">
+                            <button style="    width: 100%;height: 55px;border-radius: 0;padding: 13px 0;background-color: black;
+                            border: none;font-weight: 600; margin-top: 20vw" type="button" class="btn btn-dark">Back
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div style="background-color: #e0e0e0" class="col-lg-2 col-md-1 col-sm"></div>
 </div>
+<div th:replace="~{fragment.html::footer}"></div>
 
-</body>
-</html>
-<!-- MDB -->
-<script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"
-></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-<script src="https://kit.fontawesome.com/yourcode.js"></script>
+        crossorigin="anonymous">
+</script>
+</body4>
+</html>
+
