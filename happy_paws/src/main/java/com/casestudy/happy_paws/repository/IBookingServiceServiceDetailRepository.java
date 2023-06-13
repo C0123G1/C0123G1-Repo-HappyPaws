@@ -4,7 +4,10 @@ import com.casestudy.happy_paws.model.BookingServiceDetail;
 import com.casestudy.happy_paws.service.impl.BookingServiceServiceDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface IBookingServiceServiceDetailRepository extends JpaRepository<BookingServiceDetail,Long> {
@@ -20,4 +23,9 @@ public interface IBookingServiceServiceDetailRepository extends JpaRepository<Bo
 
             ";", nativeQuery = true)
     Double getTotal(Long bookingServiceId);
+
+
+
+    @Query(value = "SELECT * FROM booking_service_detail WHERE booking_service_id = :id" ,nativeQuery = true)
+    List<BookingServiceDetail> findByBookingServiceId( @Param("id") Long bookingServiceId);
 }
