@@ -21,4 +21,6 @@ public interface ICustomerService {
     int getRandom(int min, int max) ;
 
     Page<Customer> findByCustomer(String name, String phone, String username, Pageable pageable);
+
+    Page<Customer> findCustomer(String s, String s1,  Pageable pageable);
 }

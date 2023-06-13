@@ -27,4 +27,8 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer> {
 
     @Query(value ="SELECT c FROM Customer c WHERE c.idDelete = false ")
     Page<Customer> findAllCustomer(PageRequest pageRequest);
+
+    @Query(value = "SELECT c FROM Customer c   WHERE  c.name LIKE :s AND c.phone LIKE  :s1  AND c.idDelete = false ")
+
+    Page<Customer> findCustomerToBookService(String s, String s1, Pageable pageable);
 }
