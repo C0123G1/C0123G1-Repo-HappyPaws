@@ -275,7 +275,7 @@
                                aria-label=".form-control-sm example" name="origin" th:value="${origin}">
                     </div>
                     <div class="col-2">
-                        <select name="productType" class="form-control" style="width: 8vw">
+                        <select name="productType" class="form-control">
 <!--                            <option th:if="${nameProductType != null}" th:text="${nameProductType}"></option>-->
                             <option th:if="${nameProductType == ''}" th:text="'Product Type'" th:value="''"></option>
                             <option th:if="${nameProductType == null}" th:text="'Product Type'" th:value="''"></option>
@@ -413,6 +413,7 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
                     crossorigin="anonymous">
+
             </script>
 </body>
 </html>

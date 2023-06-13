@@ -236,7 +236,7 @@
 
     <form th:action="@{/customer/admin-save}" method="post" onsubmit="return validateForm()" name="formSignUp"
           th:object="${customerDTO}">
-        <span>User</span>
+        <span>Username</span>
         <div class="row-1">
             <div class="row row-2">
                 <input type="text" placeholder="user" th:field="*{accountDTO.username}"
@@ -251,7 +251,7 @@
             <div class="row row-2">
 
                 <input type="password" placeholder="password" id="password" name="password"
-                       th:field="*{accountDTO.password}" required/>
+                       th:field="*{accountDTO.password}" pattern="^[a-zA-Z0-9]{8,30}$" required/>
                 <p style="color: red" th:if="${#fields.hasErrors('accountDTO.password')}"
                    th:errors="*{accountDTO.password}"></p>
             </div>
@@ -260,7 +260,7 @@
         >Confirm Password</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="password" placeholder="confirm password" id="confirm" name="confirm"
+                <input type="password" placeholder="confirm password" pattern="^[a-zA-Z0-9]{8,30}$"  id="confirm" name="confirm"
                        required/>
 
             </div>
@@ -299,7 +299,7 @@
             </div>
         </div>
 
-        <button style="background:#f8b8be" class="btn d-flex mx-auto" onclick="move()" value="Save"><b>Add</b></button>
+        <button style="background:#e5707b" class="btn d-flex mx-auto" onclick="move()" value="Save"><b>Create</b></button>
         <a th:href="@{/customer}">
             <button style="background: black" type="button" class="btn btn-dark">Back</button>
         </a>
