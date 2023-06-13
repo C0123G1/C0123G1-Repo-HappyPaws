@@ -353,20 +353,40 @@
 
             </tbody>
         </table>
-        <div style="justify-content: space-between">
-            <div class="btn-group me-2" role="group" aria-label="First group">
-                <a th:href="@{/customer(page=${customerList.number - 1})}" th:if="${customerList.hasPrevious()}"
-                   class="btn btn-primary"
-                   style="line-height: 100%">Previous</a>
-                <th:block class="btn btn-primary"
-                          th:each="pageNo : ${#numbers.sequence(0,customerList.getTotalPages()-1)}">
-                    <a class="btn btn-primary" th:text="${pageNo + 1}" th:href="@{/customer(page = ${pageNo})}"
-                       style="color: white; background-color: #0d6efd;width: 40px;text-align: center;line-height: 100%"></a>
+
+
+        <div th:if="${customerList.getTotalPages() > 0}">
+            <div >
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{customer(page = ${customerList.number - 1})}"
+                   th:if="${customerList.hasPrevious()}">Previous</a>
+                <th:block th:each="pageNo : ${#numbers.sequence(0,customerList.getTotalPages() -1)}">
+                    <a class="btn btn-sm btn-outline-primary"
+                       th:href="@{/customer(page = ${pageNo})}"
+                       th:text="${pageNo +1}"
+                       th:classappend="${pageNo == customerList.number ? 'active' : ''}"></a>
                 </th:block>
-                <a th:href="@{/customer(page=${customerList.number + 1})}" th:if="${customerList.hasNext()}"
-                   class="btn btn-primary"
-                   style="line-height: 100%">Next</a>
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{/customer(page = ${customerList.number + 1})}"
+                   th:if="${customerList.hasNext()}">Next</a>
             </div>
+
+
+
+<!--            <div style="justify-content: space-between">-->
+<!--            <div class="btn-group me-2" role="group" aria-label="First group">-->
+<!--                <a th:href="@{/customer(page=${customerList.number - 1})}" th:if="${customerList.hasPrevious()}"-->
+<!--                   class="btn btn-primary"-->
+<!--                   style="line-height: 100%">Previous</a>-->
+<!--                <th:block class="btn btn-primary"-->
+<!--                          th:each="pageNo : ${#numbers.sequence(0,customerList.getTotalPages()-1)}">-->
+<!--                    <a class="btn btn-primary" th:text="${pageNo + 1}" th:href="@{/customer(page = ${pageNo})}"-->
+<!--                       style="color: white; background-color: #0d6efd;width: 40px;text-align: center;line-height: 100%"></a>-->
+<!--                </th:block>-->
+<!--                <a th:href="@{/customer(page=${customerList.number + 1})}" th:if="${customerList.hasNext()}"-->
+<!--                   class="btn btn-primary"-->
+<!--                   style="line-height: 100%">Next</a>-->
+<!--            </div>-->
 
         </div>
 

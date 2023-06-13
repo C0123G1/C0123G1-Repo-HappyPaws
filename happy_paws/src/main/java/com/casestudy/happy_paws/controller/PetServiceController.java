@@ -118,7 +118,7 @@ public class PetServiceController {
 //        send test email
    /*     String to = "khavyy98@gmail.com";
         String subject = "Hello Kha Vy";
-        String body = "Hello Kha Vy \n\n"
+        String body = "Hello Kha  \n\n"
                 +"This is a message just for you who is invited to our wedding on July 1st 2023, at 6pm. "
                 + "Your appearance will be our pleasure, so we hope to see you soon  \n"
                 + "We hope you're having a great day!\n\n"

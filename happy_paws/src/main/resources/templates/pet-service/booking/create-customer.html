@@ -64,17 +64,9 @@
             box-shadow: none
         }
 
-        .btn-group {
-            display: flex;
-            justify-content: space-between;
-        }
-
         .integration {
-            font-size: 15px;
-            padding: 0.375rem 0.75rem;
-            border: 1px solid #212529;
-            border-radius: 0.25rem;
-            background-color: palevioletred;
+            font-size: 14px;
+            height: 44px
         }
     </style>
 </head>
@@ -99,25 +91,28 @@
                     </div>
                 </div>
                 <!--                <div sec:authorize="hasAuthority('ADMIN')"><p><a href="/customer/create"></a></p> </div>-->
-                <form th:action="@{/customer/save}" method="post"  onsubmit="return validateForm()" name="formSignUp" th:object="${customerDTO}" >
+                <form th:action="@{/api/admin/booking-service/save}" method="post"  onsubmit="return validateForm()" name="formSignUp" th:object="${customerDTO}" >
 
-                    <div class="mt-4 inputs"><span>Username</span>
-                        <input type="text" placeholder="user" class="form-control" th:field="*{accountDTO.username}"
-                               required/>
-                        <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"
-                           th:errors="*{accountDTO.username}"></p>
-                    </div>
-                    <div class="mt-2 inputs"><span>Password</span>
-                        <input type="password" placeholder="password" class="form-control" id="password" name="password" pattern="^[a-zA-Z0-9]{8,30}$"
-                               th:field="*{accountDTO.password}"   required />
-                        <p style="color: red" th:if="${#fields.hasErrors('accountDTO.password')}"
-                           th:errors="*{accountDTO.password}"></p>
-                    </div>
+<!--                    <div class="mt-4 inputs"><span>User</span>-->
+<!--                        <input type="text" placeholder="user" class="form-control" th:field="*{accountDTO.username}"-->
+<!--                               required/>-->
+<!--                        <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"-->
+<!--                           th:errors="*{accountDTO.username}"></p>-->
+<!--                    </div>-->
+<!--                    <div class="mt-2 inputs"><span>Password</span>-->
+<!--                        <input type="password" placeholder="password" class="form-control" id="password" name="password"-->
+<!--                               th:field="*{accountDTO.password}" required/>-->
+<!--                        <p style="color: red" th:if="${#fields.hasErrors('accountDTO.password')}"-->
+<!--                           th:errors="*{accountDTO.password}"></p>-->
+<!--                    </div>-->
 
-                    <div class="mt-2 inputs"><span>Confirm Password</span>
-                        <input  type="password" placeholder="confirm password" class="form-control" pattern="^[a-zA-Z0-9]{8,30}$" id="confirm" name="confirm"
-                                 required/>
-                    </div>
+<!--                    <div class="mt-2 inputs"><span>Confirm Password</span>-->
+<!--                        <input  type="password" placeholder="confirm password" class="form-control" id="confirm" name="confirm"-->
+<!--                               required/>-->
+
+<!--                    </div>-->
+
+
                     <div class="mt-2 inputs"><span>Name</span>
                         <input class="form-control" placeholder="Your Name" type="text" th:field="*{name}" required>
                         <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
@@ -137,14 +132,14 @@
                                required>
                         <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
                     </div>
-                    <div class="text-center mt-4 btn-group">
-                        <a th:href="@{/customer}">
-                            <button type="button" class="btn btn-dark">Back</button>
+                    <div class="text-center mt-4">
+                        <a th:href="@{/api/booking-service/list}">
+                            <button style="  margin-right: 82%;" type="button" class="btn btn-dark">Back</button>
                         </a>
-                            <button type="submit" class=" integration" onclick="move()"  value="Save">
-                                Create
-                            </button>
-
+                        <button type="submit" class="btn btn-danger integration" onclick="move()"
+                                style="margin-left: 24vw;margin-top: -52px;" value="Save">
+                            Create
+                        </button>
                     </div>
                 </form>
 
@@ -154,41 +149,11 @@
     </div>
 </div>
 
-
 <div th:if="${mess}">
     <span th:text="${mess}" id="inputId"></span>
 </div>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-    function validateForm() {
-        const form = document.forms["formSignUp"];
-        const password = form["password"].value;
-        const confirm = form["confirm"].value;
-
-        if (password === confirm){
-            return true;
-        }
-
-        // chưa check nhảy ra đc
-
-                //
-                swal({
-                    title: "ERROR",
-                    text: `password does not match!!!`,
-                    icon: "error",
-                    button: "OK",
-                }).then((idOk) => {
-                    if (idOk) {
-                        inputId.innerText = '';
-                    }
-                });
-                //
-
-        return false
-
-    }
-</script>
 <script>
     let inputId = document.getElementById("inputId");
     if (inputId && inputId.innerText != null) {
@@ -204,7 +169,20 @@
         });
     }
 </script>
+<script>
+    function validateForm() {
+        const form = document.forms["formSignUp"];
+        const password = form["password"].value;
+        const confirm = form["confirm"].value;
 
+        if (password === confirm){
+            return true;
+        }
+
+        alert('Password does not match')
+        return false
+    }
+</script>
 <script>
     function move() {
         var elem = document.getElementById("myBar");
