@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-//        http.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll();
+        http.authorizeRequests().antMatchers("/happy_paws/assets/css/**", "/happy_paws/assets/js/**", "/images/**","/happy-paws-home").permitAll();
 
 
         // Các trang không yêu cầu login
