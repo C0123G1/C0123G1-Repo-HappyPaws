@@ -12,11 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CartController {
@@ -28,10 +28,11 @@ public class CartController {
     private IProductService iProductService;
 
     @GetMapping("/cart")
-    public String display(Model model, @RequestParam(value = "page", defaultValue = "0") Integer page) {
-        Pageable pageable = PageRequest.of(page, 5, Sort.by("dateCreate").descending());
-        Page<Cart> list = iCartService.getAll(pageable);
+    public String displayCart(Model model) {
+        List<Cart> list = iCartService.getAll();
         model.addAttribute("cartList", list);
+        model.addAttribute("totalItem", iCartService.countItemQuantity());
+        model.addAttribute("totalBill",iCartService.countTotalPayment());
         return "cart_view/cart";
     }
 
@@ -40,7 +41,23 @@ public class CartController {
         iCartService.deleteCart(id);
         return "redirect:/cart";
     }
-
-
+    @GetMapping("/add/{id}")
+    public String addQuantityToCart(@PathVariable("id")Long cartId) {
+        Cart cart1 = iCartService.findById(cartId);
+        cart1.setQuantity(cart1.getQuantity()+1);
+        iCartService.save(cart1);
+        return "redirect:/cart";
     }
+    @GetMapping("/reduce/{id}")
+    public String reduceProductInCart(@PathVariable("id") Long cartID){
+        Cart cart = iCartService.findById(cartID);
+        cart.setQuantity(cart.getQuantity()-1);
+        int newQuantity = cart.getQuantity();
+        iCartService.save(cart);
+        if(newQuantity ==0){
+            iCartService.deleteCart(cartID);
+        }
+        return "redirect:/cart";
+    }
+}
 
