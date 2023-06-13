@@ -66,4 +66,9 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findByCustomer(name, phone, username, pageable);
 
     }
+
+    @Override
+    public Page<Customer> findCustomer(String s, String s1, Pageable pageable) {
+        return customerRepository.findCustomerToBookService(s,s1,pageable);
+    }
 }
