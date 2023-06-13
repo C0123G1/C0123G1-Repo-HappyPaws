@@ -11,8 +11,10 @@ public class AccountDTO {
 
 
     @Size(max = 100, message = "username cannot longer than 100 character !!!")
+
     private String username;
-    @Size(max = 500, message = "username cannot longer than 100 character !!!")
+    @Size( min=8 ,max = 30, message = "password star 8 end 80 character !! ")
+
     private String password;
 
 

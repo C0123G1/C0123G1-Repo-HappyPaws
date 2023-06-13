@@ -25,7 +25,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<Customer> getAllPage(int page) {
-        return customerRepository.findAllCustomer(PageRequest.of(page, 5));
+        return customerRepository.findAllCustomer(PageRequest.of(page, 5,Sort.by("createTime").descending()));
     }
 
 
@@ -65,5 +65,10 @@ public class CustomerService implements ICustomerService {
     public Page<Customer> findByCustomer(String name, String phone, String username, Pageable pageable) {
         return customerRepository.findByCustomer(name, phone, username, pageable);
 
+    }
+
+    @Override
+    public Page<Customer> findCustomer(String s, String s1, Pageable pageable) {
+        return customerRepository.findCustomerToBookService(s,s1,pageable);
     }
 }

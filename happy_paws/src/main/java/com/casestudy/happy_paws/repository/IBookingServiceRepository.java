@@ -1,6 +1,5 @@
 package com.casestudy.happy_paws.repository;
 
-import com.casestudy.happy_paws.dto.BookingServiceDTO;
 import com.casestudy.happy_paws.model.BookingService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

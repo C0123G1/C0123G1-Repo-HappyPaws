@@ -16,9 +16,7 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer> {
     @Query(value = "SELECT * FROM customer c INNER JOIN account u ON u.account_id = c.account_account_id  WHERE  c.name LIKE :name AND c.phone LIKE  :phone AND u.username  LIKE :username  AND c.id_delete = false ",nativeQuery = true)
     Page<Customer> findByCustomer(String name, String phone, String username, Pageable pageable);
 
-//    @Query(value = "UPDATE customer   SET is_delete =true WHERE customer_id = :customerId",nativeQuery = true)
-//    @Modifying
-//    @Transactional
+
 
         @Query(value = "UPDATE Customer  c  SET  c.idDelete = true  WHERE c.customerId = :customerId")
         @Modifying
@@ -27,4 +25,8 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer> {
 
     @Query(value ="SELECT c FROM Customer c WHERE c.idDelete = false ")
     Page<Customer> findAllCustomer(PageRequest pageRequest);
+
+    @Query(value = "SELECT c FROM Customer c   WHERE  c.name LIKE :s AND c.phone LIKE  :s1  AND c.idDelete = false ")
+
+    Page<Customer> findCustomerToBookService(String s, String s1, Pageable pageable);
 }
