@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,7 +12,7 @@
     <style th:fragment="css">
         .footer-dark {
             padding: 50px 0;
-            color: #ffffff;
+            color: #000000;
             background-color: #f8b8be;
         }
 
@@ -82,9 +82,9 @@
             display: inline-block;
             text-align: center;
             border-radius: 50%;
-            box-shadow: 0 0 0 1px rgb(255, 255, 255);
+            box-shadow: 0 0 0 1px rgb(0, 0, 0);
             margin: 0 8px;
-            color: #ffffff;
+            color: #000000;
             opacity: 0.75;
         }
 
@@ -112,7 +112,7 @@
             text-transform: uppercase;
             font-size: 12px;
             margin-right: 20px;
-            color: #fff;
+            color: #000000;
         }
 
 
@@ -127,7 +127,7 @@
 
         .nav-link {
 
-            color: #fff !important;
+            color: #000000 !important;
         }
 
 
@@ -142,7 +142,7 @@
 
         .navbar-brand {
 
-            color: #fff;
+            color: #000000;
             font-family: 'Allerta Stencil', sans-serif;
             margin-bottom: 4px;
             font-size: 27px;
@@ -156,14 +156,14 @@
 
         .navbar-brand:hover {
 
-            color: #fff;
+            color: #000000;
 
         }
 
         .navbar-red {
 
             background-color: #f8b8be;
-            color: #ffffff;
+            color: #000000;
 
         }
 
@@ -192,45 +192,46 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="dropdown">
-                <button class="btn dropdown-toggle" style="background-color:#f8b8be;color: white " type="button"
+                <button class="btn dropdown-toggle" style="background-color:#f8b8be;color: #000000 " type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     MANAGER
                 </button>
                 <ul class="dropdown-menu text-dark">
-                    <li><a class="dropdown-item active" href="#">Products</a></li>
-                    <li><a class="dropdown-item" href="#">Services</a></li>
-                    <li><a class="dropdown-item" href="#">Employees</a></li>
-                    <li><a class="dropdown-item" href="#">Customers</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')"  class="dropdown-item active" th:href="@{/api/admin/product}">Products</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')"   class="dropdown-item" th:href="@{/api/admin/pet-service/list}">Services</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')"   class="dropdown-item" th:href="@{/api/admin/booking-service/list}">Booking</a></li>
+                    <li><a  sec:authorize="hasAuthority('ROLE_ADMIN')"  class="dropdown-item" th:href="@{/employee}">Employees</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')"   class="dropdown-item" th:href="@{/customer}">Customers</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Orders</a></li>
+                    <li><a  sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item" th:href="@{/orders}">Orders</a></li>
                 </ul>
             </div>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">contact</a>
+                        <a class="nav-link" href="#">Contact</a>
                     </li>
                 </ul>
                 <div class="d-flex flex-column sim" style="float: right">
-                    <!--                    <span style="color: black">Info Admin Here</span>-->
-                    <!--                    <small class="text-primary">view your quote</small>-->
                     <div class="dropdown dropstart" style="margin-top: 0.7vh">
-                        <button style="border-radius: 20px;background-color: white;border: 1px solid #f8b8be" class="btn dropdown-toggle" type="button"
+                        <button style="border-radius: 20px;background-color: white;border: 1px solid #f8b8be"
+                                class="btn dropdown-toggle" type="button"
                                 id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu text-dark">
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i>
-                                <!--                                <b th:text="${#authentication.getName()}"></b>-->
-                                <b th:text="'Admin'"></b>
+                            <li><a class="dropdown-item" href="#">
+                                <i class="material-icons">&#xE7fd;</i>
+                                <b th:text="${#authentication.getName()}"></b>
                             </a></li>
                             <li><a class="dropdown-item" th:href="@{/account/logout}"><i
-                                    class="fa-sharp fa-solid fa-right-from-bracket"></i>Logout </a></li>
+                                    class="material-icons">&#xE9ba;</i>Logout </a></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </div>

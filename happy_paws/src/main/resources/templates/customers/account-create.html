@@ -241,14 +241,14 @@
     <div class="row-1">
       <div class="row row-2">
         <input type="text"  th:field="*{username}" required/>
-        <p style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+        <p style="color: red" th:if="${#fields.hasErrors('username')}"  th:errors="*{username}"></p>
       </div>
     </div>
     <span >Password</span>
     <div class="row-1">
       <div class="row row-2">
-        <input type="text"  th:field="*{password}"  required/>
-        <p style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+        <input type="text"  th:field="*{password}"  pattern=".{8}"   required/>
+        <p style="color: red" th:if="${#fields.hasErrors('password')}"   th:errors="*{password}"></p>
       </div>
     </div>
     <span >Role</span>
@@ -262,7 +262,7 @@
 
     <input type="text" hidden th:field="*{role.roleId}">
 
-    <button style="background:#f8b8be" class="btn d-flex mx-auto"><b>Add</b></button>
+    <button style="background:#e5707b" class="btn d-flex mx-auto"><b>Create</b></button>
     <a th:href="@{/account}">
       <button style="background: black" type="button" class="btn btn-dark">Back</button>
     </a>

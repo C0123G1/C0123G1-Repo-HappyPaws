@@ -25,6 +25,8 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 @RequestMapping("/customer")
@@ -38,12 +40,11 @@ public class CustomerController {
     private EmailService emailService;
 
     @GetMapping("")
-    public String index(@RequestParam(value = "page", defaultValue = "0") int page, Model model) {
+    public String index(@RequestParam(value = "page", defaultValue = "0") int page, Model model, HttpServletResponse response) {
 
         Page<Customer> customerList = customerService.getAllPage(page);
         model.addAttribute("customerList", customerList);
-
-
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private, o-age=0");
         return "customers/index";
     }
 
@@ -74,7 +75,20 @@ public class CustomerController {
             accountService.save(account);
             Account account1 = accountService.findAccount(account.getAccountId());
             int result = customerService.getRandom(10000, 999999);
-            emailService.sendEmail(customer.getEmail(), "Hello " + customer.getName(), "Bạn vui lòng nhập mã số xác nhận : " + result);
+            emailService.sendEmail(customer.getEmail(), "Hello " + customer.getName() +" ,We are pet paws is a pet care store and other services ", "Please enter the verification code : " + result +"\n " +
+                    "\n"+
+                    "\n"+
+                    "\n"+
+                    "\n"+
+                    "\n"+
+                    "\n"+
+                    "\n"+
+                    "\n"+
+                    "---------------------------------------" + "\n"+
+                    "Name : Happy Paws\n" +
+                    "Mobile : 0782391943\n" +
+                    "Email : HappypawsC0123@1@gmail.com\n" +
+                    "Address :\u200B2\u200B80\u200B \u200BTrần Hưng Đạo\u200B streets, \u200BSơn Trà\u200B District, Da Nang");
             account.setCode(result);
             customer.setAccount(account1);
             boolean check = customerService.save(customer);
@@ -136,6 +150,10 @@ public class CustomerController {
         Pageable pageable = PageRequest.of(page, 2);
         Page<Customer> customerList = customerService.findByCustomer('%' + name + '%', '%' + phone + '%', '%' + username + '%', pageable);
         model.addAttribute("customerList", customerList);
+        model.addAttribute("phone",phone);
+        model.addAttribute("name",name);
+        model.addAttribute("username",username);
+
         return "customers/index";
     }
 
@@ -147,7 +165,6 @@ public class CustomerController {
             account.setCode(code);
             accountService.update(account);
             model.addAttribute("account", account);
-
             model.addAttribute("mess", "Create Successfully");
             return "redirect:/customer";
         }
@@ -156,16 +173,40 @@ public class CustomerController {
     }
 
     @GetMapping("/get-code")
-    public String getCode(@RequestParam("accountId") Integer accountId, @RequestParam("customerId") Integer customerId, Model model) {
+    public String getCode(@RequestParam("accountId") Integer accountId, @RequestParam("customerId") Integer customerId,@RequestParam(value = "count",defaultValue = "1") Integer count, Model model) {
         Account account = accountService.findById(accountId);
         Customer customer = customerService.findById(customerId);
         int result = customerService.getRandom(10000, 999999);
-        emailService.sendEmail(customer.getEmail(), "Hello ", "Bạn vui lòng nhập mã số xác nhận : " + result);
+        emailService.sendEmail(customer.getEmail(), "Hello " + customer.getName() +" ,We are pet paws is a pet care store and other services ", " Please enter the verification code : " + result +"\n " +
+                "\n"+
+                "\n"+
+                "\n"+
+                "\n"+
+                "\n"+
+                "\n"+
+                "\n"+
+                "\n"+
+                "---------------------------------------" + "\n"+
+                "Name : Happy Paws\n" +
+                "Mobile : 0782391943\n" +
+                "Email : HappypawsC0123@1@gmail.com\n" +
+                "Address :\u200B2\u200B80\u200B \u200BTrần Hưng Đạo\u200B streets, \u200BSơn Trà\u200B District, Da Nang");
         account.setCode(result);
         accountService.update(account);
+        if(count<=3){
+
+            count++;
+            model.addAttribute("account", account);
+            model.addAttribute("count", count);
+            model.addAttribute("customerId", customerId);
+            return "/customers/pageCheck";
+        }
         model.addAttribute("account", account);
         model.addAttribute("customerId", customerId);
-        return "/customers/pageCheck";
+        model.addAttribute("count", count);
+        model.addAttribute("mess" ,"You cant get code only three !!!");
+              return "/customers/pageCheck";
+
     }
 
     @GetMapping("/{customerId}/view")

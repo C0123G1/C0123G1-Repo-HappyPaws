@@ -20,9 +20,19 @@ public class Orders {
     public Orders() {
     }
 
+    public Orders(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Orders(Long id , Customer customer) {
+        this.id = id;
+        this.customer = customer;
+    }
+
     public Orders(Long id, Customer customer, LocalDateTime buyDate) {
         this.id = id;
         this.customer = customer;
+
         this.buyDate = buyDate;
     }
 

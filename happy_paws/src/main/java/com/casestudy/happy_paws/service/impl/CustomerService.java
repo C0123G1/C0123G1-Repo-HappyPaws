@@ -25,7 +25,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<Customer> getAllPage(int page) {
-        return customerRepository.findAllCustomer(PageRequest.of(page, 5));
+        return customerRepository.findAllCustomer(PageRequest.of(page, 5,Sort.by("createTime").descending()));
     }
 
 

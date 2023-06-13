@@ -114,15 +114,12 @@ public class BookingService implements Validator {
     public void setBookingServiceId(Long bookingServiceId) {
         this.bookingServiceId = bookingServiceId;
     }
-
     public Customer getCustomer() {
         return customer;
     }
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
     public LocalDate getBookingDate() {
         return bookingDate;
     }

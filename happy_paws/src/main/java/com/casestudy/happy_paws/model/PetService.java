@@ -16,7 +16,6 @@ public class PetService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long petServiceId;
-
     @NotNull
     private String name;
     @Column(name = "description", columnDefinition = "TEXT")

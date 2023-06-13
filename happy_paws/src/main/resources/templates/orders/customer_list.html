@@ -16,6 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../static/crud_table.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style th:replace="~{fragment.html::css}"></style>
 </head>
 <body>
@@ -25,23 +26,24 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2><b>Manager Orders</b></h2>
+                    <h2><b>List Customer</b></h2>
                 </div>
+<!--                <a th:attr="onclick=|infoProduct(${product.id},${customerId},'${product.name}')|" href="#addEmployeeModal" class="add" data-toggle="modal"><i class="material-icons"-->
+<!--                                                                                                                                                              data-toggle="tooltip"-->
+<!--                                                                                                                                                              title="Add">&#xE145;</i></a>-->
                 <div class="col-sm-6">
-                    <a th:href="@{/orders/create}" class="btn btn-success" data-toggle="modal"><i
+                    <a th:href="@{/orders/add-customer}" class="btn btn-success" data-toggle="modal"><i
                             class="material-icons">&#xE147;</i>
-                        <span>Add New Orders</span></a>
+                        <span>Add New Customer</span></a>
                 </div>
             </div>
         </div>
         <div class="row mt-1 container-fluid">
-            <div class="dropdown col-2">
-<!--                <a class="btn btn-sm btn-primary" th:href="@{/orders}" th:if="${pageSearch}">-->
-<!--                    Reset Search-->
-<!--                </a>-->
+            <div class="col-2">
+                <button onclick="window.history.back()"  class="btn btn-sm btn-primary material-icons" data-toggle="modal">&#xE5e0;</button>
+                <a th:href="@{/orders}"  class="btn btn-sm btn-primary " data-toggle="modal">Home</a>
             </div>
-
-            <form th:action="@{/orders/search}" method="get" class="col-10">
+            <form th:action="@{/orders/search-customer}" method="get" class="col-10">
                 <div class="row">
                     <div class="col-8">
                         <input class="form-control form-control-sm" type="text" placeholder="Name"
@@ -69,76 +71,48 @@
                 <th>ID</th>
                 <th>Customer Name</th>
                 <th>Phone</th>
-                <th>Buy Date</th>
-                <th>Total Price</th>
+                <th>Address</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order: ${orderDTOPage}">
+            <tr th:each="customer: ${customerPage}">
                 <td>
                 <span class="custom-checkbox">
                     <input type="checkbox" id="checkbox1" name="options[]" value="1">
                     <label for="checkbox1"></label>
                 </span>
                 </td>
-                <td th:text="${order.id}"></td>
-                <td th:text="${order.customer.name}"></td>
-                <td th:text="${order.customer.phone}"></td>
-                <td th:text="${order.buyDate}"></td>
-                <td th:text="${order.price + ' $ '}"></td>
+                <td th:text="${customer.customerId}"></td>
+                <td th:text="${customer.name}"></td>
+                <td th:text="${customer.phone}"></td>
+                <td th:text="${customer.address}"></td>
                 <td>
-                    <a class="btn btn-sm btn-info" th:href="@{/order-detail(orderId = ${order.id})}">Detail</a>
+                    <a th:href="@{/order-detail/create/(customerId = ${customer.customerId})}" class="add"
+                       data-toggle="modal"><i class="material-icons"
+                                              data-toggle="tooltip"
+                                              title="Add">&#xE145;</i></a>
                 </td>
             </tr>
             </tbody>
         </table>
-        <div class="row" th:if="${orderDTOPage.getTotalPages() > 0}">
-            <div class="col-10" th:if="${pageList == true}">
-                <a class="btn btn-sm btn-outline-primary"  style="border: 1px solid #007bff" th:href="@{/orders(page = ${orderDTOPage.number - 1})}" th:if="${orderDTOPage.hasPrevious()}">Previous</a>
-                <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDTOPage.getTotalPages() -1)}">
-                    <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"   th:href="@{/orders(page = ${pageNo})}" th:text="${pageNo +1}" th:classappend="${pageNo == orderDTOPage.number ? 'active' : ''}"></a>
+            <div th:if="${pageList == true}">
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/create(page = ${customerPage.number - 1})}" th:if="${customerPage.hasPrevious()}">Previous</a>
+                <th:block th:each=" pageNo : ${#numbers.sequence(0,customerPage.getTotalPages() -1)}">
+                    <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/create(page = ${pageNo})}" th:text="${pageNo +1}" th:classappend="${pageNo == customerPage.number ? 'active' : ''}"></a>
                 </th:block>
-                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/orders(page = ${orderDTOPage.number + 1})}" th:if="${orderDTOPage.hasNext()}">Next</a>
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/create(page = ${customerPage.number + 1})}" th:if="${customerPage.hasNext()}">Next</a>
             </div>
-
-            <div class="col-10" th:if="${pageSearch == true}">
-                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${orderDTOPage.number - 1})}" th:if="${orderDTOPage.hasPrevious()}">Previous</a>
-                <th:block th:each=" pageNo : ${#numbers.sequence(0,orderDTOPage.getTotalPages() -1)}">
-                    <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}" th:classappend="${pageNo == orderDTOPage.number ? 'active' : ''}"></a>
-                </th:block>
-                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/orders/search(name= ${name},phone = ${phone},page = ${orderDTOPage.number + 1})}" th:if="${orderDTOPage.hasNext()}">Next</a>
-            </div>
-            <div class="col-2">
-                <p style="font-weight: bold" th:if="${totalPriceOrderDetail != null}" th:text="${ 'Total : ' + totalPriceOrderDetail + ' $ '}"></p>
-                <p style="font-weight: bold" th:if="${totalPriceOrderDetail == null}" th:text="${ 'Total : 0 $ '}"></p>
-            </div>
+        <div th:if="${pageSearch == true}">
+            <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${customerPage.number - 1})}" th:if="${customerPage.hasPrevious()}">Previous</a>
+            <th:block th:each=" pageNo : ${#numbers.sequence(0,customerPage.getTotalPages() -1)}">
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}" th:classappend="${pageNo == customerPage.number ? 'active' : ''}"></a>
+            </th:block>
+            <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff" th:href="@{/orders/search-customer(name =${name},phone = ${phone},page = ${customerPage.number + 1})}" th:if="${customerPage.hasNext()}">Next</a>
         </div>
-
     </div>
 </div>
-
 <div th:replace="~{fragment.html::footer}"></div>
-<div th:if="${statusSaveOrderDetail}">
-    <span hidden id="inputId" th:text="'Successfully'"></span>
-</div>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<script th:if="${statusSaveOrderDetail}">
-    let inputId = document.getElementById("inputId");
-    if (inputId && inputId.innerText != null) {
-        swal({
-            title: "Payment",
-            text: inputId.innerText,
-            icon: "success",
-            button: "OK",
-        }).then((idOk) => {
-            if (idOk) {
-                inputId.innerText = '';
-            }
-        });
-    }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

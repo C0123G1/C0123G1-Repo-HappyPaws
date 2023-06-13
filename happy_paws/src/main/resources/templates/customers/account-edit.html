@@ -251,7 +251,7 @@
         <span >password</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text"  th:field="*{password}" required>
+                <input type="text"   pattern="^[a-zA-Z0-9]{8,30}$"  th:field="*{password}" required>
             </div>
         </div>
         <span > Role
@@ -262,7 +262,7 @@
                 </select>
 
 
-        <button style="background:#f8b8be" class="btn d-flex mx-auto"><b>Edit</b></button>
+        <button style="background:#e5707b" class="btn d-flex mx-auto"><b>Edit</b></button>
         <a th:href="@{/account}">
             <button style="background: black" type="button" class="btn btn-dark">Back</button>
         </a>

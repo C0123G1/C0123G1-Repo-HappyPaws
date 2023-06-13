@@ -12,7 +12,6 @@ public class BookingServiceDetail {
     @ManyToOne
     @JoinColumn(name = "pet_service_id",nullable = false)
     private PetService petService;
-
     @ManyToOne
     @JoinColumn(name = "booking_service_id",nullable = false)
     private BookingService bookingService;
