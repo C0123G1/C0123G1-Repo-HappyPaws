@@ -256,10 +256,16 @@
         <div class="col-sm-6">
           <h2>Manage <b>Account</b></h2>
         </div>
+        <div>
+          <a sec:authorize="hasAuthority('ROLE_ADMIN')"  th:href="@{/account/create}" class="btn btn-success" data-toggle="modal"><i
+                  class="material-icons">&#xE147;</i>
+            <span>Add New Customer</span></a>
+        </div>
 
       </div>
     </div>
     <div class="row mt-1 container-fluid">
+
       <div class="dropdown col-2">
       </div>
 <!--      <form th:action="@{/customer/search}" method="post" th:object="${customerList}" class="col-10"-->
