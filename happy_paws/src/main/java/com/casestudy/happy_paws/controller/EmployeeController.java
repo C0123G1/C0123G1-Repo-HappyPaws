@@ -32,6 +32,7 @@ public class EmployeeController {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("dateCreate").descending());
         Page<Employee> list = iEmployeeService.getAll(pageable);
         model.addAttribute("employeeList", list);
+        model.addAttribute("pageList",true);
         return "employee_view/employee_list";
     }
 
@@ -52,7 +53,7 @@ public class EmployeeController {
             boolean check = true;
             check = iEmployeeService.checkEmployee(employee);
             if (!check) {
-                model.addAttribute("result", "Email hoặc số điện thoại hoặc account bị trùng lặp!!!!");
+                model.addAttribute("result", "Email or phone or username is duplicated!!!");
                 return "/employee_view/create_employee";
             }
             Account account = new Account(employee.getAccount().getUsername(), employee.getAccount().getPassword(), new Role(2, "EMPLOYEE"));
@@ -92,7 +93,7 @@ public class EmployeeController {
             boolean check ;
             check = iEmployeeService.checkEditEmployee(employee);
             if(!check){
-                model.addAttribute("result", "Email hoặc số điện thoại hoặc account bị trùng lặp!!!!");
+                model.addAttribute("result", "Email or phone or username is duplicated!!!");
                 return "/employee_view/update_employee";
             }
             iEmployeeService.save(employee);
@@ -106,10 +107,13 @@ public class EmployeeController {
                                  @RequestParam("phone") String phone, Model model, Pageable pageable) {
         pageable = PageRequest.of(0, 10);
         Page<Employee> employees = iEmployeeService.findEmployee(name, phone, pageable);
-
+        if(employees.isEmpty()){
+            model.addAttribute("messSearch","There is no data for search !");
+        }
         model.addAttribute("employeeList", employees);
         model.addAttribute("name", name);
         model.addAttribute("phone", phone);
+
         return "employee_view/employee_list";
     }
 }

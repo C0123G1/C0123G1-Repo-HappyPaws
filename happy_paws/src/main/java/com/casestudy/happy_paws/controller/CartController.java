@@ -32,34 +32,15 @@ public class CartController {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("dateCreate").descending());
         Page<Cart> list = iCartService.getAll(pageable);
         model.addAttribute("cartList", list);
-        return "cart_view/cart_list";
+        return "cart_view/cart";
     }
 
-    @GetMapping("/delete-cart")
-    public String deleteEmployee(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+    @GetMapping("/delete-product")
+    public String deleteProductInCart(@RequestParam("id") Long id) {
         iCartService.deleteCart(id);
-        redirectAttributes.addFlashAttribute("mess", true);
         return "redirect:/cart";
     }
-//    @GetMapping("/create-cart")
-//    public String createEmployee(Model model) {
-//        model.addAttribute("cart", new Cart());
-//        model.addAttribute("productList",iProductService.getAll());
-//        return "/cart_view/create_cart";
-//    }
-    @PostMapping("/save-cart")
-    public String saveCreateCart(@ModelAttribute("cart")Cart cart,BindingResult bindingResult,Model model,RedirectAttributes redirectAttributes){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("cart", cart);
-            return "/cart_view/create_cart";
-        }else {
-//            Product product = new Product(1L,"xuc xich duc","an vo dau bung", 100L,"german","aa",new ProductType(1L,"cho"));
-//            Customer customer = new Customer(1,"test","123131","as","da nang",new Account(1));
-//            iCustomerService.saveCustomer(customer);
-//            iProductService.save(product);
-//            iCartService.save(cart);
-//            redirectAttributes.addFlashAttribute("mess", true);
-            return "redirect:/cart";
-        }
+
+
     }
-}
+
