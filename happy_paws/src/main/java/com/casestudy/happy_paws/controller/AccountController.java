@@ -28,7 +28,6 @@ public class AccountController {
     @GetMapping("")
     public String index(@RequestParam(value = "page",defaultValue = "0") int page, Model model, HttpServletResponse response){
         Page<Account> accountList = accountService.getAllPage(page);
-
         model.addAttribute("accountList", accountList);
 
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private, o-age=0");

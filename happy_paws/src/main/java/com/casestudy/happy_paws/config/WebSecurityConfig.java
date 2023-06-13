@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-//        http.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll();
+        http.authorizeRequests().antMatchers("/happy_paws/assets/css/**", "/happy_paws/assets/js/**", "/images/**","/happy-paws-home").permitAll();
 
 
         // Các trang không yêu cầu login
@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/account", "/account/**")
                 .access("hasAnyRole('CUSTOMER','ADMIN')");
         http.authorizeRequests()
-                .antMatchers("/orders", "/orders/*")
+                .antMatchers("/orders*", "/orders/**","order-detail/*","/order-detail/**")
                 .access("hasAnyRole('ADMIN')");
         http.authorizeRequests()
                 .antMatchers("/api/admin/product", "/api/admin/product/*")
@@ -70,7 +70,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/account/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")
-
                 // Cấu hình cho Logout Page.
                 .and().logout().logoutUrl("/account/logout").logoutSuccessUrl("/account/logoutSuccessful");
 

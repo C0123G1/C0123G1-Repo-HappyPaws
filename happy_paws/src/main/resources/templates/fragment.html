@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -181,7 +182,7 @@
 
         </div>
         <div class="container-fluid all-show">
-            <a class="navbar-brand" href="#" style="margin-top: -2.3vh">Happy <br>Paws<img
+            <a class="navbar-brand" th:href="@{/}" style="margin-top: -2.3vh">Happy <br>Paws<img
                     src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/19454/cat-s-paw-clipart-md.png"
                     height="45"
                     alt="MDB Logo"
@@ -197,15 +198,21 @@
                     MANAGER
                 </button>
                 <ul class="dropdown-menu text-dark">
-                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')"  class="dropdown-item active" th:href="@{/api/admin/product}">Products</a></li>
-                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')"   class="dropdown-item" th:href="@{/api/admin/pet-service/list}">Services</a></li>
-                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')"   class="dropdown-item" th:href="@{/api/admin/booking-service/list}">Booking</a></li>
-                    <li><a  sec:authorize="hasAuthority('ROLE_ADMIN')"  class="dropdown-item" th:href="@{/employee}">Employees</a></li>
-                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')"   class="dropdown-item" th:href="@{/customer}">Customers</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item active"
+                           th:href="@{/api/admin/product}">Products</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item"
+                           th:href="@{/api/admin/pet-service/list}">Services</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item"
+                           th:href="@{/api/admin/booking-service/list}">Booking</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item" th:href="@{/employee}">Employees</a>
+                    </li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item" th:href="@{/customer}">Customers</a>
+                    </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a  sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item" th:href="@{/orders}">Orders</a></li>
+                    <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item"
+                           th:href="@{/orders}">Orders</a></li>
                 </ul>
             </div>
 
@@ -241,7 +248,7 @@
     </nav>
 </div>
 
-<div th:fragment="footer">
+<div th:fragment="footer" style="position: relative;bottom:-55vh">
     <div class="footer-dark">
         <footer>
             <div class="container">

@@ -69,9 +69,7 @@ public class OrderController {
     }
 
     @GetMapping("/create")
-    private String create(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model, HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        session.invalidate();
+    private String create(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         model.addAttribute("customerPage", iOrderService.findAllCustomer(pageable));
         model.addAttribute("customer", new Customer());

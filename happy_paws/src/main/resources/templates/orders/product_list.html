@@ -16,7 +16,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../static/crud_table.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <style th:replace="~{fragment.html::css}"></style>
 </head>
 <body>
@@ -32,7 +34,8 @@
                     <a href="#" class="btn btn-success" data-toggle="modal"><i
                             class="material-icons">&#xE853;</i>
                         <span th:text="${customer.name}"></span></a>
-                    <a href="#infoCurrentOrder" class="btn btn-info" data-toggle="modal"><i class="material-icons">&#xEf6e; </i>
+                    <a id="myButton" href="#infoCurrentOrder" class="btn btn-info" data-toggle="modal"><i
+                            class="material-icons">&#xEf6e; </i>
                         <span th:text="${'Current Order'}"></span>
                         <sup th:if="${session.cart.size() >0}"
                              th:text="${session.cart.size()}"></sup></a>
@@ -201,8 +204,23 @@
                     </thead>
                     <tbody>
                     <tr th:each="cart,index : ${session.cart}">
-                        <td th:text="${cart.products.name}"></td>
-                        <td th:text="${cart.quantity}"></td>
+                        <td th:text="${cart.products.name}" style="width:51vw"></td>
+                        <td class="d-flex">
+                            <a id="delete" style="cursor: pointer">
+                                <input type="text" id="indexDelete" th:value="${index.index}" hidden>
+                                <i class="material-icons"
+                                   data-toggle="tooltip"
+                                   title="Delete">&#xE15b;</i>
+                            </a>
+                            <p id="quantityAction" th:text="${cart.quantity}"></p>
+                            <a id="more" style="cursor: pointer">
+                                <input type="text" id="indexMore" th:value="${index.index}" hidden>
+
+                                <i class="material-icons"
+                                   data-toggle="tooltip"
+                                   title="More">&#xE145;</i>
+                            </a>
+                        </td>
                         <td th:text="${cart.price * cart.quantity}"></td>
                         <td>
                             <a id="deleteProduct" class="delete" style="cursor: pointer">
@@ -218,7 +236,7 @@
             </div>
             <div class="modal-footer">
                 <div>
-                    <p style="margin: 0;" th:text="${'Total : ' + totalPriceCart + ' $ '}"></p>
+                    <h5 style=" color: black;margin: 0;" th:text="${'Total : ' + totalPriceCart + ' $ '}"></h5>
                 </div>
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                 <a th:href="@{/order-detail/payment/{customerId}(customerId = ${customer.customerId})}"
@@ -264,16 +282,41 @@
             total.style.color = 'red';
             total.innerText = "Quantity greater than 0";
             add.hidden = true;
-        } else if(quantity > 999999999 ){
+        } else if (quantity > 999) {
             total.style.color = 'red';
             total.innerText = "Too large a quantity";
             add.hidden = true;
-        } else{
+        } else {
             total.innerText = (quantity * price) + '$';
             add.hidden = false;
         }
     });
-    // xoa product cart -> reload page
+
+    $(document).ready(function () {
+        $(document).on('click', '#delete', function () {
+            let index = $(this).find('#indexDelete').val();
+            let infoCurrentOrder = document.getElementById('infoCurrentOrder');
+            $.ajax({
+                url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=delete',
+                Type: 'GET',
+                success: function (data) {
+
+                }
+            })
+        })
+        $(document).on('click', '#more', function () {
+            let index = $(this).find('#indexMore').val();
+            $.ajax({
+                url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=more',
+                type: 'GET',
+                success: function (data) {
+                    location.reload();
+                }
+            });
+
+        });
+    });
+
     $(document).on('click', '#deleteProduct', function () {
         let index = $(this).find('#index').val();
         $.ajax({
