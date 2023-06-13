@@ -242,9 +242,8 @@
         <div class="row-1">
             <div class="row row-2">
                 <input type="text" th:field="*{nameTypeProduct}">
-                <p style="color: red" th:if="${#fields.hasErrors('nameTypeProduct')}" th:errors="*{nameTypeProduct}"></p>
-
             </div>
+            <p style="color: red" th:if="${#fields.hasErrors('nameTypeProduct')}" th:errors="*{nameTypeProduct}"></p>
         </div>
         <button style="background:#f8b8be" class="btn d-flex mx-auto"><b>Add</b></button>
         <a th:href="@{/api/admin/product-type}">
