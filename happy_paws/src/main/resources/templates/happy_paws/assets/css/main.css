@@ -20,7 +20,7 @@
 /* Colors */
 :root {
   --color-default: #212529;
-  --color-primary: #ce1212;
+  --color-primary: #cd7878;
   --color-secondary: #37373f;
 }
 
@@ -43,7 +43,7 @@ a {
 }
 
 a:hover {
-  color: #ec2727;
+  color: rgb(239, 186, 186);
   text-decoration: none;
 }
 
@@ -92,7 +92,7 @@ section {
 }
 
 .section-header p span {
-  color: var(--color-primary);
+  color: #d6a1ab;
 }
 
 /*--------------------------------------------------------------
@@ -178,7 +178,7 @@ section {
 }
 
 .scroll-top:hover {
-  background: #ec2727;
+  background: rgb(205, 120, 120);
   color: #fff;
 }
 
@@ -283,8 +283,8 @@ section {
 .header .btn-book-a-table,
 .header .btn-book-a-table:focus {
   font-size: 14px;
-  color: #fff;
-  background: var(--color-primary);
+  color: black;
+  background:#efbaba;
   padding: 8px 20px;
   margin-left: 30px;
   border-radius: 50px;
@@ -294,7 +294,7 @@ section {
 .header .btn-book-a-table:hover,
 .header .btn-book-a-table:focus:hover {
   color: #fff;
-  background: rgba(206, 18, 18, 0.8);
+  background: var(--color-primary);
 }
 
 section {
@@ -598,7 +598,7 @@ section {
 .about .call-us p {
   font-size: 28px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: #efbaba;
 }
 
 .about .content ul {
@@ -626,7 +626,7 @@ section {
 .about .play-btn {
   width: 94px;
   height: 94px;
-  background: radial-gradient(var(--color-primary) 50%, rgba(206, 18, 18, 0.4) 52%);
+  background: radial-gradient(var(--color-primary) 50%, rgb(185 132 132 / 40%) 52%);
   border-radius: 50%;
   display: block;
   position: absolute;
@@ -647,7 +647,7 @@ section {
   animation-timing-function: steps;
   opacity: 1;
   border-radius: 50%;
-  border: 5px solid rgba(206, 18, 18, 0.7);
+  border: 5px solid palevioletred;
   top: -15%;
   left: -15%;
   background: rgba(198, 16, 0, 0);
@@ -963,7 +963,7 @@ section {
 
 .testimonials .testimonial-item .quote-icon-left,
 .testimonials .testimonial-item .quote-icon-right {
-  color: #f05656;
+  color: #cd7878;
   font-size: 26px;
   line-height: 0;
 }
@@ -1215,7 +1215,7 @@ section {
 .book-a-table .php-email-form .error-message {
   display: none;
   color: #fff;
-  background: #df1529;
+  background: palevioletred;
   text-align: left;
   padding: 15px;
   margin-bottom: 24px;
@@ -1469,7 +1469,7 @@ section {
 }
 
 .contact .php-email-form button[type=submit]:hover {
-  background: #ec2727;
+  background: #cd7878;
 }
 
 @keyframes animate-loading {
@@ -1519,14 +1519,14 @@ section {
   padding: 12px 36px;
   border-radius: 50px;
   transition: 0.5s;
-  color: #fff;
-  background: var(--color-primary);
+  color: black;
+  background: #e5bebe;
   box-shadow: 0 8px 28px rgba(206, 18, 18, 0.2);
 }
 
 .hero .btn-book-a-table:hover {
-  background: rgba(206, 18, 18, 0.8);
-  box-shadow: 0 8px 28px rgba(206, 18, 18, 0.45);
+  background: #cd7878;
+  box-shadow: 0 8px 28px rgba(240, 158, 240, 0.45);
 }
 
 .hero .btn-watch-video {

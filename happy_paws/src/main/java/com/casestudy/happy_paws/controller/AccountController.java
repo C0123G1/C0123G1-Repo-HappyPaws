@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -25,9 +26,12 @@ public class AccountController {
     private IRoleService  roleService;
 
     @GetMapping("")
-    public String index(@RequestParam(value = "page",defaultValue = "0") int page, Model model){
+    public String index(@RequestParam(value = "page",defaultValue = "0") int page, Model model, HttpServletResponse response){
         Page<Account> accountList = accountService.getAllPage(page);
         model.addAttribute("accountList", accountList);
+
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private, o-age=0");
+
         return "/customers/account";
     }
     @GetMapping("/create")
@@ -46,7 +50,7 @@ public class AccountController {
 
 
 
-//
+
     @GetMapping("/login")
     public String login(Model model ){
 
