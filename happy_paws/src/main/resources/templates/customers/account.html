@@ -256,10 +256,16 @@
         <div class="col-sm-6">
           <h2>Manage <b>Account</b></h2>
         </div>
+        <div>
+          <a sec:authorize="hasAuthority('ROLE_ADMIN')"  th:href="@{/account/create}" class="btn btn-success" data-toggle="modal"><i
+                  class="material-icons">&#xE147;</i>
+            <span>Add New Customer</span></a>
+        </div>
 
       </div>
     </div>
     <div class="row mt-1 container-fluid">
+
       <div class="dropdown col-2">
       </div>
 <!--      <form th:action="@{/customer/search}" method="post" th:object="${customerList}" class="col-10"-->
@@ -326,20 +332,23 @@
 
       </tbody>
     </table>
-    <div style="justify-content: space-between">
-      <div class="btn-group me-2" role="group" aria-label="First group">
-        <a th:href="@{/account(page=${accountList.number - 1})}" th:if="${accountList.hasPrevious()}"
-           class="btn btn-primary"
-           style="line-height: 100%">Previous</a>
-        <th:block class="btn btn-primary"
-                  th:each="pageNo : ${#numbers.sequence(0,accountList.getTotalPages()-1)}">
-          <a class="btn btn-primary" th:text="${pageNo + 1}" th:href="@{/account(page = ${pageNo})}"
-             style="color: white; background-color: #0d6efd;width: 40px;text-align: center;line-height: 100%"></a>
+
+    <div th:if="${accountList.getTotalPages() > 0}">
+      <div >
+        <a class="btn btn-sm btn-outline-primary"
+           th:href="@{customer(page = ${accountList.number - 1})}"
+           th:if="${accountList.hasPrevious()}">Previous</a>
+        <th:block th:each="pageNo : ${#numbers.sequence(0,accountList.getTotalPages() -1)}">
+          <a class="btn btn-sm btn-outline-primary"
+             th:href="@{/account(page = ${pageNo})}"
+             th:text="${pageNo +1}"
+             th:classappend="${pageNo == accountList.number ? 'active' : ''}"></a>
         </th:block>
-        <a th:href="@{/account(page=${accountList.number + 1})}" th:if="${accountList.hasNext()}"
-           class="btn btn-primary"
-           style="line-height: 100%">Next</a>
+        <a class="btn btn-sm btn-outline-primary"
+           th:href="@{/account(page = ${accountList.number + 1})}"
+           th:if="${accountList.hasNext()}">Next</a>
       </div>
+
 
     </div>
 

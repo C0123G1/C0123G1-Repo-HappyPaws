@@ -41,8 +41,7 @@ public class AccountController {
         return "/customers/account-create";
     }
     @PostMapping("/save")
-    public String save(@ModelAttribute("account") Account account,@ModelAttribute("role") Role role , RedirectAttributes redirectAttributes){
-        roleService.save(role);
+    public String save(@ModelAttribute("account") Account account , RedirectAttributes redirectAttributes){
         accountService.save(account);
        redirectAttributes.addFlashAttribute("mess","Add New Successfully");
         return "redirect:/account";

@@ -12,11 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CartController {
@@ -28,38 +28,36 @@ public class CartController {
     private IProductService iProductService;
 
     @GetMapping("/cart")
-    public String display(Model model, @RequestParam(value = "page", defaultValue = "0") Integer page) {
-        Pageable pageable = PageRequest.of(page, 5, Sort.by("dateCreate").descending());
-        Page<Cart> list = iCartService.getAll(pageable);
+    public String displayCart(Model model) {
+        List<Cart> list = iCartService.getAll();
         model.addAttribute("cartList", list);
-        return "cart_view/cart_list";
+        model.addAttribute("totalItem", iCartService.countItemQuantity());
+        model.addAttribute("totalBill",iCartService.countTotalPayment());
+        return "cart_view/cart";
     }
 
-    @GetMapping("/delete-cart")
-    public String deleteEmployee(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+    @GetMapping("/delete-product")
+    public String deleteProductInCart(@RequestParam("id") Long id) {
         iCartService.deleteCart(id);
-        redirectAttributes.addFlashAttribute("mess", true);
         return "redirect:/cart";
     }
-//    @GetMapping("/create-cart")
-//    public String createEmployee(Model model) {
-//        model.addAttribute("cart", new Cart());
-//        model.addAttribute("productList",iProductService.getAll());
-//        return "/cart_view/create_cart";
-//    }
-    @PostMapping("/save-cart")
-    public String saveCreateCart(@ModelAttribute("cart")Cart cart,BindingResult bindingResult,Model model,RedirectAttributes redirectAttributes){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("cart", cart);
-            return "/cart_view/create_cart";
-        }else {
-//            Product product = new Product(1L,"xuc xich duc","an vo dau bung", 100L,"german","aa",new ProductType(1L,"cho"));
-//            Customer customer = new Customer(1,"test","123131","as","da nang",new Account(1));
-//            iCustomerService.saveCustomer(customer);
-//            iProductService.save(product);
-//            iCartService.save(cart);
-//            redirectAttributes.addFlashAttribute("mess", true);
-            return "redirect:/cart";
+    @GetMapping("/add/{id}")
+    public String addQuantityToCart(@PathVariable("id")Long cartId) {
+        Cart cart1 = iCartService.findById(cartId);
+        cart1.setQuantity(cart1.getQuantity()+1);
+        iCartService.save(cart1);
+        return "redirect:/cart";
+    }
+    @GetMapping("/reduce/{id}")
+    public String reduceProductInCart(@PathVariable("id") Long cartID){
+        Cart cart = iCartService.findById(cartID);
+        cart.setQuantity(cart.getQuantity()-1);
+        int newQuantity = cart.getQuantity();
+        iCartService.save(cart);
+        if(newQuantity ==0){
+            iCartService.deleteCart(cartID);
         }
+        return "redirect:/cart";
     }
 }
+

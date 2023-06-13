@@ -231,10 +231,12 @@
 
 <div class="card mt-50 mb-50">
     <div class="card-title mx-auto">
-       Create New Employee
+        Create New Employee
     </div>
+    <p style="color: red" th:text="${result}"></p>
 
-    <form th:action="@{/save-employee}" method="post" th:object="${employee}" name="formCreate" onsubmit="return checkPassword()">
+    <form th:action="@{/save-employee}" method="post" th:object="${employee}" name="formCreate"
+          onsubmit="return checkPassword()">
         <span>Employee Name</span>
         <div class="row-1">
             <div class="row row-2">
@@ -256,31 +258,33 @@
                 <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
             </div>
         </div>
-        <span >Address</span>
+        <span>Address</span>
         <div class="row-1">
             <div class="row row-2">
                 <input type="text" th:field="*{address}">
                 <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
             </div>
         </div>
-        <span >Username</span>
+        <span>Username</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text"  th:field="*{account.username}"></input>
-                <p style="color: red" th:if="${#fields.hasErrors('account.username')}" th:errors="*{account.username}"></p>
+                <input type="text" th:field="*{account.username}"></input>
+                <p style="color: red" th:if="${#fields.hasErrors('account.username')}"
+                   th:errors="*{account.username}"></p>
             </div>
         </div>
         <span>Password</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="password"  th:field="*{account.password}" id="password" name="password"></input>
-                <p style="color: red" th:if="${#fields.hasErrors('account.password')}" th:errors="*{account.password}"></p>
+                <input type="password" th:field="*{account.password}" id="password" name="password"></input>
+                <p style="color: red" th:if="${#fields.hasErrors('account.password')}"
+                   th:errors="*{account.password}"></p>
             </div>
         </div>
-        <span >Confirm Password</span>
+        <span>Confirm Password</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="password" id="confirm" name="confirm" >
+                <input type="password" id="confirm" name="confirm">
             </div>
         </div>
 
@@ -292,8 +296,10 @@
     </form>
 </div>
 
-<p style="color: red" th:text="${result}"></p>
 
+<div>
+    <span hidden id="inputId2" th:text="'Fail'"></span>
+</div>
 
 <script>
     function checkPassword() {
@@ -301,12 +307,24 @@
         const password = form["password"].value;
         const confirm = form["confirm"].value;
 
-        if (password === confirm){
+        if (password === confirm) {
             return true;
         }
 
-        alert('Password does not match')
-        return false
+        let inputId = document.getElementById("inputId2");
+        if (inputId && inputId.innerText != null) {
+            swal({
+                title: "DELETE",
+                text: inputId.innerText,
+                icon: "error",
+                button: "OK",
+            }).then((idOk) => {
+                if (idOk) {
+                    inputId.innerText = '';
+                }
+            });
+            return false
+        }
     }
 </script>
 
