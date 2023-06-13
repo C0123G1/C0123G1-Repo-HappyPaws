@@ -5,8 +5,20 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../lib/w3.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/crud_table.css">
+    <style th:replace="~{fragment.html::css}"></style>
 </head>
 <body>
+<div th:replace="~{fragment.html::header}"></div>
 <section class="vh-100" style="background-color: #fdccbc;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -36,33 +48,30 @@
                             <div class="col-md-2 d-flex justify-content-center">
                                 <div>
                                     <p class="small text-muted mb-4 pb-2">Quantity</p>
-                                    <a th:href="@{/delete/__${cart.getQuantity()-1}__(action='show')}" class="btn btn-danger" th:text="${'-'}"></a>
-                                    <span th:text="${cart.quantity}">1</span>
-                                    <a id="increase_button" th:href="@{/add/__${cart.getQuantity()+1}__(action='show')}"
+                                    <a th:href="@{/reduce/{id}(id=${cart.cartId})}" class="btn btn-danger" th:text="${'-'}"></a>
+                                    <span th:text="${cart.quantity}"></span>
+                                    <a id="increase_button" th:href="@{/add/{id}(id=${cart.cartId})}"
                                        style="color: white;text-decoration: none" class="btn btn-primary" th:text="${'+'}"></a>
                                 </div>
                             </div>
                             <div class="col-md-2 d-flex justify-content-center">
                                 <div>
-                                    <p class="small text-muted mb-4 pb-2">Price</p>
-                                    <p class="lead fw-normal mb-0" th:text="${cart.product.price}"></p>
+                                    <p class="small text-muted mb-4 pb-2">Unit Price</p>
+                                    <p class="lead fw-normal mb-0" th:text="'$'+${cart.product.price}"></p>
                                 </div>
                             </div>
                             <div class="col-md-2 d-flex justify-content-center">
                                 <div>
                                     <p class="small text-muted mb-4 pb-2">Total</p>
-                                    <p class="lead fw-normal mb-0"  th:text="${cart.product.price * cart.quantity}+'$'"></p>
+                                    <p class="lead fw-normal mb-0"  th:text="'$'+${cart.product.price * cart.quantity}"></p>
                                 </div>
                             </div>
                             <!-- Button trigger modal -->
                             <div class="col-md-1 d-flex justify-content-center">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" th:attr="onclick=|deleteByID(${cart.cartId},'${cart.product.name}')|">
-                                    Delete
-                                </button>
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" th:attr="onclick=|deleteByID(${cart.cartId},'${cart.product.name}')|">
+                                    <span  class="fa-solid fa-xmark fa-2xl" style="color: #af79aa;"></span><span></span></a>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
 
@@ -71,8 +80,12 @@
 
                         <div class="float-end">
                             <p class="mb-0 me-5 d-flex align-items-center">
+                                <span class="small text-muted me-2">Number of Item:</span> <span
+                                    class="lead fw-normal" th:text="${totalItem}"></span>
+                            </p>
+                            <p class="mb-0 me-5 d-flex align-items-center">
                                 <span class="small text-muted me-2">Order total:</span> <span
-                                    class="lead fw-normal">$799</span>
+                                    class="lead fw-normal" th:text="'$'+${totalBill}"></span>
                             </p>
                         </div>
 
@@ -81,7 +94,9 @@
 
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-light btn-lg me-2">Continue shopping</button>
-                    <button type="button" class="btn btn-primary btn-lg">Add to cart</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                        Payment
+                    </button>
                 </div>
 
             </div>
@@ -93,7 +108,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Remove confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:action="@{/delete-product}" method="get">
@@ -103,13 +118,33 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Delete</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
             </form>
 
         </div>
     </div>
 </div>
+<!-- Modal Payment -->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Purchase confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                This move can not return or undo ! please contact to Shop for futher Helping !
+                Please click the "Accept Button" if your payment is  certain !
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <div th:replace="~{fragment.html::footer}"></div>
 <script>
     function deleteByID(id,name){
         document.getElementById("id").value = id;
