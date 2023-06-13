@@ -244,23 +244,23 @@
         <div class="row-1">
             <div class="row row-2">
                 <input type="text" th:field="*{name}">
-                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         <span id="card-header">Price</span>
         <div class="row-1">
             <div class="row row-2">
                 <input  type="text" th:field="*{price}">
-                <p style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
         <span id="card-header">Origin</span>
         <div class="row-1">
             <div class="row row-2">
                 <input type="text" th:field="*{origin}">
-                <p style="color: red" th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}"></p>
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}"></p>
         <span id="card-header">Product Type</span>
         <div class="row row-2">
             <select class="row-1 form-control" th:field="*{productType}">
@@ -273,7 +273,6 @@
 
         <div class="row row-2">
             <textarea type="text" class="row-1 form-control" th:field="*{description}"></textarea>
-            <p style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
 
         <span id="card-header">Image</span>
@@ -283,7 +282,6 @@
                 <input id="btnThumbnailURL" type="file" class="form-control row-1"/>
                 <progress id="uploader" value="0" max="100">0%</progress>
             </div>
-            <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{image}"></p>
         </div>
 
         <button style="background:#f8b8be" class="btn d-flex mx-auto"><b>Update</b></button>
@@ -292,6 +290,7 @@
         </a>
     </form>
 </div>
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyDpLFDgziCMcgvUDrE64kNuoYiKvU3PeKg",
