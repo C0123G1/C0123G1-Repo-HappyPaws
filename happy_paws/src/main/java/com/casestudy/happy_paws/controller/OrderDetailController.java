@@ -1,10 +1,7 @@
 package com.casestudy.happy_paws.controller;
 
 import com.casestudy.happy_paws.dto.OrderDetailDAO;
-import com.casestudy.happy_paws.model.Customer;
-import com.casestudy.happy_paws.model.OrderDetail;
-import com.casestudy.happy_paws.model.Orders;
-import com.casestudy.happy_paws.model.Product;
+import com.casestudy.happy_paws.model.*;
 import com.casestudy.happy_paws.service.IOrderDetailService;
 import com.casestudy.happy_paws.service.IOrderService;
 import org.hibernate.Session;
@@ -104,6 +101,8 @@ public class OrderDetailController {
         return "redirect:/order-detail/create?customerId=" + customer.getCustomerId() + "&now=cart";
     }
 
+
+
     @GetMapping("/payment/{customerId}")
     @Transactional(rollbackFor = Throwable.class)
     public String payment(@PathVariable("customerId") Integer customerId, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
@@ -151,8 +150,38 @@ public class OrderDetailController {
         return "redirect:/order-detail/create?customerId=" + customerId;
     }
 
-    @GetMapping("/update")
-    public String update() {
+    @GetMapping("/edit-quantity-cart")
+    public String editQuantityCart(@RequestParam("index") Integer index,@RequestParam("action") String action, Model model,HttpServletRequest httpServletRequest){
+        HttpSession session = httpServletRequest.getSession();
+        List<OrderDetail> cart = (List<OrderDetail>) session.getAttribute("cart");
+        Integer customerId = cart.get(0).getOrder().getCustomer().getCustomerId();
+        for (int i = 0; i < cart.size(); i++) {
+            if (index == i) {
+               if(action.equals("delete")){
+                   cart.get(i).setQuantity(cart.get(i).getQuantity()-1);
+                   break;
+               }else{
+                   cart.get(i).setQuantity(cart.get(i).getQuantity()+1);
+                   break;
+               }
+            }
+        }
+        return "redirect:/order-detail/create?customerId=" + customerId + "&now=cart";
+    }
+
+    @GetMapping("/payment-cart")
+    @Transactional(rollbackFor = Throwable.class)
+    public String paymentCart() {
+        Integer customerId = 1;
+        List<Cart> cartList = iOrderDetailService.findAllCart(customerId);
+        List<OrderDetail> orderDetailList = new ArrayList<>();
+        Orders orders = new Orders(iOrderDetailService.findCustomerById(customerId));
+        boolean statusSave = iOrderService.saveOrder(orders);
+        for (Cart c: cartList){
+            OrderDetail orderDetail = new OrderDetail(c.getProduct(),orders,c.getQuantity(),c.getQuantity()*c.getProduct().getPrice());
+            orderDetailList.add(orderDetail);
+        }
+        boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetailList, orders);
         return "orders/order_detail";
     }
 }

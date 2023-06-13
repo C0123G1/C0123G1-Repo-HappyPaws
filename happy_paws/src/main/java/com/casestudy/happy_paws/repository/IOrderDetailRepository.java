@@ -1,5 +1,6 @@
 package com.casestudy.happy_paws.repository;
 
+import com.casestudy.happy_paws.model.Cart;
 import com.casestudy.happy_paws.model.OrderDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public interface IOrderDetailRepository extends JpaRepository<OrderDetail, Long> {
     @Query(value = "select od from OrderDetail od where od.order.id = :orderId and od.isDelete = false ")
@@ -29,4 +32,6 @@ public interface IOrderDetailRepository extends JpaRepository<OrderDetail, Long>
 
     @Query(value = "select sum(od.price * od.quantity) from OrderDetail od where od.isDelete=false ")
     Double findTotalPriceOrderDetail();
+    @Query(value = "select c from Cart c where c.customer.customerId = :customerId")
+    List<Cart> findAllCart(@Param("customerId") Integer customerId);
 }

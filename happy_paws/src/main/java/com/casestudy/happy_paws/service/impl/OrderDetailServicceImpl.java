@@ -1,10 +1,8 @@
 package com.casestudy.happy_paws.service.impl;
 
 import com.casestudy.happy_paws.dto.OrderDetailDAO;
-import com.casestudy.happy_paws.model.Customer;
-import com.casestudy.happy_paws.model.OrderDetail;
-import com.casestudy.happy_paws.model.Orders;
-import com.casestudy.happy_paws.model.Product;
+import com.casestudy.happy_paws.model.*;
+import com.casestudy.happy_paws.repository.ICartRepo;
 import com.casestudy.happy_paws.repository.ICustomerRepository;
 import com.casestudy.happy_paws.repository.IOrderDetailRepository;
 import com.casestudy.happy_paws.repository.IProductRepository;
@@ -25,6 +23,8 @@ public class OrderDetailServicceImpl implements IOrderDetailService {
     private ICustomerRepository iCustomerRepository;
     @Autowired
     private IOrderDetailRepository iOrderDetailRepository;
+    @Autowired
+    private ICartRepo iCartRepo;
 
     @Override
     public Double findTotalPriceOrderDetail() {
@@ -85,5 +85,10 @@ public class OrderDetailServicceImpl implements IOrderDetailService {
     @Override
     public Double getTotalPriceOrder(Long orderId) {
         return iOrderDetailRepository.getTotalPriceOrder(orderId);
+    }
+
+    @Override
+    public List<Cart> findAllCart(Integer customerId) {
+        return iOrderDetailRepository.findAllCart(customerId);
     }
 }

@@ -27,7 +27,6 @@ public class AccountController {
     @GetMapping("")
     public String index(@RequestParam(value = "page",defaultValue = "0") int page, Model model){
         Page<Account> accountList = accountService.getAllPage(page);
-
         model.addAttribute("accountList", accountList);
         return "/customers/account";
     }
