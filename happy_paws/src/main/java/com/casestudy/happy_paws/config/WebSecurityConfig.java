@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         // Các trang không yêu cầu login
-        http.authorizeRequests().antMatchers("/account/login").permitAll();
+        http.authorizeRequests().antMatchers("/account/login","/customer/create","/customer/save","/customer/get-code","/customer/check").permitAll();
 
         http.authorizeRequests()
                 .antMatchers("/customer")
@@ -46,8 +46,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customer/", "/customer/")
                 .access("hasRole('CUSTOMER')");
         http.authorizeRequests()
-                .antMatchers("/account/", "/account/")
+                .antMatchers("/account", "/account/**")
                 .access("hasAnyRole('CUSTOMER','ADMIN')");
+        http.authorizeRequests()
+                .antMatchers("/orders", "/orders/*")
+                .access("hasAnyRole('ADMIN')");
+        http.authorizeRequests()
+                .antMatchers("/api/admin/product", "/api/admin/product/*")
+                .access("hasAnyRole('ADMIN')");
+
+        http.authorizeRequests()
+                .antMatchers("/api/admin/service", "/api/admin/service/*")
+                .access("hasAnyRole('ADMIN')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/customers/403");
 
