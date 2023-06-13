@@ -114,7 +114,7 @@ public class OrderDetailController {
         boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(cart, orders);
         session.invalidate();
         redirectAttributes.addFlashAttribute("statusSaveOrderDetail", statusSaveOrderDetail);
-        return "redirect:/orders/";
+        return "redirect:/orders";
     }
 
     @GetMapping("/search")

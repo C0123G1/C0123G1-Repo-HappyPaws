@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -20,14 +20,14 @@
           rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/css/main.css" rel="stylesheet">
 
     <!-- =======================================================
     * Template Name: Yummy
@@ -122,7 +122,8 @@
 
             <div class="row gy-4">
                 <div class="col-lg-7 position-relative about-img"
-                     style="background-image: url(assets/img/spa-thu-cung-la-gi-26.webp) ;" data-aos="fade-up"
+                     style="background-image: url(../../static/happy_paws/assets/img/spa-thu-cung-la-gi-26.webp) ;"
+                     data-aos="fade-up"
                      data-aos-delay="150">
                     <div class="call-us position-absolute">
                         <h4>Book a Table</h4>
@@ -289,368 +290,303 @@
 
             <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
 
-                <li class="nav-item">
-                    <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters">
-                        <h4>Starters</h4>
+                <li class="nav-item" th:each="productType : ${productTypeList}">
+                    <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#Cho">
+                        <h4 th:text="${productType.nameTypeProduct}"></h4>
                     </a>
                 </li><!-- End tab nav item -->
 
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
-                        <h4>Breakfast</h4>
-                    </a><!-- End tab nav item -->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">-->
+                <!--                        <h4>Breakfast</h4>-->
+                <!--                    </a>&lt;!&ndash; End tab nav item &ndash;&gt;-->
 
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">
-                        <h4>Lunch</h4>
-                    </a>
-                </li><!-- End tab nav item -->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">-->
+                <!--                        <h4>Lunch</h4>-->
+                <!--                    </a>-->
+                <!--                </li>&lt;!&ndash; End tab nav item &ndash;&gt;-->
 
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
-                        <h4>Dinner</h4>
-                    </a>
-                </li><!-- End tab nav item -->
-
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">-->
+                <!--                        <h4>Dinner</h4>-->
+                <!--                    </a>-->
+                <!--                </li>&lt;!&ndash; End tab nav item &ndash;&gt;-->
             </ul>
+            <div class="tab-content" data-aos="fade-up" data-aos-delay="300"
+                 th:each="productTypeL : ${productTypeList}">
 
-            <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
-
-                <div class="tab-pane fade active show" id="menu-starters">
-
+                <div class="tab-pane fade active show" th:id="${productTypeL.nameTypeProduct}">
                     <div class="tab-header text-center">
                         <p>Menu</p>
-                        <h3>Starters</h3>
+                        <h3 th:text="${productTypeL.nameTypeProduct}"></h3>
                     </div>
-
                     <div class="row gy-5">
-
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-1.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-1.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Magnam Tiste</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $5.95
-                            </p>
+                        <div class="col-lg-4 menu-item" th:each="product :${productPage}">
+                            <div th:if="${product.productType.nameTypeProduct == productTypeL.nameTypeProduct}">
+                                <a th:href="${product.image}" class="glightbox"><img
+                                        th:src="${product.image}" class="menu-img img-fluid" alt=""></a>
+                                <h4 th:text="${product.name}"></h4>
+                                <p class="ingredients">
+                                    Lorem, deren, trataro, filede, nerada
+                                </p>
+                                <p th:text="${'$'+ product.price}" class="price">
+                                </p>
+                            </div>
                         </div><!-- Menu Item -->
-
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-2.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-2.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Aut Luia</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $14.95
-                            </p>
-                        </div><!-- Menu Item -->
-
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-3.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-3.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Est Eligendi</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $8.95
-                            </p>
-                        </div><!-- Menu Item -->
-
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-4.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Eos Luibusdam</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $12.95
-                            </p>
-                        </div><!-- Menu Item -->
-
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Eos Luibusdam</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $12.95
-                            </p>
-                        </div><!-- Menu Item -->
-
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-6.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-6.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Laboriosam Direva</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $9.95
-                            </p>
-                        </div><!-- Menu Item -->
-
                     </div>
                 </div><!-- End Starter Menu Content -->
+                <!--                <div class="tab-pane fade" id="menu-breakfast">-->
 
-                <div class="tab-pane fade" id="menu-breakfast">
+                <!--                    <div class="tab-header text-center">-->
+                <!--                        <p>Menu</p>-->
+                <!--                        <h3>Breakfast</h3>-->
+                <!--                    </div>-->
 
-                    <div class="tab-header text-center">
-                        <p>Menu</p>
-                        <h3>Breakfast</h3>
-                    </div>
+                <!--                    <div class="row gy-5">-->
 
-                    <div class="row gy-5">
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-1.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-1.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Magnam Tiste</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $5.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-1.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-1.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Magnam Tiste</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $5.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-2.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-2.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Aut Luia</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $14.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-2.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-2.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Aut Luia</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $14.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-3.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-3.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Est Eligendi</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $8.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-3.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-3.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Est Eligendi</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $8.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-4.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Eos Luibusdam</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $12.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-4.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Eos Luibusdam</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $12.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Eos Luibusdam</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $12.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Eos Luibusdam</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $12.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-6.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-6.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Laboriosam Direva</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $9.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-6.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-6.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Laboriosam Direva</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $9.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                    </div>-->
+                <!--                </div>&lt;!&ndash; End Breakfast Menu Content &ndash;&gt;-->
 
-                    </div>
-                </div><!-- End Breakfast Menu Content -->
+                <!--                <div class="tab-pane fade" id="menu-lunch">-->
 
-                <div class="tab-pane fade" id="menu-lunch">
+                <!--                    <div class="tab-header text-center">-->
+                <!--                        <p>Menu</p>-->
+                <!--                        <h3>Lunch</h3>-->
+                <!--                    </div>-->
 
-                    <div class="tab-header text-center">
-                        <p>Menu</p>
-                        <h3>Lunch</h3>
-                    </div>
+                <!--                    <div class="row gy-5">-->
 
-                    <div class="row gy-5">
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-1.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-1.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Magnam Tiste</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $5.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-1.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-1.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Magnam Tiste</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $5.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-2.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-2.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Aut Luia</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $14.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-2.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-2.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Aut Luia</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $14.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-3.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-3.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Est Eligendi</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $8.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-3.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-3.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Est Eligendi</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $8.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-4.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Eos Luibusdam</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $12.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-4.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Eos Luibusdam</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $12.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Eos Luibusdam</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $12.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Eos Luibusdam</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $12.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-6.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-6.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Laboriosam Direva</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $9.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-6.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-6.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Laboriosam Direva</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $9.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                    </div>-->
+                <!--                </div>&lt;!&ndash; End Lunch Menu Content &ndash;&gt;-->
 
-                    </div>
-                </div><!-- End Lunch Menu Content -->
+                <!--                <div class="tab-pane fade" id="menu-dinner">-->
 
-                <div class="tab-pane fade" id="menu-dinner">
+                <!--                    <div class="tab-header text-center">-->
+                <!--                        <p>Menu</p>-->
+                <!--                        <h3>Dinner</h3>-->
+                <!--                    </div>-->
 
-                    <div class="tab-header text-center">
-                        <p>Menu</p>
-                        <h3>Dinner</h3>
-                    </div>
+                <!--                    <div class="row gy-5">-->
 
-                    <div class="row gy-5">
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-1.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-1.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Magnam Tiste</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $5.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-1.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-1.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Magnam Tiste</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $5.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-2.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-2.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Aut Luia</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $14.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-2.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-2.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Aut Luia</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $14.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-3.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-3.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Est Eligendi</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $8.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-3.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-3.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Est Eligendi</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $8.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-4.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Eos Luibusdam</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $12.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-4.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Eos Luibusdam</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $12.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Eos Luibusdam</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $12.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Eos Luibusdam</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $12.95
-                            </p>
-                        </div><!-- Menu Item -->
+                <!--                        <div class="col-lg-4 menu-item">-->
+                <!--                            <a href="assets/img/menu/menu-item-6.png" class="glightbox"><img-->
+                <!--                                    src="assets/img/menu/menu-item-6.png" class="menu-img img-fluid" alt=""></a>-->
+                <!--                            <h4>Laboriosam Direva</h4>-->
+                <!--                            <p class="ingredients">-->
+                <!--                                Lorem, deren, trataro, filede, nerada-->
+                <!--                            </p>-->
+                <!--                            <p class="price">-->
+                <!--                                $9.95-->
+                <!--                            </p>-->
+                <!--                        </div>&lt;!&ndash; Menu Item &ndash;&gt;-->
 
-                        <div class="col-lg-4 menu-item">
-                            <a href="assets/img/menu/menu-item-6.png" class="glightbox"><img
-                                    src="assets/img/menu/menu-item-6.png" class="menu-img img-fluid" alt=""></a>
-                            <h4>Laboriosam Direva</h4>
-                            <p class="ingredients">
-                                Lorem, deren, trataro, filede, nerada
-                            </p>
-                            <p class="price">
-                                $9.95
-                            </p>
-                        </div><!-- Menu Item -->
-
-                    </div>
-                </div><!-- End Dinner Menu Content -->
+                <!--                    </div>-->
+                <!--                </div>&lt;!&ndash; End Dinner Menu Content &ndash;&gt;-->
 
             </div>
 
@@ -805,7 +741,7 @@
                 <div class="swiper-wrapper">
 
                     <div class="swiper-slide event-item d-flex flex-column justify-content-end"
-                         style="background-image: url(assets/img/dog-spa-2.jpg)">
+                         style="background-image: url(../../static/happy_paws/assets/img/dog-spa-2.jpg)">
                         <h3>Custom Parties</h3>
                         <div class="price align-self-start">$99</div>
                         <p class="description">
@@ -815,7 +751,7 @@
                     </div><!-- End Event item -->
 
                     <div class="swiper-slide event-item d-flex flex-column justify-content-end"
-                         style="background-image: url(assets/img/images.jpg)">
+                         style="background-image: url(../../static/happy_paws/assets/img/images.jpg)">
                         <h3>Private Parties</h3>
                         <div class="price align-self-start">$289</div>
                         <p class="description">
@@ -825,7 +761,7 @@
                     </div><!-- End Event item -->
 
                     <div class="swiper-slide event-item d-flex flex-column justify-content-end"
-                         style="background-image: url(assets/img/spa-thu-cung-la-gi-26.webp)">
+                         style="background-image: url(../../static/happy_paws/assets/img/spa-thu-cung-la-gi-26.webp)">
                         <h3>Birthday Parties</h3>
                         <div class="price align-self-start">$499</div>
                         <p class="description">
@@ -928,11 +864,13 @@
 
             <div class="row g-0">
 
-                <div class="col-lg-4 reservation-img" style="background-image: url(assets/img/top-dich-vu-spa-cho-thu-cung-tai-TPHCM.jpg);"
+                <div class="col-lg-4 reservation-img"
+                     style="background-image: url(../../static/happy_paws/assets/img/top-dich-vu-spa-cho-thu-cung-tai-TPHCM.jpg);"
                      data-aos="zoom-out" data-aos-delay="200"></div>
 
                 <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-                    <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form"
+                    <form action="../../static/happy_paws/forms/book-a-table.php" method="post" role="form"
+                          class="php-email-form"
                           data-aos="fade-up" data-aos-delay="100">
                         <div class="row gy-4">
                             <div class="col-lg-4 col-md-6">
@@ -1043,7 +981,7 @@
             <div class="mb-3">
                 <iframe style="border:0; width: 100%; height: 350px;"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d981550.4679898163!2d107.56138222715613!3d16.056067821121232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314219a486b7f699%3A0xae6269b629a63e82!2zQ29kZUd5bSDEkMOgIE7hurVuZw!5e0!3m2!1sen!2s!4v1686461057056!5m2!1sen!2s"
-                        width="600" height="450"  loading="lazy"
+                        width="600" height="450" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade" frameborder="0" allowfullscreen></iframe>
             </div><!-- End Google Maps -->
 
@@ -1093,7 +1031,8 @@
 
             </div>
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form p-3 p-md-4">
+            <form action="../../static/happy_paws/forms/contact.php" method="post" role="form"
+                  class="php-email-form p-3 p-md-4">
                 <div class="row">
                     <div class="col-xl-6 form-group">
                         <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -1190,15 +1129,15 @@
 <div id="preloader"></div>
 
 <!-- Vendor JS Files -->
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/aos/aos.js"></script>
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="../../static/happy_paws/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../static/happy_paws/assets/vendor/aos/aos.js"></script>
+<script src="../../static/happy_paws/assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="../../static/happy_paws/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="../../static/happy_paws/assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="../../static/happy_paws/assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
+<script src="../../static/happy_paws/assets/js/main.js"></script>
 
 </body>
 

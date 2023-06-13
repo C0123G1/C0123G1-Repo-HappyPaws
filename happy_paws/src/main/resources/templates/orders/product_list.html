@@ -291,39 +291,6 @@
             add.hidden = false;
         }
     });
-    // $(document).on('click', '#delete', function () {
-    //     let index = $(this).find('#indexDelete').val();
-    //     $.ajax({
-    //         url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=delete',
-    //         Type: 'GET',
-    //         success: function (data) {
-    //             location.reload();
-    //         }
-    //
-    //     })
-    // })
-    // $(document).ready(function () {
-    //     function initializePage() {
-    //         var myButton = document.getElementById('myButton');
-    //         myButton.click();
-    //     }
-    //     $(document).on('click', '#more', function () {
-    //         let index = $(this).find('#indexMore').val();
-    //         $.ajax({
-    //             url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=more',
-    //             Type: 'GET',
-    //             success: function (data) {
-    //                 location.reload();
-    //                 // document.addEventListener('DOMContentLoaded', function() {
-    //                 //     // Khi tài liệu được tải hoàn thành
-    //                 //     var myButton = document.getElementById('myButton');
-    //                 //     myButton.click();
-    //                 // });
-    //                 initializePage();
-    //             }
-    //         })
-    //     })
-    // });
 
     $(document).ready(function () {
         $(document).on('click', '#delete', function () {
@@ -343,7 +310,7 @@
                 url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=more',
                 type: 'GET',
                 success: function (data) {
-
+                    location.reload();
                 }
             });
 
