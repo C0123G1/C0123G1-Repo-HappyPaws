@@ -266,30 +266,28 @@
         <div class="row mt-1 container-fluid">
             <form th:action="@{/api/admin/product/search}" method="get" class="col-10">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-3">
                         <input class="form-control form-control-sm" type="text" placeholder="Name"
                                aria-label=".form-control-sm example" name="name" th:value="${name}">
                     </div>
                     <div class="col-3">
-                        <input class="form-control form-control-sm" type="text" placeholder="origin"
+                        <input class="form-control form-control-sm" type="text" placeholder="Origin"
                                aria-label=".form-control-sm example" name="origin" th:value="${origin}">
                     </div>
-                    <div class="col-2">
-                        <select name="productType" class="form-control">
-<!--                            <option th:if="${nameProductType != null}" th:text="${nameProductType}"></option>-->
-                            <option th:if="${nameProductType == ''}" th:text="'Product Type'" th:value="''"></option>
-                            <option th:if="${nameProductType == null}" th:text="'Product Type'" th:value="''"></option>
-                            <option th:if="${nameProductType != null && nameProductType!=''}" th:text="${nameProductType}" th:value="${nameProductType}"></option>
-                            <option  th:each="productType:${productTypeList}"
-                                     th:if="${productType.nameTypeProduct != nameProductType}"
+                    <div class="col-3" >
+                        <select name="productType" class="form-control" th:value="''">
+                            <option value="">Products Type</option>
+                            <option th:each="productType:${productTypeList}"
+                                    th:if="${productType.nameTypeProduct != nameProductType}"
                                     th:text="${productType.nameTypeProduct}"
                                     th:value="${productType.nameTypeProduct}"></option>
-                            <option th:if="${nameProductType != null && nameProductType!=''}" th:text="'Product Type'" th:value="''"></option>
-
                         </select>
                     </div>
                     <div class="col-1">
-                        <button class="btn btn-sm btn-primary">Search</button>
+                        <button class="btn btn-primary">Search</button>
+                    </div>
+                    <div class="col-1" style="margin-left: 1vw">
+                        <a th:href="@{/api/admin/product}"class="btn btn-success">Reset</a>
                     </div>
                 </div>
             </form>
@@ -312,6 +310,7 @@
                 <td th:text="${product.origin}"></td>
                 <td th:text="${product.price+ ' $ '}"></td>
                 <td th:text="${product.productType.nameTypeProduct}"></td>
+
                 <td>
                     <a th:href="@{/api/admin/product/edit/{id}(id=${product.id})}" class="edit"><i
                             class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -323,6 +322,10 @@
             </tr>
             </tbody>
         </table>
+        <div th:if="${notFound}">
+            <h3 style="text-align: center; color: red">No products found.</h3>
+        </div>
+
         <div th:if="${productList.getTotalPages() > 0}">
             <div th:if="${pageList}">
                 <a class="btn btn-sm btn-outline-primary"
