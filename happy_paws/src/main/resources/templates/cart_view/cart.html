@@ -10,87 +10,63 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="static/crud_table.css">
-    <style th:replace="~{fragment.html::css}"></style>
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="../../static/happy_paws/assets/css/main.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-red navbar-dark">
-    <div class="wrapper">
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between ">
+        <a href="#" class="logo d-flex align-items-center me-auto me-lg-0">
 
-    </div>
-    <div class="container-fluid all-show">
-        <a class="navbar-brand" th:href="@{/}" style="margin-top: -2.3vh;color: white;font-family: 'Allerta Stencil', sans-serif" >Happy <br>Paws<img
-                src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/19454/cat-s-paw-clipart-md.png"
-                height="45"
-                alt="MDB Logo"
-                loading="lazy" style="transform: rotate(-18deg);margin-top: -6.5vh;margin-left: 1vw"/>
+            <h1>Happy <br> Paws<img
+                    src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/19454/cat-s-paw-clipart-md.png"
+                    height="45"
+                    alt="MDB Logo"
+                    loading="lazy" style="transform: rotate(-18deg);margin-top: -5.5vh;margin-left: 2vw"/></h1>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="dropdown">
-            <button class="btn dropdown-toggle" style="background-color:#f8b8be;color: #000000 " type="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                MANAGER
-            </button>
-            <ul class="dropdown-menu text-dark">
-                <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item active"
-                       th:href="@{/api/admin/product}">Products</a></li>
-                <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item"
-                       th:href="@{/api/admin/pet-service/list}">Services</a></li>
-                <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item"
-                       th:href="@{/api/admin/booking-service/list}">Booking</a></li>
-                <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item" th:href="@{/employee}">Employees</a>
-                </li>
-                <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item" th:href="@{/customer}">Customers</a>
-                </li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item"
-                       th:href="@{/orders}">Orders</a></li>
-            </ul>
-        </div>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">About us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#chefs">Services</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="d-flex flex-column sim" style="float: right">
-                <div class="dropdown dropstart" style="margin-top: 0.7vh">
-                    <button style="border-radius: 20px;background-color: white;border: 1px solid #f8b8be;margin-left: 61vw;"
-                            class="btn dropdown-toggle" type="button"
-                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                    </button>
-                    <ul class="dropdown-menu text-dark">
-                        <li><a class="dropdown-item" href="#">
-                            <i class="material-icons">&#xE7fd;</i>
-                            <b th:text="${#authentication.getName()}"></b>
-                        </a></li>
-                        <li><a class="dropdown-item" th:href="@{/account/logout}"><i
-                                class="material-icons">&#xE9ba;</i>Logout </a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        </nav>
+        <!-- .navbar -->
+
+        <!--        <a class="btn-book-a-table" style="width: 13vw" href="#book-a-table">Book a Table</a>-->
+        <a id="login" style="width: 6vw; text-align: center" class="btn-book-a-table" th:href="@{/account/login}" th:text="'Login'"></a>
+        <a class="btn-book-a-table" style="width: 6vw; text-align: center" sec:authorize="hasAnyRole('ADMIN','CUSTOMER','EMPLOYEE')"
+           th:href="@{/account/logout}">Logout</a>
+        <a class="btn-book-a-table" style=" text-align: center"  sec:authorize="hasRole('ADMIN')"
+           th:href="@{/account/}" th:text="'Admin Manager'"></a>
+        <a class="btn-book-a-table" style="width: 15vw; text-align: center"  sec:authorize="hasRole('CUSTOMER')"
+           th:text="${#authentication.getName()}"></a>
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     </div>
-</nav>
-</div>
-
-
-<section class="vh-100" style="background-color: #fdccbc;">
+</header><!-- End Header -->
+<section class="vh-100" style="background-color: #fbfbfb;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col">
@@ -215,51 +191,65 @@
         </div>
     </div>
 </div>
-<div th:fragment="footer" style="position: relative;bottom:-55vh">
-    <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 item">
-                        <h3>Services</h3>
-                        <ul>
-                            <li><a href="#">Web design</a></li>
-                            <li><a href="#">Development</a></li>
-                            <li><a href="#">Hosting</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 item">
-                        <h3>Address</h3>
-                        <ul>
-                            <li><a href="#">Address</a></li>
-                            <li><a href="#">Development</a></li>
-                            <li><a href="#">Hosting</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 item">
-                        <h3>About</h3>
-                        <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
-                            <li><a href="#">Careers</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 item text">
-                        <h3>HappyPaws.com</h3>
-                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus.</p>
-                    </div>
-                    <div class="col item social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i
-                            class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-youtube"></i></a><a href="#"><i
-                            class="fa fa-instagram"></i></a><a href="#"><i class="fa fa-google"></i></a></div>
-                </div>
-                <p class="copyright">HappyPaws.com &copy; 2020</p>
+<footer id="footer" class="footer">
+
+<div class="container">
+    <div class="row gy-3">
+        <div class="col-lg-3 col-md-6 d-flex">
+            <i class="bi bi-geo-alt icon"></i>
+            <div>
+                <h4>Address</h4>
+                <p>
+                    280 Đ. Trần Hưng Đạo<br>
+                    An Hải Tây, Sơn Trà, Đà Nẵng 550000 - VietNam<br>
+                </p>
             </div>
-        </footer>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links d-flex">
+            <i class="bi bi-telephone icon"></i>
+            <div>
+                <h4>Reservations</h4>
+                <p>
+                    <strong>Phone:</strong> +84 782.391.943<br>
+                    <strong>Email:</strong>happypawsC0123G1@gmail.com<br>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links d-flex">
+            <i class="bi bi-clock icon"></i>
+            <div>
+                <h4>Opening Hours</h4>
+                <p>
+                    <strong>Mon-Sat: 11AM</strong> - 23PM<br>
+                    Sunday: Closed
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Follow Us</h4>
+            <div class="social-links d-flex">
+                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+
     </div>
 </div>
 
+<div class="container">
+    <div class="copyright">
+        &copy; Copyright <strong><span>Happy Paws</span></strong>. All Rights Reserved
+    </div>
+</div>
 
-
+</footer><!-- End Footer -->
+<!-- End Footer -->
 <script>
     function deleteByID(id,name){
         document.getElementById("id").value = id;
