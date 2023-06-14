@@ -152,7 +152,7 @@ public class OrderDetailController {
                 break;
             }
         }
-        return "redirect:/order-detail/create?customerId=" + customerId;
+        return "redirect:/order-detail/create?customerId=" + customerId + "&now=cart";
     }
 
     @GetMapping("/edit-quantity-cart")
@@ -189,6 +189,6 @@ public class OrderDetailController {
         if(statusSaveOrderDetail){
             iCartService.payMentCart(customerId);
         }
-        return "redirect:/cart";
+        return "redirect:/cart/customerId=" + customerId ;
     }
 }
