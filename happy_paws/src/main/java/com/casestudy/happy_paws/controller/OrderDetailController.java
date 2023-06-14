@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -162,22 +163,27 @@ public class OrderDetailController {
     }
 
     @GetMapping("/edit-quantity-cart")
-    public String editQuantityCart(@RequestParam("index") Integer index,@RequestParam("action") String action, Model model,HttpServletRequest httpServletRequest){
+    public ResponseEntity<Integer> editQuantityCart(@RequestParam("index") Integer index,@RequestParam("action") String action, Model model,HttpServletRequest httpServletRequest){
         HttpSession session = httpServletRequest.getSession();
         List<OrderDetail> cart = (List<OrderDetail>) session.getAttribute("cart");
         Integer customerId = cart.get(0).getOrder().getCustomer().getCustomerId();
+        Integer quantity = 0;
         for (int i = 0; i < cart.size(); i++) {
             if (index == i) {
                if(action.equals("delete")){
                    cart.get(i).setQuantity(cart.get(i).getQuantity()-1);
-                   break;
                }else{
                    cart.get(i).setQuantity(cart.get(i).getQuantity()+1);
-                   break;
                }
+                quantity = cart.get(i).getQuantity();
+                if(quantity == 0){
+                    cart.remove(i);
+                }
+                break;
             }
         }
-        return "redirect:/order-detail/create?customerId=" + customerId + "&now=cart";
+//        return "redirect:/order-detail/create?customerId=" + customerId + "&now=cart";
+        return new ResponseEntity<>(quantity, HttpStatus.OK) ;
     }
 
     @GetMapping("/payment-cart/{customerId}")
