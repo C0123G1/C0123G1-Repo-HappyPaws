@@ -81,6 +81,9 @@
             </tr>
             </tbody>
         </table>
+        <div th:if="${notFound}" >
+            <h3  style="text-align: center; color: red">No products found.</h3>
+        </div>
         <div class="row" th:if="${orderDTOPage.getTotalPages() > 0}">
             <div class="col-10" th:if="${pageList == true}">
                 <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"

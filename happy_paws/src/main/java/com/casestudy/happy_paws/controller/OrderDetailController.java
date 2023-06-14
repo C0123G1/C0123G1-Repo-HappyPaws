@@ -129,6 +129,9 @@ public class OrderDetailController {
     public String search(@RequestParam("orderId") Long orderId, @RequestParam("name") String name, @RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         model.addAttribute("orderDetailPage", iOrderDetailService.searchProductOrderDetail(name, orderId, pageable));
+        if(iOrderDetailService.searchProductOrderDetail(name, orderId, pageable).getTotalElements() ==0){
+            model.addAttribute("notFound", true);
+        }
         Double totalPrice = iOrderDetailService.getTotalPriceOrder(orderId);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("name", name);
