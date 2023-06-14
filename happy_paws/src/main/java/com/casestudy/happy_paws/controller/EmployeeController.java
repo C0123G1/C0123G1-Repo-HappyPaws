@@ -106,7 +106,7 @@ public class EmployeeController {
     public String searchEmployee(@RequestParam("name") String name,
                                  @RequestParam("phone") String phone,
                                  @RequestParam(value = "page",defaultValue = "0")Integer page,Model model, Pageable pageable) {
-        pageable = PageRequest.of(page, 10);
+        pageable = PageRequest.of(page, 5);
         Page<Employee> employees = iEmployeeService.findEmployee(name, phone, pageable);
         if(employees.isEmpty()){
             model.addAttribute("messSearch","There is no data for search !");
