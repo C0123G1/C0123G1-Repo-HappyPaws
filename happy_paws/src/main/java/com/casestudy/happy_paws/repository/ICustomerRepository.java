@@ -29,4 +29,6 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer> {
     @Query(value = "SELECT c FROM Customer c   WHERE  c.name LIKE :s AND c.phone LIKE  :s1  AND c.idDelete = false ")
 
     Page<Customer> findCustomerToBookService(String s, String s1, Pageable pageable);
+    @Query(value = "select c from  Customer c inner  join Account a on c.account.accountId = a.accountId where a.username = :userName and a.isDelete = false")
+    Customer findCustomerByUserName(@Param("userName") String userName);
 }

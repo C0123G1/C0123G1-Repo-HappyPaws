@@ -19,8 +19,8 @@ public class CartServiceImpl implements ICartService {
     private ICartRepo iCartRepo;
 
     @Override
-    public List<Cart> getAll() {
-        return iCartRepo.findAll();
+    public List<Cart> getAll(Integer customerId) {
+        return iCartRepo.getCartByCustomer(customerId);
     }
 
 
@@ -47,18 +47,27 @@ public class CartServiceImpl implements ICartService {
         return productQuantity;
     }
 
-    public Integer countItemQuantity() {
-        List<Cart> carts = iCartRepo.findAll();
-        return carts.size();
-
+    public Integer countItemQuantity(Integer customerId) {
+//        List<Cart> carts = iCartRepo.findAll();
+        return iCartRepo.countItemQuantity(customerId);
     }
 
-    public Float countTotalPayment() {
-        List<Cart> carts = iCartRepo.findAll();
-        float payment = 0;
-        for (Cart c : carts) {
-            payment += c.getProduct().getPrice() * (float) c.getQuantity();
+    public Float countTotalPayment(Integer customerId) {
+//        List<Cart> carts = iCartRepo.findAll();
+//        float payment = 0;
+//        for (Cart c : carts) {
+//            payment += c.getProduct().getPrice() * (float) c.getQuantity();
+//        }
+        return iCartRepo.getTotalPricecart(customerId);
+    }
+
+    @Override
+    public boolean payMentCart(Integer customerId) {
+        try{
+            iCartRepo.payMentCart(customerId);
+        }catch (Exception e){
+            return false;
         }
-        return payment;
+        return true;
     }
 }
