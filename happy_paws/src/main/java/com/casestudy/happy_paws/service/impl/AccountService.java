@@ -6,6 +6,7 @@ import com.casestudy.happy_paws.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,7 +64,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public Page<Account> getAllPage(int page) {
-        return accountRepository.findAllAccount(PageRequest.of(page, 5));
+        return accountRepository.findAllAccount(PageRequest.of(page, 5, Sort.by("createTime").descending()));
     }
 
     @Override

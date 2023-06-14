@@ -236,7 +236,8 @@
 
 
   <form th:action="@{/account/save}" method="post" th:object="${account}">
-    <input type="text" hidden th:field="*{accountId}">
+<!--    <input type="text" hidden th:field="*{accountId}">-->
+
     <span >Username</span>
     <div class="row-1">
       <div class="row row-2">
@@ -249,14 +250,14 @@
         <input type="text"  th:field="*{password}"     required/>
       </div>
     </div>
+
     <span >Role</span>
-    <select  th:field="*{role.roleId}">
+    <select  th:field="*{role}">
       <option th:each="roles : ${roleList}" th:text="${roles.nameRole}" th:value="${roles.roleId}"></option>
     </select>
     <!--      </div>-->
     <!--    </div>-->
 
-    <input type="text" hidden th:field="*{role.roleId}">
 
     <button style="background:#e5707b" class="btn d-flex mx-auto"><b>Create</b></button>
     <a th:href="@{/account}">
