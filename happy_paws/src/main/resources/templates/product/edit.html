@@ -254,20 +254,40 @@
                 <p style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
             </div>
         </div>
-        <span id="card-header">Image</span>
-        <div class="row row-2">
-            <div class="form-group">
-                <input type="hidden" id="thumbnailURL" th:field="*{image}" />
-                <input id="btnThumbnailURL" type="file" class="form-control row-1" />
-                <progress id="uploader" value="0" max="100">0%</progress>
-                <img id="previewImage" src="" alt="Preview Image" style="display: none; width: 20vw;height: auto" />
-                <img id="newImage" src="" alt="New Image" style="display: none; width: 20vw;height: auto" />
+        <span id="card-header">Origin</span>
+        <div class="row-1">
+            <div class="row row-2">
+                <input type="text" th:field="*{origin}">
+                <p style="color: red" th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}"></p>
             </div>
         </div>
-        <button id="createButton" style="background:#f8b8be; display: none;" class="btn d-flex mx-auto" disabled><b>Create</b></button>
-        <a th:href="@{/api/admin/product}">
-            <button style="background: black" type="button" class="btn btn-dark">Back</button>
-        </a>
+        <span id="card-header">Product Type</span>
+        <div class="row row-2">
+            <select class="row-1 form-control" th:field="*{productType}">
+                <option th:each="productType:${productTypeList}"
+                        th:text="${productType.nameTypeProduct}"
+                        th:value="${productType.id}"></option>
+            </select>
+        </div>
+        <span id="card-header">Description</span>
+
+        <div class="row row-2">
+            <textarea type="text" class="row-1 form-control" th:field="*{description}"></textarea>
+            <p style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" id="thumbnailURL" th:field="*{image}" />
+            <input id="btnThumbnailURL" type="file" class="form-control row-1" />
+            <progress id="uploader" value="0" max="100">0%</progress>
+            <img id="previewImage" src="" alt="Preview Image" style="display: none; width: 20vw;height: auto" />
+            <img id="newImage" src="" alt="New Image" style="display: none; width: 20vw;height: auto" />
+        </div>
+</div>
+<button id="createButton" style="background:#f8b8be; display: none;" class="btn d-flex mx-auto"><b>Update</b></button>
+<a th:href="@{/api/admin/product}">
+    <button style="background: black" type="button" class="btn btn-dark">Back</button>
+</a>
 </div>
 <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
 <script>
