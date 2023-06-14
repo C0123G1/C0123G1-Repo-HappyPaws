@@ -315,12 +315,9 @@
         <td th:text="${account.password}"></td>
         <td th:text="${account.role.nameRole}"></td>
         <td>
-            <a  th:href="@{account/{accountId}/edit/(accountId=${account.accountId})}" class="edit"
-                   data-toggle="modal"><i class="material-icons"
-                                          data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-
-        </td>
-        <td>
+<!--            <a  th:href="@{account/{accountId}/edit/(accountId=${account.accountId})}" class="edit"-->
+<!--                   data-toggle="modal"><i class="material-icons"-->
+<!--                                          data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
           <a  th:attr="onclick=|infoDelete(${account.getAccountId()},'${account.getUsername()}')|"
               href="#deleteEmployeeModal" class="delete" data-toggle="modal">
             <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
