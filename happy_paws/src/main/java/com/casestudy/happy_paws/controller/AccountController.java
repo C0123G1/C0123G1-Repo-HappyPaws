@@ -32,6 +32,18 @@ public class AccountController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private, o-age=0");
         return "/customers/account";
     }
+//    @GetMapping("/create")
+//    public  String create(Model model){
+//        model.addAttribute("account" , new Account());
+//        model.addAttribute("roleList" , roleService.findAll());
+//        return "/customers/account-create";
+//    }
+//    @PostMapping("/save")
+//    public String save(@ModelAttribute("account") Account account , RedirectAttributes redirectAttributes){
+//        accountService.save(account);
+//       redirectAttributes.addFlashAttribute("mess","Add New Successfully");
+//        return "redirect:/account";
+//    }
     @GetMapping("/create")
     public  String create(Model model){
         model.addAttribute("account" , new Account());
@@ -40,8 +52,8 @@ public class AccountController {
     }
     @PostMapping("/save")
     public String save(@ModelAttribute("account") Account account , RedirectAttributes redirectAttributes){
-        accountService.save(account);
-       redirectAttributes.addFlashAttribute("mess","Add New Successfully");
+        accountService.update(account);
+        redirectAttributes.addFlashAttribute("mess","Add New Successfully");
         return "redirect:/account";
     }
     @GetMapping("/login")
@@ -53,7 +65,7 @@ public class AccountController {
     }
     @GetMapping( "/logoutSuccessful")
     public String logoutSuccessfulPage(Model model) {
-        model.addAttribute("title", "Logout");
+        model.addAttribute("message", "Logout");
         return "redirect:/customer";
     }
 
