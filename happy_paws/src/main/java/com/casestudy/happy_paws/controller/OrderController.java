@@ -31,7 +31,7 @@ public class OrderController {
 
     @GetMapping("")
     public String showList(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
-        Pageable pageable = PageRequest.of(page, 8, Sort.by("buyDate").ascending());
+        Pageable pageable = PageRequest.of(page, 8, Sort.by("buyDate").descending());
         Page<Orders> ordersPage = iOrderService.findAll(pageable);
         List<OrderDTO> orderDTOList = new ArrayList<>();
         for (Orders o : ordersPage) {
