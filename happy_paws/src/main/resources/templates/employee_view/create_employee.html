@@ -240,52 +240,52 @@
         <span>Employee Name</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text" th:field="*{name}" placeholder="Name">
-                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                <input type="text" th:field="*{name}" >
             </div>
+            <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
         <span>Phone</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text" th:field="*{phone}" placeholder="Phone number">
-                <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+                <input type="text" th:field="*{phone}">
             </div>
+            <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
         </div>
         <span>Email</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text" th:field="*{email}" placeholder="Email">
-                <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                <input type="text" th:field="*{email}">
             </div>
+            <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
         </div>
         <span>Address</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text" th:field="*{address}" placeholder="Address">
-                <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                <input type="text" th:field="*{address}" >
             </div>
+            <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
         </div>
         <span>Username</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text" th:field="*{account.username}" placeholder="Username"></input>
-                <p style="color: red" th:if="${#fields.hasErrors('account.username')}"
-                   th:errors="*{account.username}"></p>
+                <input type="text" th:field="*{account.username}" >
             </div>
+            <p style="color: red" th:if="${#fields.hasErrors('account.username')}"
+               th:errors="*{account.username}"></p>
         </div>
         <span>Password</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="password" th:field="*{account.password}" pattern="^[A-Za-z0-9]{4,6}$" id="password"
-                       name="password" placeholder="4-6 charaters">
-                <p style="color: red" th:if="${#fields.hasErrors('account.password')}"
-                   th:errors="*{account.password}"></p>
+                <input type="password" th:field="*{account.password}" id="password" pattern="^[0-9]{4}$"
+                       name="password" placeholder="4 charaters">
             </div>
+            <p style="color: red" th:if="${#fields.hasErrors('account.password')}"
+               th:errors="*{account.password}"></p>
         </div>
         <span>Confirm Password</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="password" id="confirm" name="confirm" pattern="^[A-Za-z0-9]{4,6}$">
+                <input type="password" id="confirm" name="confirm" pattern="^[0-9]{4}$">
             </div>
         </div>
 

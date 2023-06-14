@@ -98,11 +98,11 @@
                             <div class="col-md-2 d-flex justify-content-center">
                                 <div>
                                     <p class="small text-muted mb-4 pb-2">Quantity</p>
-                                    <a th:href="@{/reduce/{id}(id=${cart.cartId},customerId = ${customerId})}" class="btn btn-danger"
+                                    <a th:href="@{/reduce/{id}(id=${cart.cartId},customerId = ${customerId})}"
                                        th:text="${'-'}"></a>
                                     <span th:text="${cart.quantity}"></span>
                                     <a id="increase_button" th:href="@{/add/{id}(id=${cart.cartId},customerId = ${customerId})}"
-                                       style="color: white;text-decoration: none" class="btn btn-primary"
+                                       style="color: white;text-decoration: none"
                                        th:text="${'+'}"></a>
                                 </div>
                             </div>
