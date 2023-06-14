@@ -23,4 +23,5 @@ public interface ICustomerService {
     Page<Customer> findByCustomer(String name, String phone, String username, Pageable pageable);
 
     Page<Customer> findCustomer(String s, String s1,  Pageable pageable);
+    Customer findCustomerByUserName(String userName);
 }

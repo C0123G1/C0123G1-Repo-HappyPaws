@@ -66,7 +66,7 @@ public class AccountController {
     @GetMapping( "/logoutSuccessful")
     public String logoutSuccessfulPage(Model model) {
         model.addAttribute("message", "Logout");
-        return "redirect:/customer";
+        return "redirect:/";
     }
 
     @GetMapping("/{accountId}/edit")

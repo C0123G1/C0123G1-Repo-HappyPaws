@@ -19,8 +19,8 @@ public class CartServiceImpl implements ICartService {
     private ICartRepo iCartRepo;
 
     @Override
-    public List<Cart> getAll() {
-        return iCartRepo.findAll();
+    public List<Cart> getAll(Integer customerId) {
+        return iCartRepo.getCartByCustomer(customerId);
     }
 
 
@@ -60,5 +60,15 @@ public class CartServiceImpl implements ICartService {
             payment += c.getProduct().getPrice() * (float) c.getQuantity();
         }
         return payment;
+    }
+
+    @Override
+    public boolean payMentCart(Integer customerId) {
+        try{
+            iCartRepo.payMentCart(customerId);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }
