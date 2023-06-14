@@ -104,8 +104,9 @@ public class EmployeeController {
 
     @GetMapping("/search-employee")
     public String searchEmployee(@RequestParam("name") String name,
-                                 @RequestParam("phone") String phone, Model model, Pageable pageable) {
-        pageable = PageRequest.of(0, 10);
+                                 @RequestParam("phone") String phone,
+                                 @RequestParam(value = "page",defaultValue = "0")Integer page,Model model, Pageable pageable) {
+        pageable = PageRequest.of(page, 10);
         Page<Employee> employees = iEmployeeService.findEmployee(name, phone, pageable);
         if(employees.isEmpty()){
             model.addAttribute("messSearch","There is no data for search !");
@@ -113,6 +114,7 @@ public class EmployeeController {
         model.addAttribute("employeeList", employees);
         model.addAttribute("name", name);
         model.addAttribute("phone", phone);
+        model.addAttribute("pageSearch",true);
 
         return "employee_view/employee_list";
     }

@@ -33,20 +33,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         // Các trang không yêu cầu login
-        http.authorizeRequests().antMatchers("/account/login","/customer/create","/customer/save","/customer/get-code","/customer/check").permitAll();
+        http.authorizeRequests().antMatchers("/account/login","/customer/create","/customer/save","/customer/get-code","/customer/check","/").permitAll();
 
-        http.authorizeRequests()
-                .antMatchers("/customer")
-                .access("hasAnyRole('CUSTOMER', 'ADMIN')");
+//        http.authorizeRequests()
+//                .antMatchers("/customer")
+//                .access("hasAnyRole('CUSTOMER', 'ADMIN')");
 
         http.authorizeRequests()
                 .antMatchers("*", "/customer/*")
                 .access("hasRole('ADMIN')");
         http.authorizeRequests()
-                .antMatchers("/customer/", "/customer/")
+                .antMatchers( "/delete-product","/detail/*","/order-detail/payment-cart/*","/booking/**","/add-cart","/cart")
                 .access("hasRole('CUSTOMER')");
         http.authorizeRequests()
-                .antMatchers("/account", "/account/**")
+                .antMatchers("/account", "/account/**","/detail/*")
                 .access("hasAnyRole('CUSTOMER','ADMIN')");
         http.authorizeRequests()
                 .antMatchers("/orders*", "/orders/**","order-detail/*","/order-detail/**")
@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Submit URL của trang login
                 .loginProcessingUrl("/account/security") // Submit URL
                 .loginPage("/account/login")//
-                .defaultSuccessUrl("/customer")//
+                .defaultSuccessUrl("/")//
                 .failureUrl("/account/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")

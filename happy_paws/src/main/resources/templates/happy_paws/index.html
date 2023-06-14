@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="utf-8">
@@ -28,7 +29,10 @@
 
     <!-- Template Main CSS File -->
     <link href="../../static/happy_paws/assets/css/main.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- =======================================================
     * Template Name: Yummy
     * Updated: May 30 2023 with Bootstrap v5.3.0
@@ -42,13 +46,16 @@
 
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
+    <div class="container d-flex align-items-center justify-content-between ">
+        <a href="#" class="logo d-flex align-items-center me-auto me-lg-0">
 
-        <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="assets/img/logo.png" alt=""> -->
-            <h1>Happy Paws<span>.</span></h1>
+            <h1>Happy <br> Paws<img
+                    src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/19454/cat-s-paw-clipart-md.png"
+                    height="45"
+                    alt="MDB Logo"
+                    loading="lazy" style="transform: rotate(-18deg);margin-top: -5.5vh;margin-left: 2vw"/></h1>
         </a>
+
 
         <nav id="navbar" class="navbar">
             <ul>
@@ -58,33 +65,29 @@
                 <li><a href="#events">Events</a></li>
                 <li><a href="#chefs">Services</a></li>
                 <li><a href="#gallery">Gallery</a></li>
-                <li class="dropdown"><a href="#"><span>Drop Down</span> <i
-                        class="bi bi-chevron-down dropdown-indicator"></i></a>
-                    <ul>
-                        <li><a href="#">Drop Down 1</a></li>
-                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
-                                class="bi bi-chevron-down dropdown-indicator"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Drop Down 1</a></li>
-                                <li><a href="#">Deep Drop Down 2</a></li>
-                                <li><a href="#">Deep Drop Down 3</a></li>
-                                <li><a href="#">Deep Drop Down 4</a></li>
-                                <li><a href="#">Deep Drop Down 5</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Drop Down 2</a></li>
-                        <li><a href="#">Drop Down 3</a></li>
-                        <li><a href="#">Drop Down 4</a></li>
-                    </ul>
-                </li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-        </nav><!-- .navbar -->
+        </nav>
+        <!-- .navbar -->
 
-        <a class="btn-book-a-table" href="#book-a-table">Book a Table</a>
+        <!--        <a class="btn-book-a-table" style="width: 13vw" href="#book-a-table">Book a Table</a>-->
+        <a id="login" style="width: 6vw; text-align: center" class="btn-book-a-table" th:href="@{/account/login}"
+           th:text="'Login'"></a>
+        <a class="btn-book-a-table" style="width: 6vw; text-align: center"
+           sec:authorize="hasAnyRole('ADMIN','CUSTOMER','EMPLOYEE')"
+           th:href="@{/account/logout}">Logout</a>
+        <a class="btn-book-a-table" style=" text-align: center" sec:authorize="hasRole('ADMIN')"
+           th:href="@{/account/}" th:text="'Admin Manager'"></a>
+        <a class="btn-book-a-table" style="width: 10vw; text-align: center" sec:authorize="hasRole('CUSTOMER')"
+           th:text="${#authentication.getName()}"></a>
+        <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/cart(userName = ${#authentication.getName()})}" style="margin-top: 5.5px" data-toggle="modal"><i
+                style="font-size: 30px;
+                border: 1px solid;
+                border-radius: 10px;"
+                class="material-icons" title="Cart">&#xE8cc;</i>
+        </a>
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-
     </div>
 </header><!-- End Header -->
 
@@ -98,12 +101,13 @@
                     happiness of our furry friends. These services cater to the diverse needs of pets, providing them
                     with love, attention, and proper care.</p>
                 <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-                    <a href="#book-a-table" class="btn-book-a-table">Book a Table</a>
+                    <a th:href="@{/booking/reservation}"  class="btn-book-a-table">Book a Service</a>
                 </div>
+
             </div>
             <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
-                <img src="https://watermark.lovepik.com/photo/20211203/large/lovepik-two-dogs-on-the-lawn-picture_501463088.jpg"
-                     class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+                <img src="https://i.pinimg.com/564x/b2/a1/c3/b2a1c30a79a19adda5ac6b737ec491f8.jpg"
+                     class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300" style="border-radius: 30px">
             </div>
         </div>
     </div>
@@ -158,7 +162,8 @@
 
                         <div class="position-relative mt-4">
                             <img src="assets/img/about-2.jpg" class="img-fluid" alt="">
-                            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox play-btn"></a>
+                            <a href="https://www.youtube.com/watch?v=KfFvqImjJBg&embeds_referring_euri=https%3A%2F%2Fdogily.vn%2F&source_ve_path=MjM4NTE&feature=emb_title"
+                               class="glightbox play-btn"></a>
                         </div>
                     </div>
                 </div>
@@ -237,7 +242,8 @@
     </section><!-- End Why Us Section -->
 
     <!-- ======= Stats Counter Section ======= -->
-    <section id="stats-counter" class="stats-counter" style="background-image: url('https://img.freepik.com/free-vector/cute-pets-illustration_53876-112522.jpg?w=2000&t=st=1686646347~exp=1686646947~hmac=753666626c38c25a468157d95549f8e9b39cd9d2e6572772ac24c194cc3eb3a6')">
+    <section id="stats-counter" class="stats-counter"
+             style="background-image: url('https://img.freepik.com/free-vector/cute-pets-illustration_53876-112522.jpg?w=2000&t=st=1686646347~exp=1686646947~hmac=753666626c38c25a468157d95549f8e9b39cd9d2e6572772ac24c194cc3eb3a6')">
         <div class="container" data-aos="zoom-out">
 
             <div class="row gy-4">
@@ -324,7 +330,7 @@
                     <div class="row gy-5">
                         <div class="col-lg-4 menu-item" th:each="product : ${productPage}"
                              th:if="${product.productType.nameTypeProduct == 'Dog Food'}">
-                            <a th:href="@{/api/admin/product/detail(productId=${product.id})}">
+                            <a th:href="@{/detail/{id}(id=${product.id})}">
                                 <img th:src="${product.image}" class="menu-img img-fluid" style="border-radius: 5px"
                                      alt="">
                             </a>
@@ -346,7 +352,7 @@
                     <div class="row gy-5">
                         <div class="col-lg-4 menu-item" th:each="product : ${productPage}"
                              th:if="${product.productType.nameTypeProduct == 'Cat Food'}">
-                            <a th:href="@{/api/admin/product/detail(productId=${product.id})}">
+                            <a th:href="@{/detail/{id}(id=${product.id})}">
                                 <img th:src="${product.image}" class="menu-img img-fluid" style="border-radius: 5px"
                                      alt="">
                             </a>
@@ -368,7 +374,7 @@
                     <div class="row gy-5">
                         <div class="col-lg-4 menu-item" th:each="product : ${productPage}"
                              th:if="${product.productType.nameTypeProduct == 'Toys'}">
-                            <a th:href="@{/api/admin/product/detail(productId=${product.id})}">
+                            <a th:href="@{/detail/{id}(id=${product.id})}">
                                 <img th:src="${product.image}" class="menu-img img-fluid" style="border-radius: 5px"
                                      alt="">
                             </a>
@@ -389,7 +395,7 @@
                     <div class="row gy-5">
                         <div class="col-lg-4 menu-item" th:each="product : ${productPage}"
                              th:if="${product.productType.nameTypeProduct == 'Cage'}">
-                            <a th:href="@{/api/admin/product/detail(productId=${product.id})}">
+                            <a th:href="@{/detail/{id}(id=${product.id})}">
                                 <img th:src="${product.image}" class="menu-img img-fluid" style="border-radius: 5px"
                                      alt="">
                             </a>
@@ -619,9 +625,9 @@
                         </div>
                         <div class="member-info">
                             <h4 th:text="${petService.name}"></h4>
-                           <div style="background-size: cover">
-                               <img th:src="${petService.image}" alt="" width="100%" style="border-radius: 10px">
-                           </div>
+                            <div style="background-size: cover">
+                                <img th:src="${petService.image}" alt="" width="100%" style="border-radius: 10px">
+                            </div>
                             <p th:text="${petService.description}"></p>
                             <h5 th:text="${ '$'+ petService.price}"></h5>
                         </div>
@@ -632,78 +638,78 @@
     </section><!-- End Chefs Section -->
 
     <!-- ======= Book A Table Section ======= -->
-    <section id="book-a-table" class="book-a-table">
-        <div class="container" data-aos="fade-up">
+    <!--    <section id="book-a-table" class="book-a-table">-->
+    <!--        <div class="container" data-aos="fade-up">-->
 
-            <div class="section-header">
-                <h2>Book A Table</h2>
-                <p>Book <span>Your Stay</span> With Us</p>
-            </div>
+    <!--            <div class="section-header">-->
+    <!--                <h2>Book A Table</h2>-->
+    <!--                <p>Book <span>Your Stay</span> With Us</p>-->
+    <!--            </div>-->
 
-            <div class="row g-0">
+    <!--            <div class="row g-0">-->
 
-                <div class="col-lg-4 reservation-img"
-                     style="background-image: url(../../static/happy_paws/assets/img/top-dich-vu-spa-cho-thu-cung-tai-TPHCM.jpg);"
-                     data-aos="zoom-out" data-aos-delay="200"></div>
+    <!--                <div class="col-lg-4 reservation-img"-->
+    <!--                     style="background-image: url(../../static/happy_paws/assets/img/top-dich-vu-spa-cho-thu-cung-tai-TPHCM.jpg);"-->
+    <!--                     data-aos="zoom-out" data-aos-delay="200"></div>-->
 
-                <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-                    <form action="../../static/happy_paws/forms/book-a-table.php" method="post" role="form"
-                          class="php-email-form"
-                          data-aos="fade-up" data-aos-delay="100">
-                        <div class="row gy-4">
-                            <div class="col-lg-4 col-md-6">
-                                <input type="text" name="name" class="form-control" id="name1" placeholder="Your Name"
-                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                                <div class="validate"></div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <input type="email" class="form-control" name="email" id="email2"
-                                       placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
-                                <div class="validate"></div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone"
-                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                                <div class="validate"></div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <input type="text" name="date" class="form-control" id="date" placeholder="Date"
-                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                                <div class="validate"></div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <input type="text" class="form-control" name="time" id="time" placeholder="Time"
-                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                                <div class="validate"></div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <input type="number" class="form-control" name="people" id="people"
-                                       placeholder="# of people" data-rule="minlen:1"
-                                       data-msg="Please enter at least 1 chars">
-                                <div class="validate"></div>
-                            </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-                            <div class="validate"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your booking request was sent. We will call back or send an Email
-                                to confirm your reservation. Thank you!
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit">Book a Table</button>
-                        </div>
-                    </form>
-                </div><!-- End Reservation Form -->
+    <!--                <div class="col-lg-8 d-flex align-items-center reservation-form-bg">-->
+    <!--                    <form th:action="@{/booking-service}" method="post" role="form"-->
+    <!--                          class="php-email-form"-->
+    <!--                          data-aos="fade-up" data-aos-delay="100">-->
+    <!--                        <div class="row gy-4">-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="text" name="name" class="form-control" id="name1" placeholder="Your Name"-->
+    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="email" class="form-control" name="email" id="email2"-->
+    <!--                                       placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone"-->
+    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="text" name="date" class="form-control" id="date" placeholder="Date"-->
+    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="text" class="form-control" name="time" id="time" placeholder="Time"-->
+    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="number" class="form-control" name="people" id="people"-->
+    <!--                                       placeholder="# of people" data-rule="minlen:1"-->
+    <!--                                       data-msg="Please enter at least 1 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                        <div class="form-group mt-3">-->
+    <!--                            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>-->
+    <!--                            <div class="validate"></div>-->
+    <!--                        </div>-->
+    <!--                        <div class="mb-3">-->
+    <!--                            <div class="loading">Loading</div>-->
+    <!--                            <div class="error-message"></div>-->
+    <!--                            <div class="sent-message">Your booking request was sent. We will call back or send an Email-->
+    <!--                                to confirm your reservation. Thank you!-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                        <div class="text-center">-->
+    <!--                            <button type="submit">Book a Table</button>-->
+    <!--                        </div>-->
+    <!--                    </form>-->
+    <!--                </div>&lt;!&ndash; End Reservation Form &ndash;&gt;-->
 
-            </div>
+    <!--            </div>-->
 
-        </div>
-    </section><!-- End Book A Table Section -->
+    <!--        </div>-->
+    <!--    </section>&lt;!&ndash; End Book A Table Section &ndash;&gt;-->
 
     <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery section-bg">
@@ -945,7 +951,12 @@
 
 <!-- Template Main JS File -->
 <script src="../../static/happy_paws/assets/js/main.js"></script>
-
+<div sec:authorize="isAuthenticated()">
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $('#login').hide();
+        });
+    </script>
+</div>
 </body>
-
 </html>

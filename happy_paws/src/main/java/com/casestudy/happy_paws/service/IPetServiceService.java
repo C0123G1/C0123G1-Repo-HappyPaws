@@ -4,6 +4,8 @@ import com.casestudy.happy_paws.model.PetService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IPetServiceService {
     Page<PetService> findPage(Pageable pageable);
 
@@ -14,4 +16,7 @@ public interface IPetServiceService {
     void deleteById(Long id);
 
     Page<PetService> searchPage(String search,Pageable pageable);
+
+    List<PetService> findAll();
+
 }
