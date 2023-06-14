@@ -99,6 +99,14 @@ public class BookingServiceController {
         return "pet-service/booking/list";
     }
 
+
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id")Long bookingServiceId , Model model){
+        List<BookingServiceDetail>bookingServiceDetailList = iBookingServiceServiceDetail.findByBookingServiceIdJoinWithPetService(bookingServiceId);
+        model.addAttribute("bookingServiceDetailList",bookingServiceDetailList);
+        return "pet-service/booking/detail";
+    }
+
     @PostMapping("/delete")
     public String delete(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         iBookingServiceService.deleteById(id);
