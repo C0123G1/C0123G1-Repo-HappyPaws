@@ -94,42 +94,6 @@ public class AccountController {
         return "redirect:/account";
     }
 
-//
-//    @GetMapping("/")
-//    public String sessions(HttpServletRequest httpServletRequest){
-//
-//        Cookie[] cookies = httpServletRequest.getCookies();
-//        if (cookies!=null){
-//            for ( Cookie cookie: cookies) {
-//                if(cookie.getName().equals("cookieUser")){
-//                    httpServletRequest.setAttribute("name",cookie.getValue());
-//                }
-//                if(cookie.getName().equals("cookiePass")){
-//                    httpServletRequest.setAttribute("pass",cookie.getValue());
-//                }
-//            }
-//
-//        }
-//        return "redirect:/";
-//
-//    }
-
-
-//    @PostMapping("/userLogin")
-//    public String LoginUser( HttpServletRequest httpServletRequest, @ModelAttribute("user") Account user, Model model ) {
-//        String username = user.getUsername();
-//        Account user1 = userService.findUser(username);
-//        if (user.getPassword().equals(user1.getPassword())) {
-//            HttpSession session = httpServletRequest.getSession();
-//            session.setAttribute("user", user);
-//            model.addAttribute("mess"," Login Successfully");
-//            return "redirect:/customer";
-//        } else {
-//            model.addAttribute("mess","Login fail");
-//
-//            return "/customers/error" ;
-//        }
-//    }
 
 
 

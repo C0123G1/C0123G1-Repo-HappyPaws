@@ -305,6 +305,7 @@
         </a>
     </form>
 </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     function validateForm() {
         const form = document.forms["formSignUp"];
@@ -315,8 +316,23 @@
             return true;
         }
 
-        alert('Password does not match')
+        // chưa check nhảy ra đc
+
+        //
+        swal({
+            title: "ERROR",
+            text: `password does not match!!!`,
+            icon: "error",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+        //
+
         return false
+
     }
 </script>
 <script>
