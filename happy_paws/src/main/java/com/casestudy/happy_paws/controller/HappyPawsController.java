@@ -34,6 +34,7 @@ public class HappyPawsController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id")Long id, Model model){
         model.addAttribute("product",iProductService.findById(id));
+        model.addAttribute("productPage",iProductService.findAll(PageRequest.of(0,4)));
         return "happy_paws/detail_home";
     }
 }
