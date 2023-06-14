@@ -59,6 +59,13 @@ public class BookingService implements Validator {
         this.total = total;
     }
 
+    public BookingService(Customer customer, LocalDate bookingDate, String bookingTime, Double total) {
+        this.customer = customer;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
+        this.total = total;
+    }
+
     public boolean isDelete() {
         return isDelete;
     }

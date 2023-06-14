@@ -19,4 +19,5 @@ public interface IPetServiceService {
 
     List<PetService> findAll();
 
+    List<PetService> findByBookingServiceIdJoinWithBookingService(Long bookingServiceId);
 }
