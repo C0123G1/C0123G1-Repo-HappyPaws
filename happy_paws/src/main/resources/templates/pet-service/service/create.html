@@ -34,67 +34,74 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
             <textarea th:field="*{description}" class="form-control" ></textarea>
             <p style="color:red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
-        <div class="form-group">
-            <label for="thumbnailURL">ThumbnailURL:</label>
-            <input type="hidden" id="thumbnailURL" th:field="*{image}" />
-            <input id="btnThumbnailURL" type="file" class="form-control"/>
-            <progress id="uploader" value="0" max="100">0%</progress>
+        <div>
+            <span id="card-header">Image</span>
+            <div class="row row-2">
+                <div class="form-group">
+                    <input type="hidden" id="thumbnailURL" th:field="*{image}" />
+                    <input id="btnThumbnailURL" type="file" class="form-control row-1" />
+                    <progress id="uploader" value="0" max="100">0%</progress>
+                    <img id="previewImage" src="" alt="Preview Image" style="display: none; width: 20vw;height: auto" />
+                    <img id="newImage" src="" alt="New Image" style="display: none; width: 20vw;height: auto" />
+                </div>
+            </div>
+            <button id="createButton" style="background:#f8b8be; display: none;" class="btn d-flex mx-auto" disabled><b>Create</b></button>
+            <a th:href="@{/api/admin/pet-service/list}">
+                <button style="background: black" type="button" class="btn btn-dark">Back</button>
+            </a>
         </div>
-    </div>
-    <div class="modal-footer">
-        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-        <input type="submit" class="btn btn-success" value="Add">
-    </div>
-<!--    <input type="date" class="Future">-->
-<!--    <script>$(document).ready(function(){-->
-<!--        var todaysDate = new Date();	// Get today's date.-->
+        <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+        <script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyDpLFDgziCMcgvUDrE64kNuoYiKvU3PeKg",
+                authDomain: "paws-image.firebaseapp.com",
+                projectId: "paws-image",
+                storageBucket: "paws-image.appspot.com",
+                messagingSenderId: "939502564406",
+                appId: "1:939502564406:web:a127764d05552a5bb3d497",
+                measurementId: "G-QQV6T9DTSD"
+            };
 
-<!--        // Get today's date.-->
-<!--        var year = todaysDate.getFullYear();			// yyyy-->
-<!--        var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2); // mm-->
-<!--        var day = ("0" + todaysDate.getDate()).slice(-2);	// dd-->
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
 
-<!--        var dtToday = (year + "-" + month + "-" + day);	// Results in yyyy-mm-dd-->
+            let uploader = document.getElementById('uploader');
+            let fileButton = document.getElementById('btnThumbnailURL');
+            let previewImage = document.getElementById('previewImage');
+            let newImage = document.getElementById('newImage');
+            let thumbnailURL = document.getElementById('thumbnailURL').value;
 
-<!--        // Now set the max date value for the calendar to be that date.-->
-<!--        $(".Past input").attr('max', dtToday);-->
-<!--        $(".Future input").attr('min', dtToday);-->
-<!--    });</script>-->
-</form>
-<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyDpLFDgziCMcgvUDrE64kNuoYiKvU3PeKg",
-        authDomain: "paws-image.firebaseapp.com",
-        projectId: "paws-image",
-        storageBucket: "paws-image.appspot.com",
-        messagingSenderId: "939502564406",
-        appId: "1:939502564406:web:a127764d05552a5bb3d497",
-        measurementId: "G-QQV6T9DTSD"
-    };
+            if (thumbnailURL) {
+                previewImage.src = thumbnailURL;
+                previewImage.style.display = 'block';
+            }
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    // const analytics = getAnalytics(app);
-    let uploader = document.getElementById('uploader');
-    let fileButton = document.getElementById('btnThumbnailURL');
-    fileButton.addEventListener('change', function (e) {
-        let file = e.target.files[0];
-        let storageRef = firebase.storage().ref('img/' + file.name);
-        let task = storageRef.put(file);
-        task.on('state_changed', function progress(snapshot) {
-            let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            uploader.value = percentage;
+            fileButton.addEventListener('change', function (e) {
+                let file = e.target.files[0];
+                let storageRef = firebase.storage().ref('img/' + file.name);
+                let task = storageRef.put(file);
 
-        });
+                task.on('state_changed', function progress(snapshot) {
+                    let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    uploader.value = percentage;
 
-        task
-            .then(snapshot => snapshot.ref.getDownloadURL())
-            .then(url => {
-                document.getElementById('thumbnailURL').setAttribute("value", url);
-            })
-    });
-</script>
+                    if (percentage === 100) {
+                        document.getElementById('createButton').removeAttribute('disabled');
+                    } else {
+                        document.getElementById('createButton').setAttribute('disabled', 'disabled');
+                    }
+                });
+
+                task.then(snapshot => snapshot.ref.getDownloadURL())
+                    .then(url => {
+                        document.getElementById('thumbnailURL').setAttribute("value", url);
+                        previewImage.style.display = 'none';
+                        newImage.src = url;
+                        newImage.style.display = 'block';
+                    });
+            });
+        </script>
+
 </body>
 </html>
 <script src="/crud_table.js"></script>
