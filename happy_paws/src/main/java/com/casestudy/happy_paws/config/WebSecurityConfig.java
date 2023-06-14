@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         // Các trang không yêu cầu login
-        http.authorizeRequests().antMatchers("/account/login","/customer/create","/customer/save","/customer/get-code","/customer/check").permitAll();
+        http.authorizeRequests().antMatchers("/account/login","/customer/create","/customer/save","/customer/get-code","/customer/check","/").permitAll();
 
         http.authorizeRequests()
                 .antMatchers("/customer")
@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("*", "/customer/*")
                 .access("hasRole('ADMIN')");
         http.authorizeRequests()
-                .antMatchers("/customer/", "/customer/")
+                .antMatchers("/customer/", "/customer/","detail/")
                 .access("hasRole('CUSTOMER')");
         http.authorizeRequests()
                 .antMatchers("/account", "/account/**")
@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Submit URL của trang login
                 .loginProcessingUrl("/account/security") // Submit URL
                 .loginPage("/account/login")//
-                .defaultSuccessUrl("/customer")//
+                .defaultSuccessUrl("/")//
                 .failureUrl("/account/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")
