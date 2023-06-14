@@ -166,6 +166,7 @@
             </div>
             <form th:action="@{/delete-product}" method="get">
                 <div class="modal-body">
+                    <input type="text" name="userName" th:value="${#authentication.getName()}" hidden>
                     <input type="text" id="id" name="id" hidden>
                     Do you want to delete <span style="color: red" id="name"></span>?
                 </div>

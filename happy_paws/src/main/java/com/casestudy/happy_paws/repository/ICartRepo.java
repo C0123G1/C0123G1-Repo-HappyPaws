@@ -18,4 +18,8 @@ public interface ICartRepo extends JpaRepository<Cart,Long> {
     @Modifying
     @Transactional
     void payMentCart(@Param("customerId")Integer customerId);
+    @Query(value = "select sum(c.quantity * c.product.price) from Cart c where c.customer.customerId = :customerId and c.pendingStatus = false")
+    Float getTotalPricecart(@Param("customerId") Integer customerId);
+    @Query(value = "select count(c.cartId) from Cart  c where c.customer.customerId = :customerId and c.pendingStatus = false")
+    Integer countItemQuantity(@Param("customerId") Integer customerId);
 }

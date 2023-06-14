@@ -47,19 +47,18 @@ public class CartServiceImpl implements ICartService {
         return productQuantity;
     }
 
-    public Integer countItemQuantity() {
-        List<Cart> carts = iCartRepo.findAll();
-        return carts.size();
-
+    public Integer countItemQuantity(Integer customerId) {
+//        List<Cart> carts = iCartRepo.findAll();
+        return iCartRepo.countItemQuantity(customerId);
     }
 
-    public Float countTotalPayment() {
-        List<Cart> carts = iCartRepo.findAll();
-        float payment = 0;
-        for (Cart c : carts) {
-            payment += c.getProduct().getPrice() * (float) c.getQuantity();
-        }
-        return payment;
+    public Float countTotalPayment(Integer customerId) {
+//        List<Cart> carts = iCartRepo.findAll();
+//        float payment = 0;
+//        for (Cart c : carts) {
+//            payment += c.getProduct().getPrice() * (float) c.getQuantity();
+//        }
+        return iCartRepo.getTotalPricecart(customerId);
     }
 
     @Override

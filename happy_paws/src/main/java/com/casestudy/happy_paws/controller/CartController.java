@@ -39,15 +39,15 @@ public class CartController {
         List<Cart> list = iCartService.getAll(customerId);
         model.addAttribute("cartList", list);
         model.addAttribute("customerId", customerId);
-        model.addAttribute("totalItem", iCartService.countItemQuantity());
-        model.addAttribute("totalBill",iCartService.countTotalPayment());
+        model.addAttribute("totalItem", iCartService.countItemQuantity(customerId));
+        model.addAttribute("totalBill",iCartService.countTotalPayment(customerId));
         return "cart_view/cart";
     }
 
     @GetMapping("/delete-product")
-    public String deleteProductInCart(@RequestParam("id") Long id) {
+    public String deleteProductInCart(@RequestParam("id") Long id,@RequestParam("userName") String userName) {
         iCartService.deleteCart(id);
-        return "redirect:/cart";
+        return "redirect:/cart?userName=" + userName;
     }
     @GetMapping("/add/{id}")
     public String addQuantityToCart(@PathVariable("id")Long cartId,@RequestParam("customerId") Integer customerId) {

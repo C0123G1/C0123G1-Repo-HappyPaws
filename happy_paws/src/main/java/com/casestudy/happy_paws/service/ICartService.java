@@ -17,7 +17,7 @@ public interface ICartService {
 
     void save(Cart cart1);
     Integer countProductQuantity();
-    Integer countItemQuantity();
-    Float countTotalPayment();
+    Integer countItemQuantity(Integer customerId);
+    Float countTotalPayment(Integer customerId);
     boolean payMentCart(Integer customerId);
 }
