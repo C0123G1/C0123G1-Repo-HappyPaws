@@ -29,9 +29,7 @@ public class AccountController {
     public String index(@RequestParam(value = "page",defaultValue = "0") int page, Model model, HttpServletResponse response){
         Page<Account> accountList = accountService.getAllPage(page);
         model.addAttribute("accountList", accountList);
-
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private, o-age=0");
-
         return "/customers/account";
     }
     @GetMapping("/create")
@@ -46,10 +44,6 @@ public class AccountController {
        redirectAttributes.addFlashAttribute("mess","Add New Successfully");
         return "redirect:/account";
     }
-
-
-
-
     @GetMapping("/login")
     public String login(Model model ){
 
