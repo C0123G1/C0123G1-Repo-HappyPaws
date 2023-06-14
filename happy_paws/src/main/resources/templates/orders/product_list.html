@@ -80,12 +80,6 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>
-                <span class="custom-checkbox">
-                    <input type="checkbox" id="selectAll">
-                    <label for="selectAll"></label>
-                </span>
-                </th>
                 <th>ID</th>
                 <th>Product Name</th>
                 <th>Origin</th>
@@ -96,12 +90,6 @@
             </thead>
             <tbody>
             <tr th:each="product: ${productPage}">
-                <td>
-                <span class="custom-checkbox">
-                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                    <label for="checkbox1"></label>
-                </span>
-                </td>
                 <td th:text="${product.id}"></td>
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.origin}"></td>
@@ -186,7 +174,7 @@
 </div>
 <!-- Current Order-->
 <div id="infoCurrentOrder" class="modal fade">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog-sm modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Current Order</h4>
@@ -236,7 +224,10 @@
             </div>
             <div class="modal-footer">
                 <div>
-                    <h5 style=" color: black;margin: 0;" th:text="${'Total : ' + totalPriceCart + ' $ '}"></h5>
+                    <h5 style=" color: black;margin: 0;" th:if="${totalPriceCart >0}"
+                        th:text="${'Total : ' + totalPriceCart + ' $ '}"></h5>
+                    <h5 style=" color: black;margin: 0;" th:if="${totalPriceCart == null}"
+                        th:text="${'Total : 0 $ '}"></h5>
                 </div>
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                 <a th:href="@{/order-detail/payment/{customerId}(customerId = ${customer.customerId})}"
@@ -296,27 +287,47 @@
         $(document).on('click', '#delete', function () {
             let index = $(this).find('#indexDelete').val();
             let infoCurrentOrder = document.getElementById('infoCurrentOrder');
+            let isModalShown = $(infoCurrentOrder).is(':visible'); // Kiểm tra trạng thái của modal
+
             $.ajax({
                 url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=delete',
-                Type: 'GET',
+                type: 'GET',
                 success: function (data) {
+                    // Lưu trạng thái modal vào localStorage
+                    localStorage.setItem('isModalShown', isModalShown);
                     location.reload();
                 }
-            })
+            });
         })
         $(document).on('click', '#more', function () {
             let index = $(this).find('#indexMore').val();
+            let infoCurrentOrder = document.getElementById('infoCurrentOrder');
+            let isModalShown = $(infoCurrentOrder).is(':visible');
             $.ajax({
                 url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=more',
                 type: 'GET',
                 success: function (data) {
+                    localStorage.setItem('isModalShown', isModalShown);
                     location.reload();
                 }
             });
 
         });
     });
+    $(document).ready(function () {
+        // Kiểm tra trạng thái modal từ localStorage
+        let isModalShown = localStorage.getItem('isModalShown');
 
+        if (isModalShown === 'true') {
+            let infoCurrentOrder = document.getElementById('infoCurrentOrder');
+            $(infoCurrentOrder).modal('show');
+        }
+        // Xóa trạng thái modal khỏi localStorage
+        localStorage.removeItem('isModalShown');
+    });
+</script>
+
+<script>
     $(document).on('click', '#deleteProduct', function () {
         let index = $(this).find('#index').val();
         $.ajax({
@@ -327,9 +338,7 @@
             }
         })
     });
-    //    nghien cuu them de xoa bang ajax
 </script>
-
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
