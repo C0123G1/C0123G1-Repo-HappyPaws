@@ -29,8 +29,7 @@ public class ProductController {
 
     @GetMapping("")
     public String showList(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
-
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("id").descending());
+        Pageable pageable = PageRequest.of(page, 10);
         model.addAttribute("productList", productService.findAll(pageable));
         model.addAttribute("pageList", true);
         model.addAttribute("productTypeList",productTypeService.findAll());

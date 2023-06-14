@@ -204,7 +204,7 @@ public class CustomerController {
         model.addAttribute("account", account);
         model.addAttribute("customerId", customerId);
         model.addAttribute("count", count);
-        model.addAttribute("mess" ,"You cant get code only three !!!");
+        model.addAttribute("messa" ,"You cant get code only three !!!");
               return "/customers/pageCheck";
 
     }

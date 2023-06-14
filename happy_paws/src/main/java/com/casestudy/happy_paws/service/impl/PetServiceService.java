@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PetServiceService implements IPetServiceService {
     @Autowired private IPetServiceRepository iPetServiceRepository;
@@ -34,5 +36,10 @@ public class PetServiceService implements IPetServiceService {
     @Override
     public Page<PetService> searchPage(String search,Pageable pageable) {
         return iPetServiceRepository.searchPage('%'+search+'%',pageable);
+    }
+
+    @Override
+    public List<PetService> findAll() {
+        return iPetServiceRepository.findAll();
     }
 }

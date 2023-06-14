@@ -2,6 +2,8 @@ package com.casestudy.happy_paws.controller;
 
 import com.casestudy.happy_paws.dto.OrderDetailDAO;
 import com.casestudy.happy_paws.model.*;
+import com.casestudy.happy_paws.repository.ICartRepo;
+import com.casestudy.happy_paws.service.ICartService;
 import com.casestudy.happy_paws.service.IOrderDetailService;
 import com.casestudy.happy_paws.service.IOrderService;
 import org.hibernate.Session;
@@ -28,6 +30,8 @@ public class OrderDetailController {
     private IOrderDetailService iOrderDetailService;
     @Autowired
     private IOrderService iOrderService;
+    @Autowired
+    private ICartService iCartService;
 
     @GetMapping("")
     public String showOrderDetail(@RequestParam("orderId") Long orderId, @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -148,7 +152,7 @@ public class OrderDetailController {
                 break;
             }
         }
-        return "redirect:/order-detail/create?customerId=" + customerId;
+        return "redirect:/order-detail/create?customerId=" + customerId + "&now=cart";
     }
 
     @GetMapping("/edit-quantity-cart")
@@ -170,10 +174,9 @@ public class OrderDetailController {
         return "redirect:/order-detail/create?customerId=" + customerId + "&now=cart";
     }
 
-    @GetMapping("/payment-cart")
+    @GetMapping("/payment-cart/{customerId}")
     @Transactional(rollbackFor = Throwable.class)
-    public String paymentCart() {
-        Integer customerId = 1;
+    public String paymentCart(@PathVariable("customerId") Integer customerId) {
         List<Cart> cartList = iOrderDetailService.findAllCart(customerId);
         List<OrderDetail> orderDetailList = new ArrayList<>();
         Orders orders = new Orders(iOrderDetailService.findCustomerById(customerId));
@@ -183,6 +186,9 @@ public class OrderDetailController {
             orderDetailList.add(orderDetail);
         }
         boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetailList, orders);
-        return "orders/order_detail";
+        if(statusSaveOrderDetail){
+            iCartService.payMentCart(customerId);
+        }
+        return "redirect:/cart/customerId=" + customerId ;
     }
 }
