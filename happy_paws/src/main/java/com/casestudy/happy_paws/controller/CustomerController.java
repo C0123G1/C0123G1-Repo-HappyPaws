@@ -165,8 +165,8 @@ public class CustomerController {
             account.setCode(code);
             accountService.update(account);
             model.addAttribute("account", account);
-            model.addAttribute("mess", "Create Successfully");
-            return "redirect:/customer";
+            model.addAttribute("mess", "Sign up Successfully");
+            return "/happy_paws/index";
         }
         return "/customers/pageCheck";
 
@@ -204,7 +204,7 @@ public class CustomerController {
         model.addAttribute("account", account);
         model.addAttribute("customerId", customerId);
         model.addAttribute("count", count);
-        model.addAttribute("messa" ,"You cant get code only three !!!");
+        model.addAttribute("mess" ,"You cant get code only three !!!");
               return "/customers/pageCheck";
 
     }

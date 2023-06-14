@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <style>
         body {
@@ -80,8 +79,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<div class="w3-light-grey">
-    <div id="myBar" class="w3-container w3-green" style="width:66%">66%</div>
+
 
 <form th:action="@{/customer/check}" method="post">
     <div class="container height-100 d-flex justify-content-center align-items-center">
@@ -102,7 +100,7 @@
                         </button>
 
                         <a th:href="@{/customer/get-code(accountId=${account.getAccountId()},customerId=${customerId},count= ${count})}">
-                            <button type="button" style="margin-top: 10px;height: 50%;width: 73%">get code</button>
+                            <button type="button" style="margin-top: 10px;height: 50%;width: 73%">Get code</button>
 
 <!--                            <button style="background: palevioletred ;color: black; height: 7vh;width: 12vw;margin-top: 8px">Get Code-->
 <!--                            </button>-->
@@ -115,7 +113,6 @@
     </div>
 </form>
 
-</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function (event) {

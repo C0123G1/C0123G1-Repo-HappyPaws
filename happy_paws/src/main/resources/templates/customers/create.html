@@ -79,9 +79,7 @@
     </style>
 </head>
 <body>
-<div class="w3-light-grey">
-    <div id="myBar" class="w3-container w3-green" style="width:33%">33%</div>
-</div>
+
 <br>
 
 
@@ -102,38 +100,38 @@
                 <form th:action="@{/customer/save}" method="post"  onsubmit="return validateForm()" name="formSignUp" th:object="${customerDTO}" >
 
                     <div class="mt-4 inputs"><span>Username</span>
-                        <input type="text" placeholder="user" class="form-control" th:field="*{accountDTO.username}"
+                        <input type="text"  class="form-control" th:field="*{accountDTO.username}"
                                required/>
                         <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"
                            th:errors="*{accountDTO.username}"></p>
                     </div>
                     <div class="mt-2 inputs"><span>Password</span>
-                        <input type="password" placeholder="password" class="form-control" id="password" name="password" pattern="^[a-zA-Z0-9]{8,30}$"
+                        <input type="password"  class="form-control" id="password" name="password"
                                th:field="*{accountDTO.password}"   required />
                         <p style="color: red" th:if="${#fields.hasErrors('accountDTO.password')}"
                            th:errors="*{accountDTO.password}"></p>
                     </div>
 
                     <div class="mt-2 inputs"><span>Confirm Password</span>
-                        <input  type="password" placeholder="confirm password" class="form-control" pattern="^[a-zA-Z0-9]{8,30}$" id="confirm" name="confirm"
+                        <input  type="password" class="form-control"  id="confirm" name="confirm"
                                  required/>
                     </div>
                     <div class="mt-2 inputs"><span>Name</span>
-                        <input class="form-control" placeholder="Your Name" type="text" th:field="*{name}" required>
+                        <input class="form-control"  type="text" th:field="*{name}" required>
                         <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                     </div>
 
                     <div class="mt-2 inputs"><span>Phone</span>
-                        <input class="form-control" placeholder=" phone number " type="text" th:field="*{phone}"
+                        <input class="form-control"  type="text" th:field="*{phone}"
                                required>
                         <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
                     </div>
                     <div class="mt-2 inputs"><span>Email</span>
-                        <input class="form-control" placeholder="email " type="email" th:field="*{email}" required>
+                        <input class="form-control"  type="email" th:field="*{email}" required>
                         <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                     </div>
                     <div class="mt-2 inputs"><span>Address</span>
-                        <input class="form-control" placeholder=" phone number " type="text" th:field="*{address}"
+                        <input class="form-control"  type="text" th:field="*{address}"
                                required>
                         <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
                     </div>
@@ -170,9 +168,6 @@
             return true;
         }
 
-        // chưa check nhảy ra đc
-
-                //
                 swal({
                     title: "ERROR",
                     text: `password does not match!!!`,
