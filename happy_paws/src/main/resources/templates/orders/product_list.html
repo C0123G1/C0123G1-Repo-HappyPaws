@@ -107,32 +107,32 @@
         </table>
         <div th:if="${pageList == true}">
             <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-               th:href="@{/order-detail/create(customerId = ${customer.customerId},page= ${productPage.number -1})}"
+               th:href="@{/order-detail/create(customerId = ${customer.customerId},now = ${now},page= ${productPage.number -1})}"
                th:if="${productPage.hasPrevious()}">Previous</a>
             <th:block th:each="pageNo : ${#numbers.sequence(0,productPage.getTotalPages() -1)}">
                 <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-                   th:href="@{/order-detail/create(customerId = ${customer.customerId},page= ${pageNo})}"
+                   th:href="@{/order-detail/create(customerId = ${customer.customerId},now = ${now},page= ${pageNo})}"
                    th:text="${pageNo+1}"
                    th:classappend="${pageNo == productPage.number ? 'active' : ''}"
                 ></a>
             </th:block>
             <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-               th:href="@{/order-detail/create(customerId = ${customer.customerId},page= ${productPage.number +1})}"
+               th:href="@{/order-detail/create(customerId = ${customer.customerId},now = ${now},page= ${productPage.number +1})}"
                th:if="${productPage.hasNext()}">Next</a>
         </div>
         <div th:if="${pageSearch == true}">
             <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-               th:href="@{/orders/search-product(name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId} ,page= ${productPage.number -1})}"
+               th:href="@{/orders/search-product(now = ${now},name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId} ,page= ${productPage.number -1})}"
                th:if="${productPage.hasPrevious()}">Previous</a>
             <th:block th:each="pageNo : ${#numbers.sequence(0,productPage.getTotalPages() -1)}">
                 <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-                   th:href="@{/orders/search-product(name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId} ,page= ${pageNo})}"
+                   th:href="@{/orders/search-product(now = ${now},name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId} ,page= ${pageNo})}"
                    th:text="${pageNo+1}"
                    th:classappend="${pageNo == productPage.number ? 'active' : ''}"
                 ></a>
             </th:block>
             <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-               th:href="@{/orders/search-product(name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId},page= ${productPage.number +1})}"
+               th:href="@{/orders/search-product(now = ${now},name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId},page= ${productPage.number +1})}"
                th:if="${productPage.hasNext()}">Next</a>
         </div>
     </div>

@@ -88,6 +88,7 @@ public class OrderController {
     @GetMapping("/search-product")
     public String searchProduct(@RequestParam("customerId") Integer customerId, @RequestParam("chosePrice") Integer chosePrice,
                                 @RequestParam("name") String name, @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                @RequestParam(value = "now",defaultValue = "noCart") String now,
                                 Model model, HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         Pageable pageable = PageRequest.of(page, 8);
@@ -98,6 +99,7 @@ public class OrderController {
         }
         session.setAttribute("cart", productList);
         model.addAttribute("session", session);
+        model.addAttribute("now", now);
         model.addAttribute("customer", iOrderDetailService.findCustomerById(customerId));
         model.addAttribute("productPage", productPage);
         model.addAttribute("name", name);

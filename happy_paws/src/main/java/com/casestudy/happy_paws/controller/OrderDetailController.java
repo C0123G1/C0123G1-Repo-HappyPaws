@@ -66,8 +66,11 @@ public class OrderDetailController {
                 totalPriceCart += c.getProducts().getPrice() * c.getQuantity();
             }
             model.addAttribute("totalPriceCart", totalPriceCart);
+            model.addAttribute("now", "cart");
+        }else{
+            model.addAttribute("now", "noCart");
+            session.setAttribute("cart", cart);
         }
-        session.setAttribute("cart", cart);
         model.addAttribute("session", session);
         model.addAttribute("customer", customer);
         model.addAttribute("pageList", true);
@@ -176,19 +179,22 @@ public class OrderDetailController {
 
     @GetMapping("/payment-cart/{customerId}")
     @Transactional(rollbackFor = Throwable.class)
-    public String paymentCart(@PathVariable("customerId") Integer customerId) {
+    public String paymentCart(@PathVariable("customerId") Integer customerId,RedirectAttributes redirectAttributes) {
         List<Cart> cartList = iOrderDetailService.findAllCart(customerId);
-        List<OrderDetail> orderDetailList = new ArrayList<>();
-        Orders orders = new Orders(iOrderDetailService.findCustomerById(customerId));
-        boolean statusSave = iOrderService.saveOrder(orders);
-        for (Cart c: cartList){
-            OrderDetail orderDetail = new OrderDetail(c.getProduct(),orders,c.getQuantity(),c.getQuantity()*c.getProduct().getPrice());
-            orderDetailList.add(orderDetail);
+        if(cartList.size()>0){
+            List<OrderDetail> orderDetailList = new ArrayList<>();
+            Orders orders = new Orders(iOrderDetailService.findCustomerById(customerId));
+            boolean statusSave = iOrderService.saveOrder(orders);
+            for (Cart c: cartList){
+                OrderDetail orderDetail = new OrderDetail(c.getProduct(),orders,c.getQuantity(),c.getQuantity()*c.getProduct().getPrice());
+                orderDetailList.add(orderDetail);
+            }
+            boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetailList, orders);
+            if(statusSaveOrderDetail){
+                boolean statusPayment =  iCartService.payMentCart(customerId);
+                redirectAttributes.addFlashAttribute("statusPayment",statusPayment);
+            }
         }
-        boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetailList, orders);
-        if(statusSaveOrderDetail){
-            iCartService.payMentCart(customerId);
-        }
-        return "redirect:/cart/customerId=" + customerId ;
+        return "redirect:/cart?customerId=" + customerId ;
     }
 }

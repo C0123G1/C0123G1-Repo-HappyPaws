@@ -138,8 +138,9 @@
                                     class="lead fw-normal" th:text="${totalItem}"></span>
                             </p>
                             <p class="mb-0 me-5 d-flex align-items-center">
-                                <span class="small text-muted me-2">Order total:</span> <span
-                                    class="lead fw-normal" th:text="'$'+${totalBill}"></span>
+                                <span class="small text-muted me-2">Order total:</span>
+                                <span class="lead fw-normal" th:if="${totalBill == null}" th:text="'$0'"></span>
+                                <span class="lead fw-normal" th:if="${totalBill  != null}" th:text="'$'+${totalBill}"></span>
                             </p>
                         </div>
 
@@ -148,7 +149,7 @@
 
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-light btn-lg me-2">Continue shopping</button>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                    <button th:if="${cartList.size() > 0}" id="payment" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal">
                         Payment
                     </button>
                 </div>
@@ -267,6 +268,26 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 <script src="../../static/happy_paws/assets/js/main.js"></script>
+
+<div th:if="${statusPayment}">
+    <span hidden id="inputId" th:text="'Successfully'"></span>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script th:if="${statusPayment}">
+    let inputId = document.getElementById("inputId");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "Payment",
+            text: inputId.innerText,
+            icon: "success",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
 <div sec:authorize="isAuthenticated()">
     <script th:inline="javascript">
         $(document).ready(function () {

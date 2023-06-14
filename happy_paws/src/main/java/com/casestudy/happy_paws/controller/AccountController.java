@@ -58,7 +58,6 @@ public class AccountController {
     }
     @GetMapping("/login")
     public String login(Model model ){
-
         Account account = new Account();
         model.addAttribute("account", account);
         return "/customers/login";
