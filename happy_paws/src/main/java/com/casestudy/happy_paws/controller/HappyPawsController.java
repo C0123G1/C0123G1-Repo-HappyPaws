@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,5 +30,10 @@ public class HappyPawsController {
         model.addAttribute("productTypeList",iProductTypeService.findAll());
         model.addAttribute("petServiceList",iPetServiceService.findPage(PageRequest.of(0,6)));
         return "/happy_paws/index";
+    }
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id")Long id, Model model){
+        model.addAttribute("product",iProductService.findById(id));
+        return "happy_paws/detail_home";
     }
 }
