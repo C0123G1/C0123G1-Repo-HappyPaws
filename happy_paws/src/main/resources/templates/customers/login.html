@@ -23,16 +23,17 @@
         <!--              class="material-icons">&#xE147;</i>-->
         <!--      </a></button>-->
 
-    </div>
-    <!-- /login?error=true -->
-    <div th:if="${#request.getParameter('error') == 'true'}"
-         style="color:red;margin:10px 0px;">
-        Login Failed!!!<br/>
-        Reason :
-        <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
-              th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+        <div th:if="${#request.getParameter('error') == 'true'}"
+             style="color:red">
+            <span id="inputId" style="color: red">
+            Login Failed!!!<br/>
+            Reason :
+            <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+                  th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
                 Static summary
          </span>
+                </span>
+        </div>
 
     </div>
     <div class="form-container sign-in-container">
@@ -49,7 +50,7 @@
             </div>
             <span>or use your account</span>
 
-            <input type="text" placeholder="Email" name='username' value=''/>
+            <input type="text" placeholder="Email" name='username' value='' autofocus/>
             <input name="password" type="password" placeholder="Password"/>
 
 
@@ -76,7 +77,22 @@
     </div>
 </div>
 
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    let inputId = document.getElementById("inputId");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "WARNING",
+            text: inputId.innerText,
+            icon: "warning",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
 </body>
 <script>
     const signUpButton = document.getElementById('signUp');

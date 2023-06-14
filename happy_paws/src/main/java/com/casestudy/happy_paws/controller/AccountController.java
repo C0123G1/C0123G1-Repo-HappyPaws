@@ -32,6 +32,18 @@ public class AccountController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private, o-age=0");
         return "/customers/account";
     }
+//    @GetMapping("/create")
+//    public  String create(Model model){
+//        model.addAttribute("account" , new Account());
+//        model.addAttribute("roleList" , roleService.findAll());
+//        return "/customers/account-create";
+//    }
+//    @PostMapping("/save")
+//    public String save(@ModelAttribute("account") Account account , RedirectAttributes redirectAttributes){
+//        accountService.save(account);
+//       redirectAttributes.addFlashAttribute("mess","Add New Successfully");
+//        return "redirect:/account";
+//    }
     @GetMapping("/create")
     public  String create(Model model){
         model.addAttribute("account" , new Account());
@@ -40,8 +52,8 @@ public class AccountController {
     }
     @PostMapping("/save")
     public String save(@ModelAttribute("account") Account account , RedirectAttributes redirectAttributes){
-        accountService.save(account);
-       redirectAttributes.addFlashAttribute("mess","Add New Successfully");
+        accountService.update(account);
+        redirectAttributes.addFlashAttribute("mess","Add New Successfully");
         return "redirect:/account";
     }
     @GetMapping("/login")
@@ -53,8 +65,8 @@ public class AccountController {
     }
     @GetMapping( "/logoutSuccessful")
     public String logoutSuccessfulPage(Model model) {
-        model.addAttribute("title", "Logout");
-        return "redirect:/customer";
+        model.addAttribute("message", "Logout");
+        return "redirect:/";
     }
 
     @GetMapping("/{accountId}/edit")
@@ -76,42 +88,6 @@ public class AccountController {
         return "redirect:/account";
     }
 
-//
-//    @GetMapping("/")
-//    public String sessions(HttpServletRequest httpServletRequest){
-//
-//        Cookie[] cookies = httpServletRequest.getCookies();
-//        if (cookies!=null){
-//            for ( Cookie cookie: cookies) {
-//                if(cookie.getName().equals("cookieUser")){
-//                    httpServletRequest.setAttribute("name",cookie.getValue());
-//                }
-//                if(cookie.getName().equals("cookiePass")){
-//                    httpServletRequest.setAttribute("pass",cookie.getValue());
-//                }
-//            }
-//
-//        }
-//        return "redirect:/";
-//
-//    }
-
-
-//    @PostMapping("/userLogin")
-//    public String LoginUser( HttpServletRequest httpServletRequest, @ModelAttribute("user") Account user, Model model ) {
-//        String username = user.getUsername();
-//        Account user1 = userService.findUser(username);
-//        if (user.getPassword().equals(user1.getPassword())) {
-//            HttpSession session = httpServletRequest.getSession();
-//            session.setAttribute("user", user);
-//            model.addAttribute("mess"," Login Successfully");
-//            return "redirect:/customer";
-//        } else {
-//            model.addAttribute("mess","Login fail");
-//
-//            return "/customers/error" ;
-//        }
-//    }
 
 
 

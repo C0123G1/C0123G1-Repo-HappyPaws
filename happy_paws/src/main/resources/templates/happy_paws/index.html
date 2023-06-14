@@ -31,7 +31,8 @@
     <link href="../../static/happy_paws/assets/css/main.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- =======================================================
     * Template Name: Yummy
     * Updated: May 30 2023 with Bootstrap v5.3.0
@@ -46,58 +47,47 @@
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between ">
-                <a href="#" class="logo d-flex align-items-center me-auto me-lg-0">
+        <a href="#" class="logo d-flex align-items-center me-auto me-lg-0">
 
-                    <h1>Happy <br> Paws<img
-                            src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/19454/cat-s-paw-clipart-md.png"
-                            height="45"
-                            alt="MDB Logo"
-                            loading="lazy" style="transform: rotate(-18deg);margin-top: -5.5vh;margin-left: 2vw"/></h1>
-                </a>
+            <h1>Happy <br> Paws<img
+                    src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/19454/cat-s-paw-clipart-md.png"
+                    height="45"
+                    alt="MDB Logo"
+                    loading="lazy" style="transform: rotate(-18deg);margin-top: -5.5vh;margin-left: 2vw"/></h1>
+        </a>
 
 
-                <nav id="navbar" class="navbar">
-                    <ul>
-                        <li><a href="#hero">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#menu">Menu</a></li>
-                        <li><a href="#events">Events</a></li>
-                        <li><a href="#chefs">Services</a></li>
-                        <li><a href="#gallery">Gallery</a></li>
-                        <li class="dropdown"><a href="#"><span>Drop Down</span> <i
-                                class="bi bi-chevron-down dropdown-indicator"></i></a>
-                            <ul>
-                                <li><a href="#">Drop Down 1</a></li>
-                                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
-                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
-                                    <ul>
-                                        <li><a href="#">Deep Drop Down 1</a></li>
-                                        <li><a href="#">Deep Drop Down 2</a></li>
-                                        <li><a href="#">Deep Drop Down 3</a></li>
-                                        <li><a href="#">Deep Drop Down 4</a></li>
-                                        <li><a href="#">Deep Drop Down 5</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Drop Down 2</a></li>
-                                <li><a href="#">Drop Down 3</a></li>
-                                <li><a href="#">Drop Down 4</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-          <!-- .navbar -->
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#chefs">Services</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- .navbar -->
 
-            <!--        <a class="btn-book-a-table" style="width: 13vw" href="#book-a-table">Book a Table</a>-->
-                   <a id="login" style="width: 6vw; text-align: center" class="btn-book-a-table" th:href="@{/account/login}" th:text="'Login'"></a>
-                   <a class="btn-book-a-table" style="width: 6vw; text-align: center" sec:authorize="hasAnyRole('ADMIN','CUSTOMER','EMPLOYEE')"
-                                         th:href="@{/account/logout}">Logout</a>
-                 <a class="btn-book-a-table" style="width: 15vw; text-align: center"  sec:authorize="hasRole('ADMIN')"
-                                         th:href="@{/account/}" th:text="'Admin Manager'"></a>
-        <a class="btn-book-a-table" style="width: 15vw; text-align: center"  sec:authorize="hasRole('CUSTOMER')"
-            th:text="${#authentication.getName()}"></a>
-                <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-                <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+        <!--        <a class="btn-book-a-table" style="width: 13vw" href="#book-a-table">Book a Table</a>-->
+        <a id="login" style="width: 6vw; text-align: center" class="btn-book-a-table" th:href="@{/account/login}"
+           th:text="'Login'"></a>
+        <a class="btn-book-a-table" style="width: 6vw; text-align: center"
+           sec:authorize="hasAnyRole('ADMIN','CUSTOMER','EMPLOYEE')"
+           th:href="@{/account/logout}">Logout</a>
+        <a class="btn-book-a-table" style=" text-align: center" sec:authorize="hasRole('ADMIN')"
+           th:href="@{/account/}" th:text="'Admin Manager'"></a>
+        <a class="btn-book-a-table" style="width: 10vw; text-align: center" sec:authorize="hasRole('CUSTOMER')"
+           th:text="${#authentication.getName()}"></a>
+        <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/cart(userName = ${#authentication.getName()})}" style="margin-top: 5.5px" data-toggle="modal"><i
+                style="font-size: 30px;
+                border: 1px solid;
+                border-radius: 10px;"
+                class="material-icons" title="Cart">&#xE8cc;</i>
+        </a>
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     </div>
 </header><!-- End Header -->
 
@@ -172,7 +162,8 @@
 
                         <div class="position-relative mt-4">
                             <img src="assets/img/about-2.jpg" class="img-fluid" alt="">
-                            <a href="https://www.youtube.com/watch?v=KfFvqImjJBg&embeds_referring_euri=https%3A%2F%2Fdogily.vn%2F&source_ve_path=MjM4NTE&feature=emb_title" class="glightbox play-btn"></a>
+                            <a href="https://www.youtube.com/watch?v=KfFvqImjJBg&embeds_referring_euri=https%3A%2F%2Fdogily.vn%2F&source_ve_path=MjM4NTE&feature=emb_title"
+                               class="glightbox play-btn"></a>
                         </div>
                     </div>
                 </div>
@@ -647,78 +638,78 @@
     </section><!-- End Chefs Section -->
 
     <!-- ======= Book A Table Section ======= -->
-<!--    <section id="book-a-table" class="book-a-table">-->
-<!--        <div class="container" data-aos="fade-up">-->
+    <!--    <section id="book-a-table" class="book-a-table">-->
+    <!--        <div class="container" data-aos="fade-up">-->
 
-<!--            <div class="section-header">-->
-<!--                <h2>Book A Table</h2>-->
-<!--                <p>Book <span>Your Stay</span> With Us</p>-->
-<!--            </div>-->
+    <!--            <div class="section-header">-->
+    <!--                <h2>Book A Table</h2>-->
+    <!--                <p>Book <span>Your Stay</span> With Us</p>-->
+    <!--            </div>-->
 
-<!--            <div class="row g-0">-->
+    <!--            <div class="row g-0">-->
 
-<!--                <div class="col-lg-4 reservation-img"-->
-<!--                     style="background-image: url(../../static/happy_paws/assets/img/top-dich-vu-spa-cho-thu-cung-tai-TPHCM.jpg);"-->
-<!--                     data-aos="zoom-out" data-aos-delay="200"></div>-->
+    <!--                <div class="col-lg-4 reservation-img"-->
+    <!--                     style="background-image: url(../../static/happy_paws/assets/img/top-dich-vu-spa-cho-thu-cung-tai-TPHCM.jpg);"-->
+    <!--                     data-aos="zoom-out" data-aos-delay="200"></div>-->
 
-<!--                <div class="col-lg-8 d-flex align-items-center reservation-form-bg">-->
-<!--                    <form th:action="@{/booking-service}" method="post" role="form"-->
-<!--                          class="php-email-form"-->
-<!--                          data-aos="fade-up" data-aos-delay="100">-->
-<!--                        <div class="row gy-4">-->
-<!--                            <div class="col-lg-4 col-md-6">-->
-<!--                                <input type="text" name="name" class="form-control" id="name1" placeholder="Your Name"-->
-<!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-<!--                                <div class="validate"></div>-->
-<!--                            </div>-->
-<!--                            <div class="col-lg-4 col-md-6">-->
-<!--                                <input type="email" class="form-control" name="email" id="email2"-->
-<!--                                       placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">-->
-<!--                                <div class="validate"></div>-->
-<!--                            </div>-->
-<!--                            <div class="col-lg-4 col-md-6">-->
-<!--                                <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone"-->
-<!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-<!--                                <div class="validate"></div>-->
-<!--                            </div>-->
-<!--                            <div class="col-lg-4 col-md-6">-->
-<!--                                <input type="text" name="date" class="form-control" id="date" placeholder="Date"-->
-<!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-<!--                                <div class="validate"></div>-->
-<!--                            </div>-->
-<!--                            <div class="col-lg-4 col-md-6">-->
-<!--                                <input type="text" class="form-control" name="time" id="time" placeholder="Time"-->
-<!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-<!--                                <div class="validate"></div>-->
-<!--                            </div>-->
-<!--                            <div class="col-lg-4 col-md-6">-->
-<!--                                <input type="number" class="form-control" name="people" id="people"-->
-<!--                                       placeholder="# of people" data-rule="minlen:1"-->
-<!--                                       data-msg="Please enter at least 1 chars">-->
-<!--                                <div class="validate"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group mt-3">-->
-<!--                            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>-->
-<!--                            <div class="validate"></div>-->
-<!--                        </div>-->
-<!--                        <div class="mb-3">-->
-<!--                            <div class="loading">Loading</div>-->
-<!--                            <div class="error-message"></div>-->
-<!--                            <div class="sent-message">Your booking request was sent. We will call back or send an Email-->
-<!--                                to confirm your reservation. Thank you!-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="text-center">-->
-<!--                            <button type="submit">Book a Table</button>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>&lt;!&ndash; End Reservation Form &ndash;&gt;-->
+    <!--                <div class="col-lg-8 d-flex align-items-center reservation-form-bg">-->
+    <!--                    <form th:action="@{/booking-service}" method="post" role="form"-->
+    <!--                          class="php-email-form"-->
+    <!--                          data-aos="fade-up" data-aos-delay="100">-->
+    <!--                        <div class="row gy-4">-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="text" name="name" class="form-control" id="name1" placeholder="Your Name"-->
+    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="email" class="form-control" name="email" id="email2"-->
+    <!--                                       placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone"-->
+    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="text" name="date" class="form-control" id="date" placeholder="Date"-->
+    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="text" class="form-control" name="time" id="time" placeholder="Time"-->
+    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-lg-4 col-md-6">-->
+    <!--                                <input type="number" class="form-control" name="people" id="people"-->
+    <!--                                       placeholder="# of people" data-rule="minlen:1"-->
+    <!--                                       data-msg="Please enter at least 1 chars">-->
+    <!--                                <div class="validate"></div>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                        <div class="form-group mt-3">-->
+    <!--                            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>-->
+    <!--                            <div class="validate"></div>-->
+    <!--                        </div>-->
+    <!--                        <div class="mb-3">-->
+    <!--                            <div class="loading">Loading</div>-->
+    <!--                            <div class="error-message"></div>-->
+    <!--                            <div class="sent-message">Your booking request was sent. We will call back or send an Email-->
+    <!--                                to confirm your reservation. Thank you!-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                        <div class="text-center">-->
+    <!--                            <button type="submit">Book a Table</button>-->
+    <!--                        </div>-->
+    <!--                    </form>-->
+    <!--                </div>&lt;!&ndash; End Reservation Form &ndash;&gt;-->
 
-<!--            </div>-->
+    <!--            </div>-->
 
-<!--        </div>-->
-<!--    </section>&lt;!&ndash; End Book A Table Section &ndash;&gt;-->
+    <!--        </div>-->
+    <!--    </section>&lt;!&ndash; End Book A Table Section &ndash;&gt;-->
 
     <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery section-bg">
