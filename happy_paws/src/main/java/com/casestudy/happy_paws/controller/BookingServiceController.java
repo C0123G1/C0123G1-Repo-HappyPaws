@@ -26,6 +26,7 @@ public class BookingServiceController {
     @Autowired
     private EmailService emailService;
     @Autowired private IAccountService accountService;
+
     @Autowired private ICustomerService customerService;
     @Autowired
     private IBookingServiceService iBookingServiceService;
@@ -99,6 +100,9 @@ public class BookingServiceController {
         model.addAttribute("bookingServicePage", bookingServiceDTOPage);
         model.addAttribute("searchDate", searchDate);
         model.addAttribute("search", true);
+        if (!bookingServiceDTOPage.hasContent()){
+            model.addAttribute("notFound",true);
+        }
         return "pet-service/booking/list";
     }
 
@@ -189,6 +193,9 @@ public class BookingServiceController {
         model.addAttribute("phone", phone);
         model.addAttribute("bookingService", new BookingService());
         model.addAttribute("search" , true);
+        if (!customerList.hasContent()){
+            model.addAttribute("notFound",true);
+        }
         return "pet-service/booking/select-customer-new";
     }
 

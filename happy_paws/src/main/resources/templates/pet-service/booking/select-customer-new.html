@@ -355,6 +355,9 @@
 
             </tbody>
         </table>
+        <div th:if="${notFound}">
+            <h3 style="text-align: center;margin-bottom: 25vw; color: red">No service found.</h3>
+        </div>
         <div id="deleteEmployeeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
