@@ -36,6 +36,9 @@ public class BookingServiceController {
     @Autowired
     private IBookingServiceServiceDetail iBookingServiceServiceDetail;
 
+    @Autowired
+    private ICustomerService iCustomerService;
+
 
     @GetMapping("/list")
     public String showPage(Model model, @RequestParam(value = "page", defaultValue = "0") Optional<Integer> page) {
@@ -97,6 +100,20 @@ public class BookingServiceController {
         model.addAttribute("searchDate", searchDate);
         model.addAttribute("search", true);
         return "pet-service/booking/list";
+    }
+
+
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id")Long bookingServiceId , Model model){
+        List<PetService>petServiceList = iPetServiceService.findByBookingServiceIdJoinWithBookingService(bookingServiceId);
+        model.addAttribute("petServiceList",petServiceList);
+        BookingService bookingService = iBookingServiceService.findBookingServiceById(bookingServiceId);
+        Customer customer = iCustomerService.findById(bookingService.getCustomer().getCustomerId());
+        model.addAttribute("customer",customer);
+        model.addAttribute("bookingService",bookingService);
+
+        model.addAttribute("total",iBookingServiceServiceDetail.getTotalByIdBooking(bookingServiceId));
+        return "pet-service/booking/Home";
     }
 
     @PostMapping("/delete")

@@ -27,5 +27,12 @@ public interface IBookingServiceServiceDetailRepository extends JpaRepository<Bo
 
 
     @Query(value = "SELECT * FROM booking_service_detail WHERE booking_service_id = :id" ,nativeQuery = true)
+//    @Query(value = "SELECT d.* FROM booking_service_detail as d WHERE booking_service_id = :id" )
     List<BookingServiceDetail> findByBookingServiceId( @Param("id") Long bookingServiceId);
+
+
+    @Query(value = "SELECT * FROM booking_service_detail\n" +
+            "         INNER JOIN pet_service PS ON booking_service_detail.pet_service_id = PS.pet_service_id\n" +
+            "WHERE booking_service_id = :id" , nativeQuery = true)
+    List<BookingServiceDetail> findByBookingServiceIdJoinWithPetService(@Param("id") Long bookingServiceId);
 }

@@ -42,4 +42,9 @@ public class PetServiceService implements IPetServiceService {
     public List<PetService> findAll() {
         return iPetServiceRepository.findAll();
     }
+
+    @Override
+    public List<PetService> findByBookingServiceIdJoinWithBookingService(Long bookingServiceId) {
+        return iPetServiceRepository.findByBookingServiceIdJoinWithBookingService(bookingServiceId);
+    }
 }

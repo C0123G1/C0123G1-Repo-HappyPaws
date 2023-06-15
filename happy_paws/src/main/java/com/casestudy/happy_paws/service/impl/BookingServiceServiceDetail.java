@@ -25,4 +25,9 @@ public class BookingServiceServiceDetail implements IBookingServiceServiceDetail
     public List<BookingServiceDetail> findByBookingServiceId(Long bookingServiceId) {
         return iBookingServiceServiceDetailRepository.findByBookingServiceId(bookingServiceId);
     }
+
+    @Override
+    public List<BookingServiceDetail> findByBookingServiceIdJoinWithPetService(Long bookingServiceId) {
+        return iBookingServiceServiceDetailRepository.findByBookingServiceIdJoinWithPetService(bookingServiceId);
+    }
 }
