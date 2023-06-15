@@ -107,6 +107,7 @@ public class OrderDetailController {
             cart.add(orderDetail);
         }
         session.setAttribute("cart", cart);
+        redirectAttributes.addFlashAttribute("statusAddCart",true);
         return "redirect:/order-detail/create?customerId=" + customer.getCustomerId() + "&now=cart";
     }
 

@@ -241,8 +241,8 @@
 <!--            font-weight: normal;-->
 <!--        }-->
 <!--    </style>-->
-    <link rel="stylesheet" href="../../../static/pet-service-css.css">
-    <link rel="stylesheet" href="../../../static/crud_table.css">
+    <link rel="stylesheet" href="/static/pet-service-css.css">
+    <link rel="stylesheet" href="/static/crud_table.css">
 <body>
 <div th:replace="fragment.html::header"></div>
 
@@ -356,7 +356,7 @@
             </tbody>
         </table>
         <div th:if="${notFound}">
-            <h3 style="text-align: center;margin-bottom: 25vw; color: red">No service found.</h3>
+            <h3 style="text-align: center;margin-bottom: 25vw; color: red">No Data found.</h3>
         </div>
         <div id="deleteEmployeeModal" class="modal fade">
             <div class="modal-dialog">

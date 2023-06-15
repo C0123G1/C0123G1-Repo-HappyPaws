@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../static/crud_table.css">
+    <link rel="stylesheet" href="/static/crud_table.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -24,7 +24,7 @@
 <body>
 <div th:replace="~{fragment.html::header}"></div>
 <div class="container">
-    <div class="table-wrapper" style="height: 83vh">
+    <div class="table-wrapper" style="height: 105vh">
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
@@ -275,6 +275,10 @@
     <span hidden id="inputId2" th:text="'Fail'"></span>
 </div>
 
+<div th:if="${statusAddCart}">
+    <span hidden id="inputId3" th:text="'Successfully'"></span>
+</div>
+
 <script>
     function infoProduct(id, customerId, price, name) {
         document.getElementById('productId').value = id;
@@ -312,38 +316,6 @@
             add.hidden = false;
         }
     });
-
-    // $(document).ready(function () {
-    //     $(document).on('click', '#delete', function () {
-    //         let index = $(this).find('#indexDelete').val();
-    //         let infoCurrentOrder = document.getElementById('infoCurrentOrder');
-    //         let isModalShown = $(infoCurrentOrder).is(':visible'); // Kiểm tra trạng thái của modal
-    //
-    //         $.ajax({
-    //             url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=delete',
-    //             type: 'GET',
-    //             success: function (data) {
-    //                 // Lưu trạng thái modal vào localStorage
-    //                 localStorage.setItem('isModalShown', isModalShown);
-    //                 location.reload();
-    //             }
-    //         });
-    //     })
-    //     $(document).on('click', '#more', function () {
-    //         let index = $(this).find('#indexMore').val();
-    //         let infoCurrentOrder = document.getElementById('infoCurrentOrder');
-    //         let isModalShown = $(infoCurrentOrder).is(':visible');
-    //         $.ajax({
-    //             url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=more',
-    //             type: 'GET',
-    //             success: function (data) {
-    //                 localStorage.setItem('isModalShown', isModalShown);
-    //                 location.reload();
-    //             }
-    //         });
-    //     });
-    // });
-
 
     $(document).ready(function () {
         $(document).on('click', '#delete', function () {
@@ -420,6 +392,22 @@
 </script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script th:if="${statusAddCart}">
+    let inputId = document.getElementById("inputId3");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "ADD CART",
+            text: inputId.innerText,
+            icon: "success",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
 
 <script th:if="${statusSave}">
     let inputId = document.getElementById("inputId");
