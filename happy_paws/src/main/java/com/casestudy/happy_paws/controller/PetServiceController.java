@@ -41,6 +41,9 @@ public class PetServiceController {
         Page<PetService> petServicePage = iPetServiceService.searchPage(search,pageable);
         model.addAttribute("petServicePage",petServicePage);
         model.addAttribute("search",search);
+        if (!petServicePage.hasContent()){
+            model.addAttribute("notFound",true);
+        }
         return "pet-service/service/pet-service-list-moi";
     }
 
@@ -52,6 +55,9 @@ public class PetServiceController {
         Page<PetService> petServicePage = iPetServiceService.searchPage(search,pageable);
         model.addAttribute("petServicePage",petServicePage);
         model.addAttribute("search",search);
+        if (!petServicePage.hasContent()){
+            model.addAttribute("notFound",true);
+        }
         return "pet-service/service/pet-service-list-moi";
     }
 

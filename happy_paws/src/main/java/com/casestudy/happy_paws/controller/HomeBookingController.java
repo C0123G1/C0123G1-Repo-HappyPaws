@@ -19,6 +19,8 @@ import java.util.List;
 @RequestMapping("/booking")
 public class HomeBookingController {
     @Autowired
+    private EmailService emailService;
+    @Autowired
     private IBookingServiceServiceDetail iBookingServiceServiceDetail;
 
     @Autowired
@@ -118,6 +120,7 @@ public class HomeBookingController {
 
     @GetMapping("/done")
     public String done(@RequestParam(value = "page",defaultValue = "0")Integer page, Model model){
+
 
         Pageable pageable = PageRequest.of(page,100);
         model.addAttribute("productPage",iProductService.findAll(pageable));

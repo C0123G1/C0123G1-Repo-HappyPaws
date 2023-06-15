@@ -66,7 +66,7 @@
                 </th>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Price</th>
+                <th>Price $</th>
                 <th>Create Time</th>
                 <th>Update Time</th>
                 <th>Actions</th>
@@ -104,6 +104,9 @@
             </tr>
             </tbody>
         </table>
+        <div th:if="${notFound}">
+            <h3 style="text-align: center;margin-bottom: 25vw; color: red">No service found.</h3>
+        </div>
         <div class="row" th:if="${petServicePage.getTotalPages() > 0}">
             <div class="col-10" th:if="${search} == null">
                 <a class="btn btn-sm btn-outline-primary"  style="border: 1px solid #007bff"  th:href="@{/api/admin/pet-service/list/(page = ${petServicePage.number - 1})}" th:if="${petServicePage.hasPrevious()}">Previous</a>
