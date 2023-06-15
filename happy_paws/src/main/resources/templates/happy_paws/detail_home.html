@@ -35,7 +35,9 @@
     <link href="../../static/happy_paws/assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="../../static/happy_paws/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="../../static/happy_paws/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+<!--    Icon file-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Template Main CSS File -->
     <link href="../../static/happy_paws/assets/css/main.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -78,6 +80,13 @@
            th:href="@{/account/}" th:text="'Admin Manager'"></a>
         <a class="btn-book-a-table" style=" text-align: center" sec:authorize="hasRole('CUSTOMER')"
            th:text="${#authentication.getName()}"></a>
+        <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/cart(userName = ${#authentication.getName()})}"
+           style="margin-top: 5.5px" data-toggle="modal"><i
+                style="font-size: 30px;
+                border: 1px solid;
+                border-radius: 10px;"
+                class="material-icons" title="Cart">&#xE8cc;</i>
+        </a>
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     </div>
@@ -100,7 +109,7 @@
                     <div class="d-flex">
                         <input type="text" name="productId" th:value="${product.id}" hidden>
                         <input type="text" id="userName" name="userName" th:value="${#authentication.getName()}" hidden>
-                        <input class="form-control text-center me-3" id="quantity"  name="quantity" type="number"
+                        <input class="form-control text-center me-3" id="quantity"  name="quantity" type="number" th:value="1"
                                style="max-width: 3rem"/>
                         <button id="checkUser" class="btn btn-outline-dark flex-shrink-0">
                             <i class="bi-cart-fill me-1"></i>
@@ -212,6 +221,27 @@
     </div>
 
 </footer>
+
+<div th:if="${statusQuantity}">
+    <span hidden id="inputId1" th:text="'Quantity greater than 0'"></span>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script th:if="${statusQuantity}">
+    let inputId = document.getElementById("inputId1");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "Add To Cart",
+            text: inputId.innerText,
+            icon: "error",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
+
 <script>
     $(document).ready(function (){
         $(document).on('input','#quantity',function (){

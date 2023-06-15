@@ -277,6 +277,7 @@
 <div th:if="${statusPayment}">
     <span hidden id="inputId" th:text="'Successfully'"></span>
 </div>
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script th:if="${statusPayment}">
     let inputId = document.getElementById("inputId");

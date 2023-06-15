@@ -55,7 +55,7 @@ public class HomeBookingController {
         Customer customer = new Customer();
         for (int i = 0; i < accountList.size(); i++) {
             if (accountList.get(i).getUsername().equals(username)) {
-                customer = iCustomerService.findById(accountList.get(i).getAccountId());
+                customer = iCustomerService.findCustomerByUserName(username);
                 break;
             }
         }
@@ -64,7 +64,6 @@ public class HomeBookingController {
         BookingService bookingService = new BookingService(customer, LocalDate.parse(bookingDate),bookingTime);
         iBookingServiceService.save(bookingService);
         List<PetService> petServiceList = iPetServiceService.findAll();
-
 
         model.addAttribute("petServiceList", petServiceList);
         model.addAttribute("bookingServiceId", bookingService.getBookingServiceId());

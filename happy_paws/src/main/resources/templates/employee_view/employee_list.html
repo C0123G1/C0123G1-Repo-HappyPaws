@@ -107,11 +107,11 @@
                    th:href="@{/employee(page = ${employeeList.number + 1})}" th:if="${employeeList.hasNext()}">Next</a>
             </div>
             <div class="col-10" th:if="${pageSearch == true}">
-                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/employee/search-employee(name= ${name},phone = ${phone},page = ${employeeList.number - 1})}" th:if="${employeeList.hasPrevious()}">Previous</a>
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/search-employee(name= ${name},phone = ${phone},page = ${employeeList.number - 1})}" th:if="${employeeList.hasPrevious()}">Previous</a>
                 <th:block th:each=" pageNo : ${#numbers.sequence(0,employeeList.getTotalPages() -1)}">
-                    <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/employee/search-employee(name= ${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}" th:classappend="${pageNo == employeeList.number ? 'active' : ''}"></a>
+                    <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/search-employee(name= ${name},phone = ${phone},page = ${pageNo})}" th:text="${pageNo +1}" th:classappend="${pageNo == employeeList.number ? 'active' : ''}"></a>
                 </th:block>
-                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/employee/search-employee(name= ${name},phone = ${phone},page = ${employeeList.number + 1})}" th:if="${employeeList.hasNext()}">Next</a>
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"  th:href="@{/search-employee(name= ${name},phone = ${phone},page = ${employeeList.number + 1})}" th:if="${employeeList.hasNext()}">Next</a>
             </div>
         </div>
 

@@ -17,9 +17,10 @@ public class EmployeeDTO {
     @Size(max = 10, message = "Phone number cannot over 10 number !!!")
     @Pattern(regexp = "^0[1-9][0-9]{8}$", message = "Invalid phone number")
     private String phone;
+    @NotBlank(message = "Please input value!")
     @Email(message = "Invalid Email")
     private String email;
-    @NotBlank(message = "please insert value")
+    @NotBlank(message = "Please insert value!")
     private String address;
 
     private Account account;
