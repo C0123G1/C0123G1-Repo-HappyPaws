@@ -2,6 +2,7 @@ package com.casestudy.happy_paws.dto;
 
 import com.casestudy.happy_paws.model.Role;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -10,10 +11,13 @@ public class AccountDTO {
     private Integer accountId;
 
 
-    @Size(max = 100, message = "username cannot longer than 100 character !!!")
+    @Size(max = 100, message = "Username cannot longer than 100 character !!!")
+    @NotBlank(message = "Please insert value")
+
 
     private String username;
-    @Size( min=8 ,max = 30, message = "password star 8 end 80 character !! ")
+    @Size( min=8 ,max = 30, message = "Password star 8 end 30 character !! ")
+    @NotBlank(message = "Please insert value")
 
     private String password;
 

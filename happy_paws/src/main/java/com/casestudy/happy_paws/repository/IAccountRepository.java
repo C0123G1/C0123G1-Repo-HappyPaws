@@ -10,12 +10,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.method.P;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 public interface IAccountRepository extends JpaRepository<Account,Integer> {
     @Query(value = "SELECT  c FROM  Account c WHERE c.accountId = :userId ")
     Account findAccount(Integer userId);
 
-    @Query(value = "SELECT u FROM Account u WHERE u.username LIKE :username ")
+    @Query(value = "SELECT u FROM Account u WHERE u.username = :username ")
     Account findUser(String username);
 
 @Query(value = "SELECT c FROM Account c WHERE c.isDelete=false")
@@ -25,6 +27,9 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
 @Modifying
 @Transactional
     void deleteByIdAccount(@Param("accountId") Integer accountId);
+
+@Query(value = "SELECT a FROM Account a")
+    List<Account> findAllAccounts();
 }
 
 
