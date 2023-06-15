@@ -323,11 +323,11 @@
             let totalCartNew = $('#total-cart');
             let currentRow = $(this).closest('tr');
             let quantityElement = currentRow.find('#quantity-cart');
+            let price = currentRow.find('#priceItems');
             let quantity = currentRow.find('#quantity-cart').val();
             let index = currentRow.find('#indexDelete').val();
             let priceProduct = currentRow.find('#price-product').val();
             let priceTotal = currentRow.find('#priceItems').val();
-            let price = currentRow.find('#priceItems');
             $.ajax({
                 url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=delete',
                 type: 'GET',
@@ -337,6 +337,7 @@
                         totalCartNew.val(0);
                         $('#sizeCart').hide();
                         $('#payment').prop('disabled', true);
+                        totalCartNew.val(totalCart - (priceTotal / quantity))
                     } else {
                         quantityElement.val(data);
                         price.val((quantity - (quantity - data)) * priceProduct)

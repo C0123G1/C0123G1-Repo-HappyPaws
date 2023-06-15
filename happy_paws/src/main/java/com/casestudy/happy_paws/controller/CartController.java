@@ -57,7 +57,11 @@ public class CartController {
         return "redirect:/cart?customerId=" + customerId;
     }
     @GetMapping("/add-cart")
-    public String addCart(@RequestParam("productId") Long productId,@RequestParam("userName") String userName,@RequestParam(value = "quantity",defaultValue = "1") Integer quantity){
+    public String addCart(@RequestParam("productId") Long productId,@RequestParam("userName") String userName,@RequestParam(value = "quantity",defaultValue = "1") Integer quantity, RedirectAttributes redirectAttributes){
+       if(quantity<=0){
+           redirectAttributes.addFlashAttribute("statusQuantity",true);
+           return "redirect:/detail/" + productId;
+       }
         Customer customer = iCustomerService.findCustomerByUserName(userName);
         Cart cart = new Cart(iProductService.findById(productId),customer,quantity);
         iCartService.save(cart);
