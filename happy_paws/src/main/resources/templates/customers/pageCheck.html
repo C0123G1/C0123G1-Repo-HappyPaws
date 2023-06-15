@@ -100,7 +100,7 @@
                         </button>
 
                         <a th:href="@{/customer/get-code(accountId=${account.getAccountId()},customerId=${customerId},count= ${count})}">
-                            <button type="button" style="margin-top: 10px;height: 50%;width: 73%">Get code</button>
+                            <button type="button" style="margin-top: 10px;height: 50%;width: 73%"  th:if="${count< 4} "    >Get code</button>
 
 <!--                            <button style="background: palevioletred ;color: black; height: 7vh;width: 12vw;margin-top: 8px">Get Code-->
 <!--                            </button>-->

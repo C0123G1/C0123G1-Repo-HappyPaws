@@ -1,6 +1,9 @@
 package com.casestudy.happy_paws.service.impl;
 
+import com.casestudy.happy_paws.model.Account;
 import com.casestudy.happy_paws.model.Customer;
+import com.casestudy.happy_paws.model.Employee;
+import com.casestudy.happy_paws.repository.IAccountRepository;
 import com.casestudy.happy_paws.repository.ICustomerRepository;
 import com.casestudy.happy_paws.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import java.util.List;
 public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
+    @Autowired
+    private IAccountRepository accountRepository;
 
     @Override
     public List<Customer> getAll() {
@@ -32,12 +37,6 @@ public class CustomerService implements ICustomerService {
     @Transactional(rollbackOn = Throwable.class)
     @Override
     public boolean save(Customer customer) {
-        List<Customer> customerList = customerRepository.findAll();
-        for (int i = 0; i <customerList.size() ; i++) {
-            if(customer.getEmail().equals(customerList.get(i).getEmail()) || customer.getPhone().equals(customerList.get(i).getPhone()) ){
-                return false;
-            }
-        }
         customerRepository.save(customer);
         return true;
     }
@@ -76,4 +75,29 @@ public class CustomerService implements ICustomerService {
     public Customer findCustomerByUserName(String userName) {
         return customerRepository.findCustomerByUserName(userName);
     }
+    @Transactional(rollbackOn = Throwable.class)
+
+    @Override
+    public boolean checkCustomer(Customer customer) {
+            try {
+                List<Customer> customers = customerRepository.findAll();
+                List<Account> accounts = accountRepository.findAllAccounts();
+//                for (int i = 0; i < accounts.size(); i++) {
+//                    if (accounts.get(i).getUsername().equals(customer.getAccount().getUsername())) {
+//                        return false;
+//                    }
+//                }
+                for (int i = 0; i < customers.size(); i++) {
+                    if (customers.get(i).getEmail().equals(customer.getEmail()) || customers.get(i).getPhone().equals(customer.getPhone())) {
+                        return false;
+                    }
+                }
+            } catch (Exception e) {
+                return false;
+            }
+            return true;
+        }
+
+
 }
+

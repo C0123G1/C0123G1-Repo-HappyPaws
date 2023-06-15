@@ -74,7 +74,7 @@
             padding: 0.375rem 0.75rem;
             border: 1px solid #212529;
             border-radius: 0.25rem;
-            background-color: palevioletred;
+            background-color: #e593b8;
         }
     </style>
 </head>
@@ -97,51 +97,54 @@
                     </div>
                 </div>
                 <!--                <div sec:authorize="hasAuthority('ADMIN')"><p><a href="/customer/create"></a></p> </div>-->
-                <form th:action="@{/customer/save}" method="post"  onsubmit="return validateForm()" name="formSignUp" th:object="${customerDTO}" >
+                <form th:action="@{/customer/save}" method="post" onsubmit="return validateForm()" name="formSignUp"
+                      th:object="${customerDTO}">
 
                     <div class="mt-4 inputs"><span>Username</span>
-                        <input type="text"  class="form-control" th:field="*{accountDTO.username}"
-                               required/>
-                        <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"
-                           th:errors="*{accountDTO.username}"></p>
+                        <input type="text" class="form-control" th:field="*{accountDTO.username}" />
                     </div>
+                    <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"
+                       th:errors="*{accountDTO.username}"></p>
                     <div class="mt-2 inputs"><span>Password</span>
-                        <input type="password"  class="form-control" id="password" name="password"
-                               th:field="*{accountDTO.password}"   required />
-                        <p style="color: red" th:if="${#fields.hasErrors('accountDTO.password')}"
-                           th:errors="*{accountDTO.password}"></p>
+                        <input type="password" class="form-control" id="password" name="password"
+                               th:field="*{accountDTO.password}"/>
                     </div>
+                    <p style="color: red" th:if="${#fields.hasErrors('accountDTO.password')}"
+                       th:errors="*{accountDTO.password}"></p>
 
                     <div class="mt-2 inputs"><span>Confirm Password</span>
-                        <input  type="password" class="form-control"  id="confirm" name="confirm"
-                                 required/>
+                        <input type="password" class="form-control" id="confirm" name="confirm" />
                     </div>
                     <div class="mt-2 inputs"><span>Name</span>
-                        <input class="form-control"  type="text" th:field="*{name}" required>
-                        <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                        <input class="form-control" type="text" th:field="*{name}">
                     </div>
+                    <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+
 
                     <div class="mt-2 inputs"><span>Phone</span>
-                        <input class="form-control"  type="text" th:field="*{phone}"
-                               required>
-                        <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+                        <input class="form-control" type="text" th:field="*{phone}"
+                        >
                     </div>
+                    <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+
                     <div class="mt-2 inputs"><span>Email</span>
-                        <input class="form-control"  type="email" th:field="*{email}" required>
-                        <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                        <input class="form-control" type="email" th:field="*{email}">
                     </div>
+                    <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
                     <div class="mt-2 inputs"><span>Address</span>
-                        <input class="form-control"  type="text" th:field="*{address}"
-                               required>
-                        <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                        <input class="form-control" type="text" th:field="*{address}"
+                        >
                     </div>
+                    <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+
                     <div class="text-center mt-4 btn-group">
                         <a th:href="@{/customer}">
                             <button type="button" class="btn btn-dark">Back</button>
                         </a>
-                            <button type="submit" class=" integration" onclick="move()"  value="Save">
-                                Create
-                            </button>
+                        <button type="submit" class=" integration" onclick="move()" value="Save">
+                            Create
+                        </button>
 
                     </div>
                 </form>
@@ -164,21 +167,21 @@
         const password = form["password"].value;
         const confirm = form["confirm"].value;
 
-        if (password === confirm){
+        if (password === confirm) {
             return true;
         }
 
-                swal({
-                    title: "ERROR",
-                    text: `password does not match!!!`,
-                    icon: "error",
-                    button: "OK",
-                }).then((idOk) => {
-                    if (idOk) {
-                        inputId.innerText = '';
-                    }
-                });
-                //
+        swal({
+            title: "ERROR",
+            text: `password does not match!!!`,
+            icon: "error",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+        //
 
         return false
 
