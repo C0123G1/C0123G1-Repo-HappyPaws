@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/orders*", "/orders/**","order-detail/*","/order-detail/**")
                 .access("hasAnyRole('ADMIN')");
         http.authorizeRequests()
-                .antMatchers("/api/admin/product", "/api/admin/product/**")
+                .antMatchers("/api/admin/product", "/api/admin/product-type","/api/admin/product-type/*","/api/admin/product/*")
                 .access("hasAnyRole('ADMIN')");
 
         http.authorizeRequests()
