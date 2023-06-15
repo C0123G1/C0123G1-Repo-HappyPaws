@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,8 +67,11 @@ public class OrderDetailController {
                 totalPriceCart += c.getProducts().getPrice() * c.getQuantity();
             }
             model.addAttribute("totalPriceCart", totalPriceCart);
+            model.addAttribute("now", "cart");
+        }else{
+            model.addAttribute("now", "noCart");
+            session.setAttribute("cart", cart);
         }
-        session.setAttribute("cart", cart);
         model.addAttribute("session", session);
         model.addAttribute("customer", customer);
         model.addAttribute("pageList", true);
@@ -103,6 +107,7 @@ public class OrderDetailController {
             cart.add(orderDetail);
         }
         session.setAttribute("cart", cart);
+        redirectAttributes.addFlashAttribute("statusAddCart",true);
         return "redirect:/order-detail/create?customerId=" + customer.getCustomerId() + "&now=cart";
     }
 
@@ -126,6 +131,9 @@ public class OrderDetailController {
     public String search(@RequestParam("orderId") Long orderId, @RequestParam("name") String name, @RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         model.addAttribute("orderDetailPage", iOrderDetailService.searchProductOrderDetail(name, orderId, pageable));
+        if(iOrderDetailService.searchProductOrderDetail(name, orderId, pageable).getTotalElements() ==0){
+            model.addAttribute("notFound", true);
+        }
         Double totalPrice = iOrderDetailService.getTotalPriceOrder(orderId);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("name", name);
@@ -156,39 +164,47 @@ public class OrderDetailController {
     }
 
     @GetMapping("/edit-quantity-cart")
-    public String editQuantityCart(@RequestParam("index") Integer index,@RequestParam("action") String action, Model model,HttpServletRequest httpServletRequest){
+    public ResponseEntity<Integer> editQuantityCart(@RequestParam("index") Integer index,@RequestParam("action") String action, Model model,HttpServletRequest httpServletRequest){
         HttpSession session = httpServletRequest.getSession();
         List<OrderDetail> cart = (List<OrderDetail>) session.getAttribute("cart");
         Integer customerId = cart.get(0).getOrder().getCustomer().getCustomerId();
+        Integer quantity = 0;
         for (int i = 0; i < cart.size(); i++) {
             if (index == i) {
                if(action.equals("delete")){
                    cart.get(i).setQuantity(cart.get(i).getQuantity()-1);
-                   break;
                }else{
                    cart.get(i).setQuantity(cart.get(i).getQuantity()+1);
-                   break;
                }
+                quantity = cart.get(i).getQuantity();
+                if(quantity == 0){
+                    cart.remove(i);
+                }
+                break;
             }
         }
-        return "redirect:/order-detail/create?customerId=" + customerId + "&now=cart";
+//        return "redirect:/order-detail/create?customerId=" + customerId + "&now=cart";
+        return new ResponseEntity<>(quantity, HttpStatus.OK) ;
     }
 
     @GetMapping("/payment-cart/{customerId}")
     @Transactional(rollbackFor = Throwable.class)
-    public String paymentCart(@PathVariable("customerId") Integer customerId) {
+    public String paymentCart(@PathVariable("customerId") Integer customerId,RedirectAttributes redirectAttributes) {
         List<Cart> cartList = iOrderDetailService.findAllCart(customerId);
-        List<OrderDetail> orderDetailList = new ArrayList<>();
-        Orders orders = new Orders(iOrderDetailService.findCustomerById(customerId));
-        boolean statusSave = iOrderService.saveOrder(orders);
-        for (Cart c: cartList){
-            OrderDetail orderDetail = new OrderDetail(c.getProduct(),orders,c.getQuantity(),c.getQuantity()*c.getProduct().getPrice());
-            orderDetailList.add(orderDetail);
+        if(cartList.size()>0){
+            List<OrderDetail> orderDetailList = new ArrayList<>();
+            Orders orders = new Orders(iOrderDetailService.findCustomerById(customerId));
+            boolean statusSave = iOrderService.saveOrder(orders);
+            for (Cart c: cartList){
+                OrderDetail orderDetail = new OrderDetail(c.getProduct(),orders,c.getQuantity(),c.getQuantity()*c.getProduct().getPrice());
+                orderDetailList.add(orderDetail);
+            }
+            boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetailList, orders);
+            if(statusSaveOrderDetail){
+                boolean statusPayment =  iCartService.payMentCart(customerId);
+                redirectAttributes.addFlashAttribute("statusPayment",statusPayment);
+            }
         }
-        boolean statusSaveOrderDetail = iOrderDetailService.saveOrderDetail(orderDetailList, orders);
-        if(statusSaveOrderDetail){
-            iCartService.payMentCart(customerId);
-        }
-        return "redirect:/cart/customerId=" + customerId ;
+        return "redirect:/cart?customerId=" + customerId ;
     }
 }

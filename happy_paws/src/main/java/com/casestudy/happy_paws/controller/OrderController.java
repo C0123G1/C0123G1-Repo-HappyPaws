@@ -57,6 +57,9 @@ public class OrderController {
         }
         Page<OrderDTO> orderDTOPage = new PageImpl<>(orderDTOList, pageable, ordersPage.getTotalElements());
         Double totalPriceOrderDetail = iOrderDetailService.findTotalPriceOrderDetail();
+        if(orderDTOPage.getTotalElements() ==0){
+            model.addAttribute("notFound", true);
+        }
         model.addAttribute("totalPriceOrderDetail", totalPriceOrderDetail);
         model.addAttribute("orderDTOPage", orderDTOPage);
         model.addAttribute("name", name);
@@ -79,6 +82,9 @@ public class OrderController {
                                  @RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 8);
         model.addAttribute("customerPage", iOrderService.searchCustomerByNameAndPhone(name, phone, pageable));
+        if(iOrderService.searchCustomerByNameAndPhone(name, phone, pageable).getTotalElements() ==0){
+            model.addAttribute("notFound", true);
+        }
         model.addAttribute("name", name);
         model.addAttribute("phone", phone);
         model.addAttribute("pageSearch", true);
@@ -88,6 +94,7 @@ public class OrderController {
     @GetMapping("/search-product")
     public String searchProduct(@RequestParam("customerId") Integer customerId, @RequestParam("chosePrice") Integer chosePrice,
                                 @RequestParam("name") String name, @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                @RequestParam(value = "now",defaultValue = "noCart") String now,
                                 Model model, HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         Pageable pageable = PageRequest.of(page, 8);
@@ -96,8 +103,12 @@ public class OrderController {
         if (session.getAttribute("cart") != null) {
             productList = (List<OrderDetail>) session.getAttribute("cart");
         }
+        if(productPage.getTotalElements() ==0){
+            model.addAttribute("notFound", true);
+        }
         session.setAttribute("cart", productList);
         model.addAttribute("session", session);
+        model.addAttribute("now", now);
         model.addAttribute("customer", iOrderDetailService.findCustomerById(customerId));
         model.addAttribute("productPage", productPage);
         model.addAttribute("name", name);

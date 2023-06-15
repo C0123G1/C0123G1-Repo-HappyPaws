@@ -233,7 +233,7 @@
 
 <div class="card mt-50 mb-50">
     <div class="card-title mx-auto">
-        Create New Employee
+        CREATE NEW EMPLOYEE
     </div>
     <p style="color: red" th:text="${result}"></p>
 
@@ -278,7 +278,7 @@
         <div class="row-1">
             <div class="row row-2">
                 <input type="password" th:field="*{account.password}" id="password" pattern="^[0-9A-Za-z]{4}$"
-                       name="password" placeholder="4 charaters">
+                       name="password" placeholder="4 characters">
             </div>
         </div>
         <p style="color: red" th:if="${#fields.hasErrors('account.password')}"
@@ -293,7 +293,7 @@
 
         <button style="background:#f8b8be;" class="btn d-flex mx-auto" ><b>Create</b></button>
         <a th:href="@{/employee}">
-            <button style="background: black" type="button" class="btn btn-dark">Back</button>
+            <button style="background: black" type="button" class="btn btn-dark"><b>Back</b></button>
         </a>
     </form>
     <p id="error"></p>

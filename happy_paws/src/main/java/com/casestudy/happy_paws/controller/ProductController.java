@@ -29,7 +29,7 @@ public class ProductController {
 
     @GetMapping("")
     public String showList(@RequestParam(value = "page", defaultValue = "0") Integer page, Model model) {
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 8,Sort.by("id").descending());
         model.addAttribute("productList", productService.findAll(pageable));
         model.addAttribute("pageList", true);
         model.addAttribute("productTypeList",productTypeService.findAll());
@@ -85,7 +85,7 @@ public class ProductController {
     }
     @GetMapping("/search")
     public String search(@RequestParam("productType") String nameProductType,@RequestParam("name") String name, @RequestParam("origin") String origin, @RequestParam(value = "page",defaultValue = "0")Integer page,Model model ){
-        Pageable pageable=PageRequest.of(page,10);
+        Pageable pageable=PageRequest.of(page,8);
         Page<Product> productPage=productService.search("%"+name+"%","%"+origin+"%","%"+nameProductType+"%",pageable);
         if(productPage.isEmpty()){
             model.addAttribute("notFound",true);

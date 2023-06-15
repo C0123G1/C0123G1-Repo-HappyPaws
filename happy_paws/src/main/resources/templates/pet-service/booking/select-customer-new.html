@@ -241,13 +241,13 @@
 <!--            font-weight: normal;-->
 <!--        }-->
 <!--    </style>-->
-    <link rel="stylesheet" href="../../../static/pet-service-css.css">
-    <link rel="stylesheet" href="../../../static/crud_table.css">
+    <link rel="stylesheet" href="/static/pet-service-css.css">
+    <link rel="stylesheet" href="/static/crud_table.css">
 <body>
 <div th:replace="fragment.html::header"></div>
 
 <div class="container">
-    <div class="table-wrapper">
+    <div class="table-wrapper" style="height: 83vh">
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
@@ -294,7 +294,7 @@
 <!--                    </div>-->
 
                     <div class="col-1">
-                        <button class="btn btn-sm btn-primary" style="background-color: palevioletred">Search
+                        <button class="btn btn-sm btn-primary" >Search
                         </button>
                     </div>
                 </div>
@@ -356,7 +356,7 @@
             </tbody>
         </table>
         <div th:if="${notFound}">
-            <h3 style="text-align: center;margin-bottom: 25vw; color: red">No service found.</h3>
+            <h3 style="text-align: center;margin-bottom: 25vw; color: red">No Data found.</h3>
         </div>
         <div id="deleteEmployeeModal" class="modal fade">
             <div class="modal-dialog">
@@ -553,7 +553,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<div th:replace="~{fragment.html::footer}"></div>
 <div hidden th:if="${mess}">
     <span th:text="${mess}" id="inputId" ></span>
 </div>

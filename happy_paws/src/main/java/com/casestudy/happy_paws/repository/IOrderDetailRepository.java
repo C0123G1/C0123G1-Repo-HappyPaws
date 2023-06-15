@@ -32,6 +32,6 @@ public interface IOrderDetailRepository extends JpaRepository<OrderDetail, Long>
 
     @Query(value = "select sum(od.price * od.quantity) from OrderDetail od where od.isDelete=false ")
     Double findTotalPriceOrderDetail();
-    @Query(value = "select c from Cart c where c.customer.customerId = :customerId")
+    @Query(value = "select c from Cart c where c.customer.customerId = :customerId and c.pendingStatus = false")
     List<Cart> findAllCart(@Param("customerId") Integer customerId);
 }

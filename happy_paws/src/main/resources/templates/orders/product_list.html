@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../static/crud_table.css">
+    <link rel="stylesheet" href="/static/crud_table.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -24,7 +24,7 @@
 <body>
 <div th:replace="~{fragment.html::header}"></div>
 <div class="container">
-    <div class="table-wrapper">
+    <div class="table-wrapper" style="height: 105vh">
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
@@ -37,7 +37,7 @@
                     <a id="myButton" href="#infoCurrentOrder" class="btn btn-info" data-toggle="modal"><i
                             class="material-icons">&#xEf6e; </i>
                         <span th:text="${'Current Order'}"></span>
-                        <sup th:if="${session.cart.size() >0}"
+                        <sup id="sizeCart" th:if="${session.cart.size() >0}"
                              th:text="${session.cart.size()}"></sup></a>
 
                 </div>
@@ -105,36 +105,42 @@
             </tr>
             </tbody>
         </table>
-        <div th:if="${pageList == true}">
-            <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-               th:href="@{/order-detail/create(customerId = ${customer.customerId},page= ${productPage.number -1})}"
-               th:if="${productPage.hasPrevious()}">Previous</a>
-            <th:block th:each="pageNo : ${#numbers.sequence(0,productPage.getTotalPages() -1)}">
-                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-                   th:href="@{/order-detail/create(customerId = ${customer.customerId},page= ${pageNo})}"
-                   th:text="${pageNo+1}"
-                   th:classappend="${pageNo == productPage.number ? 'active' : ''}"
-                ></a>
-            </th:block>
-            <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-               th:href="@{/order-detail/create(customerId = ${customer.customerId},page= ${productPage.number +1})}"
-               th:if="${productPage.hasNext()}">Next</a>
+        <div th:if="${notFound}">
+            <h3 style="text-align: center; color: red">No products found.</h3>
         </div>
-        <div th:if="${pageSearch == true}">
-            <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-               th:href="@{/orders/search-product(name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId} ,page= ${productPage.number -1})}"
-               th:if="${productPage.hasPrevious()}">Previous</a>
-            <th:block th:each="pageNo : ${#numbers.sequence(0,productPage.getTotalPages() -1)}">
+        <div th:if="${productPage.getTotalElements()>0}">
+            <div th:if="${pageList == true}">
                 <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-                   th:href="@{/orders/search-product(name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId} ,page= ${pageNo})}"
-                   th:text="${pageNo+1}"
-                   th:classappend="${pageNo == productPage.number ? 'active' : ''}"
-                ></a>
-            </th:block>
-            <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
-               th:href="@{/orders/search-product(name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId},page= ${productPage.number +1})}"
-               th:if="${productPage.hasNext()}">Next</a>
+                   th:href="@{/order-detail/create(customerId = ${customer.customerId},now = ${now},page= ${productPage.number -1})}"
+                   th:if="${productPage.hasPrevious()}">Previous</a>
+                <th:block th:each="pageNo : ${#numbers.sequence(0,productPage.getTotalPages() -1)}">
+                    <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
+                       th:href="@{/order-detail/create(customerId = ${customer.customerId},now = ${now},page= ${pageNo})}"
+                       th:text="${pageNo+1}"
+                       th:classappend="${pageNo == productPage.number ? 'active' : ''}"
+                    ></a>
+                </th:block>
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
+                   th:href="@{/order-detail/create(customerId = ${customer.customerId},now = ${now},page= ${productPage.number +1})}"
+                   th:if="${productPage.hasNext()}">Next</a>
+            </div>
+            <div th:if="${pageSearch == true}">
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
+                   th:href="@{/orders/search-product(now = ${now},name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId} ,page= ${productPage.number -1})}"
+                   th:if="${productPage.hasPrevious()}">Previous</a>
+                <th:block th:each="pageNo : ${#numbers.sequence(0,productPage.getTotalPages() -1)}">
+                    <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
+                       th:href="@{/orders/search-product(now = ${now},name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId} ,page= ${pageNo})}"
+                       th:text="${pageNo+1}"
+                       th:classappend="${pageNo == productPage.number ? 'active' : ''}"
+                    ></a>
+                </th:block>
+                <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"
+                   th:href="@{/orders/search-product(now = ${now},name =${name},chosePrice =${chosePrice},customerId = ${customer.customerId},page= ${productPage.number +1})}"
+                   th:if="${productPage.hasNext()}">Next</a>
+            </div>
         </div>
+
     </div>
 </div>
 <!--Product info-->
@@ -181,35 +187,43 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-hover">
+                <table class="table">
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
+                        <th style="width: 13vw;">Quantity</th>
+                        <th style="width: 13vw;">Price ($)</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="cart,index : ${session.cart}">
                         <td th:text="${cart.products.name}" style="width:51vw"></td>
-                        <td class="d-flex">
+                        <td class="d-flex" width="">
                             <a id="delete" style="cursor: pointer">
                                 <input type="text" id="indexDelete" th:value="${index.index}" hidden>
                                 <i class="material-icons"
                                    data-toggle="tooltip"
                                    title="Delete">&#xE15b;</i>
                             </a>
-                            <p id="quantityAction" th:text="${cart.quantity}"></p>
-                            <a id="more" style="cursor: pointer">
+                            <!--                            <p id="quantityAction" th:text="${cart.quantity}"></p>-->
+                            <input class="form-control text-center me-3" id="quantity-cart" name="quantity"
+                                   type="number"
+                                   style="max-width: 5rem; border: none; background-color: white" th:value="${cart.quantity}" readonly/>
+                            <input type="text" id="price-product" th:value="${cart.products.price}" hidden>
+                            <a id="more" style="cursor: pointer;">
                                 <input type="text" id="indexMore" th:value="${index.index}" hidden>
-
                                 <i class="material-icons"
                                    data-toggle="tooltip"
                                    title="More">&#xE145;</i>
                             </a>
                         </td>
-                        <td th:text="${cart.price * cart.quantity}"></td>
+
+                        <td><input type="number" th:value="${cart.price * cart.quantity}"
+                                   class="form-control text-center me-3" id="priceItems" name="price"
+                                   style="max-width: 13vw; border: none;margin: 0;background-color: white;color: black; font-weight: bold" readonly>
+                        </td>
+
                         <td>
                             <a id="deleteProduct" class="delete" style="cursor: pointer">
                                 <input type="text" id="index" th:value="${index.index}" hidden>
@@ -221,17 +235,33 @@
                     </tr>
                     </tbody>
                 </table>
+                <div th:if="${session.cart.size() == 0}">
+                    <h3 style="text-align: center; color: black">No products found.</h3>
+                </div>
             </div>
             <div class="modal-footer">
-                <div>
-                    <h5 style=" color: black;margin: 0;" th:if="${totalPriceCart >0}"
-                        th:text="${'Total : ' + totalPriceCart + ' $ '}"></h5>
-                    <h5 style=" color: black;margin: 0;" th:if="${totalPriceCart == null}"
-                        th:text="${'Total : 0 $ '}"></h5>
+                <div class="row col-12">
+<!--                    fix lai-->
+                    <div class="col-7">
+                      <div style="float: left">
+                          <h3 style=" color: black;margin: 0;display: inline-block" th:if="${totalPriceCart >0}">Total :
+                              <input th:if="${session.cart.size() >0}" type="text" id="total-cart"
+                                     class="form-control text-center me-3"
+                                     style="max-width: 13vw; border: none;font-size: 23px;display: inline-block; background-color: #ecf0f1;color: black"
+                                     readonly
+                                     th:value="${totalPriceCart}"> $
+                          </h3>
+                          <!--                        <h5 style=" color: black;margin: 0;" th:if="${totalPriceCart == null}"-->
+                          <!--                            th:text="${'Total : 0 $ '}"></h5>-->
+                      </div>
+                    </div>
+                    <div class="col-5">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <a th:if="${session.cart.size() >0}" id="payment"
+                           th:href="@{/order-detail/payment/{customerId}(customerId = ${customer.customerId})}"
+                           class="btn btn-danger" th:text="'Payment'"></a>
+                    </div>
                 </div>
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                <a th:href="@{/order-detail/payment/{customerId}(customerId = ${customer.customerId})}"
-                   class="btn btn-danger" th:text="'Payment'"></a>
             </div>
         </div>
     </div>
@@ -243,6 +273,10 @@
 </div>
 <div th:if="${statusSave == false}">
     <span hidden id="inputId2" th:text="'Fail'"></span>
+</div>
+
+<div th:if="${statusAddCart}">
+    <span hidden id="inputId3" th:text="'Successfully'"></span>
 </div>
 
 <script>
@@ -285,44 +319,62 @@
 
     $(document).ready(function () {
         $(document).on('click', '#delete', function () {
-            let index = $(this).find('#indexDelete').val();
-            let infoCurrentOrder = document.getElementById('infoCurrentOrder');
-            let isModalShown = $(infoCurrentOrder).is(':visible'); // Kiểm tra trạng thái của modal
-
+            let totalCart = parseInt(document.getElementById('total-cart').value);
+            let totalCartNew = $('#total-cart');
+            let currentRow = $(this).closest('tr');
+            let quantityElement = currentRow.find('#quantity-cart');
+            let quantity = currentRow.find('#quantity-cart').val();
+            let index = currentRow.find('#indexDelete').val();
+            let priceProduct = currentRow.find('#price-product').val();
+            let priceTotal = currentRow.find('#priceItems').val();
+            let price = currentRow.find('#priceItems');
             $.ajax({
                 url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=delete',
                 type: 'GET',
                 success: function (data) {
-                    // Lưu trạng thái modal vào localStorage
-                    localStorage.setItem('isModalShown', isModalShown);
-                    location.reload();
+                    if (data === 0) {
+                        currentRow.hide();
+                        totalCartNew.val(0);
+                        $('#sizeCart').hide();
+                        $('#payment').prop('disabled', true);
+                    } else {
+                        quantityElement.val(data);
+                        price.val((quantity - (quantity - data)) * priceProduct)
+                        totalCartNew.val(totalCart - (priceTotal / quantity))
+                    }
                 }
             });
-        })
+        });
         $(document).on('click', '#more', function () {
-            let index = $(this).find('#indexMore').val();
-            let infoCurrentOrder = document.getElementById('infoCurrentOrder');
-            let isModalShown = $(infoCurrentOrder).is(':visible');
+            let totalCart = parseInt(document.getElementById('total-cart').value);
+            let totalCartNew = $('#total-cart');
+            let currentRow = $(this).closest('tr');
+            let quantityElement = currentRow.find('#quantity-cart');
+            let quantity = currentRow.find('#quantity-cart').val();
+            let index = currentRow.find('#indexMore').val();
+            let priceProduct = currentRow.find('#price-product').val();
+            let priceTotal = currentRow.find('#priceItems').val();
+            let price = currentRow.find('#priceItems');
             $.ajax({
                 url: 'http://localhost:8080/order-detail/edit-quantity-cart?index=' + encodeURIComponent(index) + '&action=more',
                 type: 'GET',
                 success: function (data) {
-                    localStorage.setItem('isModalShown', isModalShown);
-                    location.reload();
+                    quantityElement.val(data);
+                    price.val(data * priceProduct)
+                    totalCartNew.val(totalCart + (priceTotal / quantity))
                 }
             });
         });
-    });
-    $(document).ready(function () {
-        // Kiểm tra trạng thái modal từ localStorage
-        let isModalShown = localStorage.getItem('isModalShown');
-
-        if (isModalShown === 'true') {
-            let infoCurrentOrder = document.getElementById('infoCurrentOrder');
-            $(infoCurrentOrder).modal('show');
-        }
-        // Xóa trạng thái modal khỏi localStorage
-        localStorage.removeItem('isModalShown');
+        $(document).ready(function () {
+            // Kiểm tra trạng thái modal từ localStorage
+            let isModalShown = localStorage.getItem('isModalShown');
+            if (isModalShown === 'true') {
+                let infoCurrentOrder = document.getElementById('infoCurrentOrder');
+                $(infoCurrentOrder).modal('show');
+            }
+            // Xóa trạng thái modal khỏi localStorage
+            localStorage.removeItem('isModalShown');
+        });
     });
 </script>
 
@@ -340,6 +392,22 @@
 </script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script th:if="${statusAddCart}">
+    let inputId = document.getElementById("inputId3");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "ADD CART",
+            text: inputId.innerText,
+            icon: "success",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
 
 <script th:if="${statusSave}">
     let inputId = document.getElementById("inputId");

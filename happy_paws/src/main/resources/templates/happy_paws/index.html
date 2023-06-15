@@ -31,6 +31,7 @@
     <link href="../../static/happy_paws/assets/css/main.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- =======================================================
@@ -80,7 +81,8 @@
            th:href="@{/account/}" th:text="'Admin Manager'"></a>
         <a class="btn-book-a-table" style="width: 10vw; text-align: center" sec:authorize="hasRole('CUSTOMER')"
            th:text="${#authentication.getName()}"></a>
-        <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/cart(userName = ${#authentication.getName()})}" style="margin-top: 5.5px" data-toggle="modal"><i
+        <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/cart(userName = ${#authentication.getName()})}"
+           style="margin-top: 5.5px" data-toggle="modal"><i
                 style="font-size: 30px;
                 border: 1px solid;
                 border-radius: 10px;"
@@ -101,7 +103,7 @@
                     happiness of our furry friends. These services cater to the diverse needs of pets, providing them
                     with love, attention, and proper care.</p>
                 <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-                    <a th:href="@{/booking/reservation}"  class="btn-book-a-table">Book a Service</a>
+                    <a id="booking-service" th:href="@{/booking/reservation}" class="btn-book-a-table">Book a Service</a>
                 </div>
 
             </div>
@@ -240,50 +242,6 @@
 
         </div>
     </section><!-- End Why Us Section -->
-
-    <!-- ======= Stats Counter Section ======= -->
-    <section id="stats-counter" class="stats-counter"
-             style="background-image: url('https://img.freepik.com/free-vector/cute-pets-illustration_53876-112522.jpg?w=2000&t=st=1686646347~exp=1686646947~hmac=753666626c38c25a468157d95549f8e9b39cd9d2e6572772ac24c194cc3eb3a6')">
-        <div class="container" data-aos="zoom-out">
-
-            <div class="row gy-4">
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
-                              class="purecounter"></span>
-                        <p>Clients</p>
-                    </div>
-                </div><!-- End Stats Item -->
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
-                              class="purecounter"></span>
-                        <p>Projects</p>
-                    </div>
-                </div><!-- End Stats Item -->
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1"
-                              class="purecounter"></span>
-                        <p>Hours Of Support</p>
-                    </div>
-                </div><!-- End Stats Item -->
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1"
-                              class="purecounter"></span>
-                        <p>Workers</p>
-                    </div>
-                </div><!-- End Stats Item -->
-
-            </div>
-
-        </div>
-    </section><!-- End Stats Counter Section -->
 
     <!-- ======= Menu Section ======= -->
     <section id="menu" class="menu">
@@ -611,105 +569,32 @@
 
             <div class="row gy-4">
 
-                <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100"
+                <div  class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100"
                      th:each="petService : ${petServiceList}">
-                    <div class="chef-member">
-                        <div class="member-img">
-                            <img src="assets/img/chefs/chefs-1.jpg" class="img-fluid" alt="">
-                            <div class="social">
-                                <a href=""><i class="bi bi-twitter"></i></a>
-                                <a href=""><i class="bi bi-facebook"></i></a>
-                                <a href=""><i class="bi bi-instagram"></i></a>
-                                <a href=""><i class="bi bi-linkedin"></i></a>
+                        <div class="chef-member" id="service">
+                            <div class="member-img">
+                                <img src="assets/img/chefs/chefs-1.jpg" class="img-fluid" alt="">
+                                <div class="social">
+                                    <a href=""><i class="bi bi-twitter"></i></a>
+                                    <a href=""><i class="bi bi-facebook"></i></a>
+                                    <a href=""><i class="bi bi-instagram"></i></a>
+                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4 th:text="${petService.name}"></h4>
+                                <div style="background-size: cover">
+                                    <img th:src="${petService.image}" alt="" width="100%" style="border-radius: 10px">
+                                </div>
+                                <p th:text="${petService.description}"></p>
+                                <h5 th:text="${ '$'+ petService.price}"></h5>
                             </div>
                         </div>
-                        <div class="member-info">
-                            <h4 th:text="${petService.name}"></h4>
-                            <div style="background-size: cover">
-                                <img th:src="${petService.image}" alt="" width="100%" style="border-radius: 10px">
-                            </div>
-                            <p th:text="${petService.description}"></p>
-                            <h5 th:text="${ '$'+ petService.price}"></h5>
-                        </div>
-                    </div>
-                </div><!-- End Chefs Member -->
+                </div>
+                <!-- End Chefs Member -->
             </div>
         </div>
     </section><!-- End Chefs Section -->
-
-    <!-- ======= Book A Table Section ======= -->
-    <!--    <section id="book-a-table" class="book-a-table">-->
-    <!--        <div class="container" data-aos="fade-up">-->
-
-    <!--            <div class="section-header">-->
-    <!--                <h2>Book A Table</h2>-->
-    <!--                <p>Book <span>Your Stay</span> With Us</p>-->
-    <!--            </div>-->
-
-    <!--            <div class="row g-0">-->
-
-    <!--                <div class="col-lg-4 reservation-img"-->
-    <!--                     style="background-image: url(../../static/happy_paws/assets/img/top-dich-vu-spa-cho-thu-cung-tai-TPHCM.jpg);"-->
-    <!--                     data-aos="zoom-out" data-aos-delay="200"></div>-->
-
-    <!--                <div class="col-lg-8 d-flex align-items-center reservation-form-bg">-->
-    <!--                    <form th:action="@{/booking-service}" method="post" role="form"-->
-    <!--                          class="php-email-form"-->
-    <!--                          data-aos="fade-up" data-aos-delay="100">-->
-    <!--                        <div class="row gy-4">-->
-    <!--                            <div class="col-lg-4 col-md-6">-->
-    <!--                                <input type="text" name="name" class="form-control" id="name1" placeholder="Your Name"-->
-    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-    <!--                                <div class="validate"></div>-->
-    <!--                            </div>-->
-    <!--                            <div class="col-lg-4 col-md-6">-->
-    <!--                                <input type="email" class="form-control" name="email" id="email2"-->
-    <!--                                       placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">-->
-    <!--                                <div class="validate"></div>-->
-    <!--                            </div>-->
-    <!--                            <div class="col-lg-4 col-md-6">-->
-    <!--                                <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone"-->
-    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-    <!--                                <div class="validate"></div>-->
-    <!--                            </div>-->
-    <!--                            <div class="col-lg-4 col-md-6">-->
-    <!--                                <input type="text" name="date" class="form-control" id="date" placeholder="Date"-->
-    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-    <!--                                <div class="validate"></div>-->
-    <!--                            </div>-->
-    <!--                            <div class="col-lg-4 col-md-6">-->
-    <!--                                <input type="text" class="form-control" name="time" id="time" placeholder="Time"-->
-    <!--                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-    <!--                                <div class="validate"></div>-->
-    <!--                            </div>-->
-    <!--                            <div class="col-lg-4 col-md-6">-->
-    <!--                                <input type="number" class="form-control" name="people" id="people"-->
-    <!--                                       placeholder="# of people" data-rule="minlen:1"-->
-    <!--                                       data-msg="Please enter at least 1 chars">-->
-    <!--                                <div class="validate"></div>-->
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                        <div class="form-group mt-3">-->
-    <!--                            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>-->
-    <!--                            <div class="validate"></div>-->
-    <!--                        </div>-->
-    <!--                        <div class="mb-3">-->
-    <!--                            <div class="loading">Loading</div>-->
-    <!--                            <div class="error-message"></div>-->
-    <!--                            <div class="sent-message">Your booking request was sent. We will call back or send an Email-->
-    <!--                                to confirm your reservation. Thank you!-->
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                        <div class="text-center">-->
-    <!--                            <button type="submit">Book a Table</button>-->
-    <!--                        </div>-->
-    <!--                    </form>-->
-    <!--                </div>&lt;!&ndash; End Reservation Form &ndash;&gt;-->
-
-    <!--            </div>-->
-
-    <!--        </div>-->
-    <!--    </section>&lt;!&ndash; End Book A Table Section &ndash;&gt;-->
 
     <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery section-bg">
@@ -951,6 +836,14 @@
 
 <!-- Template Main JS File -->
 <script src="../../static/happy_paws/assets/js/main.js"></script>
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#service', function() {
+            window.location.href = $('#booking-service').attr('href');
+        });
+    });
+
+</script>
 <div sec:authorize="isAuthenticated()">
     <script th:inline="javascript">
         $(document).ready(function () {
