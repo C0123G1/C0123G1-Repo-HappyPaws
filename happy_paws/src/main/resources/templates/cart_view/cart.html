@@ -98,12 +98,17 @@
                             <div class="col-md-2 d-flex justify-content-center">
                                 <div>
                                     <p class="small text-muted mb-4 pb-2">Quantity</p>
-                                    <a th:href="@{/reduce/{id}(id=${cart.cartId},customerId = ${customerId})}"
-                                       th:text="${'-'}"></a>
+                                    <a th:href="@{/reduce/{id}(id=${cart.cartId},customerId = ${customerId})}" class="delete">
+                                        <i class="material-icons"
+                                           data-toggle="tooltip"
+                                           title="Delete">&#xE15b;</i>
+                                    </a>
                                     <span th:text="${cart.quantity}"></span>
                                     <a id="increase_button" th:href="@{/add/{id}(id=${cart.cartId},customerId = ${customerId})}"
-                                       style="color: white;text-decoration: none"
-                                       th:text="${'+'}"></a>
+                                       style="color: cornflowerblue;text-decoration: none"
+                                       class="add"> <i class="material-icons"
+                                                            data-toggle="tooltip"
+                                                            title="Add">&#xE145;</i></a>
                                 </div>
                             </div>
                             <div class="col-md-2 d-flex justify-content-center">
