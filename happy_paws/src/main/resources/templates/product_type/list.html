@@ -245,7 +245,7 @@
 <div th:replace="~{fragment.html::header}"></div>
 
 <div class="container">
-    <div class="table-wrapper">
+    <div class="table-wrapper" style="height: 83vh">
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
@@ -256,7 +256,7 @@
                         <span hidden id="inputId" th:text="${mess}"></span>
                     </div>
                     <a href="/api/admin/product-type/create" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Products Type</span></a>
-                    <a th:href="@{/api/admin/product}" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Products</span></a>
+                    <a th:href="@{/api/admin/product}" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Products</span></a>
 
                 </div>
             </div>

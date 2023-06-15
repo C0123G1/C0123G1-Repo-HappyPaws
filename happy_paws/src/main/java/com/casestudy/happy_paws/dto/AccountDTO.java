@@ -16,7 +16,7 @@ public class AccountDTO {
 
 
     private String username;
-    @Size( min=8 ,max = 30, message = "Password star 8 end 30 character !! ")
+    @Size( min=8 ,max = 300, message = "Password star 8 end 300 character !! ")
     @NotBlank(message = "Please insert value")
 
     private String password;

@@ -56,7 +56,7 @@ public class EmployeeController {
                 model.addAttribute("result", "Email or phone or username is duplicated!!!");
                 return "/employee_view/create_employee";
             }
-            Account account = new Account(employee.getAccount().getUsername(), employee.getAccount().getPassword(), new Role(2, "EMPLOYEE"));
+            Account account = new Account(employee.getAccount().getUsername(), employee.getAccount().getPassword(), new Role(3, "EMPLOYEE"));
             account.setCode(11111);
             employee.setAccount(account);
             iAccountService.save(account);

@@ -22,7 +22,7 @@
 
 </div>
 <div class="container">
-    <div class="table-wrapper">
+    <div class="table-wrapper" style="height: 63vh">
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
@@ -65,8 +65,8 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Phone</th>
-                <th>email</th>
-                <th>address</th>
+                <th>Email</th>
+                <th>Address</th>
                 <th>Account</th>
                 <th>Actions</th>
             </tr>
@@ -92,7 +92,8 @@
             </tr>
             </tbody>
         </table>
-        <p style="color: red" th:text="${messSearch}"></p>
+
+        <h3 style="color: red;text-align: center" th:text="${messSearch}"></h3>
         <div class="row" th:if="${employeeList.getTotalPages() > 0}">
             <div class="col-10" th:if="${pageList == true}">
                 <a class="btn btn-sm btn-outline-primary" style="border: 1px solid #007bff"

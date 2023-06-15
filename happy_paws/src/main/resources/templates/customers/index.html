@@ -246,7 +246,7 @@
 <div th:replace="fragment.html::header"></div>
 
 <div class="container">
-    <div class="table-wrapper">
+    <div class="table-wrapper" >
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
@@ -260,7 +260,7 @@
                         <a sec:authorize="hasAuthority('ROLE_ADMIN')"  th:href="@{/customer/admin-create}" class="btn btn-success" data-toggle="modal"><i
                                 class="material-icons">&#xE147;</i>
                             <span>Add New Customer</span></a>
-                    <a sec:authorize="hasAuthority('ROLE_ADMIN')"  th:href="@{/account}" class="btn btn-success" data-toggle="modal"><i
+                    <a sec:authorize="hasAuthority('ROLE_ADMIN')"  th:href="@{/account}" class="btn btn-primary" data-toggle="modal"><i
                             class="material-icons">&#xE147;</i>
                         <span>Manage Account</span></a>
 <!--                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>-->
@@ -293,7 +293,7 @@
                     </div>
 
                     <div class="col-1">
-                        <button class="btn btn-sm btn-primary" style="background-color: palevioletred">Search
+                        <button class="btn btn-sm btn-primary">Search
                         </button>
                     </div>
                 </div>
@@ -353,7 +353,9 @@
 
             </tbody>
         </table>
-
+        <div th:if="${notFound}">
+            <h3 style="text-align: center;margin-bottom: 25vw; color: red">No customer found.</h3>
+        </div>
 
         <div th:if="${customerList.getTotalPages() > 0}">
             <div >

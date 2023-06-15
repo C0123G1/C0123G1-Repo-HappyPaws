@@ -153,7 +153,9 @@ public class CustomerController {
         model.addAttribute("phone", phone);
         model.addAttribute("name", name);
         model.addAttribute("username", username);
-
+        if (!customerList.hasContent()){
+            model.addAttribute("notFound",true);
+        }
         return "customers/index";
     }
 
@@ -255,6 +257,7 @@ public class CustomerController {
             account.setEnable(true);
             customer.setAccount(account);
             accountService.save(account);
+            customerService.save(customer);
             redirectAttributes.addFlashAttribute("mess", "Add New Successfully");
             return "redirect:/customer";
         }

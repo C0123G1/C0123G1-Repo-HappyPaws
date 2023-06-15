@@ -101,7 +101,7 @@
                       th:object="${customerDTO}">
 
                     <div class="mt-4 inputs"><span>Username</span>
-                        <input type="text" class="form-control" th:field="*{accountDTO.username}" />
+                        <input type="text" class="form-control" th:field="*{accountDTO.username}"/>
                     </div>
                     <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"
                        th:errors="*{accountDTO.username}"></p>
@@ -113,7 +113,7 @@
                        th:errors="*{accountDTO.password}"></p>
 
                     <div class="mt-2 inputs"><span>Confirm Password</span>
-                        <input type="password" class="form-control" id="confirm" name="confirm" />
+                        <input type="password" class="form-control" id="confirm" name="confirm"/>
                     </div>
                     <div class="mt-2 inputs"><span>Name</span>
                         <input class="form-control" type="text" th:field="*{name}">
@@ -140,10 +140,10 @@
 
                     <div class="text-center mt-4 btn-group">
                         <a th:href="@{/customer}">
-                            <button type="button" class="btn btn-dark">Back</button>
+                            <button type="button" class="btn btn-dark"><b> Back</b></button>
                         </a>
                         <button type="submit" class=" integration" onclick="move()" value="Save">
-                            Create
+                            <b>Create</b>
                         </button>
 
                     </div>
