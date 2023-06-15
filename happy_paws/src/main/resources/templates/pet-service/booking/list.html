@@ -55,9 +55,12 @@
             </div>
 
             <form th:action="@{/api/admin/booking-service/searchByDate}" method="get">
-                <input required style="color: black" type="date" name="searchDate" th:value="${searchDate}">
-                <button type="submit" class="btn-primary">Search</button>
+                <input class="input-group-lg" required style="color: black ; margin-right: 0vw" type="date" name="searchDate" th:value="${searchDate}">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a class="btn btn-success" style="color: white;display: inline-block" th:href="@{/api/admin/booking-service/list}">
+                   Reset</a>
             </form>
+
         </div>
         <table class="table table-striped table-hover">
             <thead>
@@ -110,6 +113,9 @@
             </tr>
             </tbody>
         </table>
+        <div th:if="${notFound}">
+            <h3 style="text-align: center;margin-bottom: 25vw; color: red">No service found.</h3>
+        </div>
         <div class="row" th:if="${bookingServicePage.getTotalPages() > 0}">
             <div class="col-10" th:if="${search} == false">
                 <a class="btn btn-sm btn-outline-primary"  style="border: 1px solid #007bff"  th:href="@{/api/admin/booking-service/list/(page = ${bookingServicePage.number - 1})}" th:if="${bookingServicePage.hasPrevious()}">Previous</a>
