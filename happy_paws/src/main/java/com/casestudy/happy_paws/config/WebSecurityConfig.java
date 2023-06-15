@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/happy_paws/assets/css/**", "/happy_paws/assets/js/**", "/images/**","/happy-paws-home").permitAll();
+        http.authorizeRequests().antMatchers("/happy_paws/assets/css/**", "/happy_paws/assets/js/**", "/images/**","/happy-paws-home", "/static/**").permitAll();
 
 
         // Các trang không yêu cầu login
@@ -52,11 +52,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/orders*", "/orders/**","order-detail/*","/order-detail/**")
                 .access("hasAnyRole('ADMIN')");
         http.authorizeRequests()
-                .antMatchers("/api/admin/product", "/api/admin/product/*")
+                .antMatchers("/api/admin/product", "/api/admin/product-type","/api/admin/product-type/*","/api/admin/product/*")
                 .access("hasAnyRole('ADMIN')");
 
         http.authorizeRequests()
-                .antMatchers("/api/admin/service", "/api/admin/service/*")
+                .antMatchers("/api/admin/service", "/api/admin/service/**", "/api/admin/pet-service/**", "/api/admin/booking-service/*")
                 .access("hasAnyRole('ADMIN')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/customers/403");

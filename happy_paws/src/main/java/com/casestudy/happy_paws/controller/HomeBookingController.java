@@ -29,6 +29,10 @@ public class HomeBookingController {
     private IBookingServiceService iBookingServiceService;
     @Autowired
     private IPetServiceService iPetServiceService;
+    @Autowired
+    private IProductService iProductService;
+    @Autowired
+    private IProductTypeService iProductTypeService;
 
 
     @GetMapping("/reservation")
@@ -36,7 +40,7 @@ public class HomeBookingController {
 
 //        model.addAttribute("bookingService",new BookingService());
 //
-        return "happy_paws/booking-page";
+        return "happy_paws/booking-page-new";
     }
 
 
@@ -64,7 +68,7 @@ public class HomeBookingController {
         model.addAttribute("bookingServiceId", bookingService.getBookingServiceId());
 
 
-        return "happy_paws/choose-service-page";
+        return "happy_paws/select-service-new";
     }
 
 
@@ -88,6 +92,8 @@ public class HomeBookingController {
         BookingServiceDetail bookingServiceDetail = new BookingServiceDetail(price, petService, bookingService);
 
         iBookingServiceServiceDetail.save(bookingServiceDetail);
+        double total = iBookingServiceServiceDetail.getTotalByIdBooking(bookingServiceId);
+        bookingService.setTotal(total);
 
 //        redirectAttributes.addFlashAttribute("customerId",bookingService.getCustomer().getCustomerId());
 
@@ -106,13 +112,18 @@ public class HomeBookingController {
 
 
 
-        return "happy_paws/choose-service-page";
+        return "happy_paws/select-service-new";
     }
 
 
     @GetMapping("/done")
-    public String done(@RequestParam("bookingServiceId")Long bookingServiceId){
-        return "happy_paws/index";
+    public String done(@RequestParam(value = "page",defaultValue = "0")Integer page, Model model){
+
+        Pageable pageable = PageRequest.of(page,100);
+        model.addAttribute("productPage",iProductService.findAll(pageable));
+        model.addAttribute("productTypeList",iProductTypeService.findAll());
+        model.addAttribute("petServiceList",iPetServiceService.findPage(PageRequest.of(0,6)));
+        return "/happy_paws/index";
     }
 
 }

@@ -842,6 +842,27 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <div th:if="${mess}">
+        <span th:text="${mess}" id="inputId" hidden></span>
+    </div>
+    <script>
+        let inputId = document.getElementById("inputId");
+        if (inputId && inputId.innerText != null) {
+            swal({
+                title: "SUCCESSFULLY",
+                text: inputId.innerText,
+                icon: "success",
+                button: "OK",
+            }).then((idOk) => {
+                if (idOk) {
+                    inputId.innerText = '';
+                }
+            });
+        }
+    </script>
+
 </footer><!-- End Footer -->
 <!-- End Footer -->
 

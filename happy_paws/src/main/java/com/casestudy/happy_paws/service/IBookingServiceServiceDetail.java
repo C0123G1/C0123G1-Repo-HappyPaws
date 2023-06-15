@@ -10,4 +10,6 @@ public interface IBookingServiceServiceDetail {
     Double getTotalByIdBooking(Long bookingServiceId);
 
     List<BookingServiceDetail> findByBookingServiceId(Long bookingServiceId);
+
+    List<BookingServiceDetail> findByBookingServiceIdJoinWithPetService(Long bookingServiceId);
 }
