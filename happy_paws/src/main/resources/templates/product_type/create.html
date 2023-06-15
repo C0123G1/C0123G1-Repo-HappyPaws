@@ -242,13 +242,12 @@
         <div class="row-1">
             <div class="row row-2">
                 <input type="text" th:field="*{nameTypeProduct}">
-                <p style="color: red" th:if="${#fields.hasErrors('nameTypeProduct')}" th:errors="*{nameTypeProduct}"></p>
-
             </div>
         </div>
-        <button style="background:#f8b8be" class="btn d-flex mx-auto"><b>Add</b></button>
+        <p style="color: red" th:if="${#fields.hasErrors('nameTypeProduct')}" th:errors="*{nameTypeProduct}"></p>
+        <button style="background:#e593b8" class="btn d-flex mx-auto"><b>Create</b></button>
         <a th:href="@{/api/admin/product-type}">
-            <button style="background: black" type="button" class="btn btn-dark">Back</button>
+            <button style="background: black" type="button" class="btn btn-dark"><b>Back</b></button>
         </a>
     </form>
 </div>
