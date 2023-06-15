@@ -248,7 +248,7 @@
 <!--        <div class="row-1">-->
 <!--            <div class="row row-2">-->
 <!--                <label></label>-->
-<!--                <input type="text" th:field="*{accountDTO.username}" required>-->
+<!--                <input type="text" th:field="*{accountDTO.username}" >-->
 <!--                <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"-->
 <!--                   th:errors="*{accountDTO.username}"></p>-->
 <!--            </div>-->
@@ -256,41 +256,38 @@
         <span>Name</span>
         <div class="row-1">
             <div class="row row-2">
-
-
-                <input placeholder="Your Name" type="text" th:field="*{name}" required>
-                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-
+                <input  type="text" th:field="*{name}" >
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+
         <span>Phone</span>
         <div class="row-1">
             <div class="row row-2">
-
-                <input placeholder=" phone number " type="text" th:field="*{phone}" required>
-                <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
-
+                <input type="text" th:field="*{phone}" >
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+
         <span>Email</span>
         <div class="row-1">
             <div class="row row-2">
-                <input placeholder="Example: abc@gmail.com" type="text" th:field="*{email}" required>
-                <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-
+                <input  type="text" th:field="*{email}" >
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
         <span>Address</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text" th:field="*{address}" required>
-                <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                <input type="text" th:field="*{address}" >
 
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
 
 
-        <button style="background:#e5707b" class="btn d-flex mx-auto"><b>Edit</b></button>
+
+        <button style="background:#e593b8" class="btn d-flex mx-auto"><b>Edit</b></button>
         <a th:href="@{/customer}">
             <button style="background: black" type="button" class="btn btn-dark">Back</button>
         </a>

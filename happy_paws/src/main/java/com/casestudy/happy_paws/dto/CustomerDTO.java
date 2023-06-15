@@ -4,7 +4,9 @@ package com.casestudy.happy_paws.dto;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -15,20 +17,28 @@ public class CustomerDTO implements Validator {
     private Integer customerId;
 
 
-    @Size(max = 100, message = "name cannot be longer than 100 characters")
-    @Pattern(regexp = "^\\p{Lu}\\p{Ll}*(\\s\\p{Lu}\\p{Ll}*)*$", message = "malformed  name")
+    @Size(max = 100, message = "Name cannot be longer than 100 characters")
+    @Pattern(regexp = "^\\p{Lu}\\p{Ll}*(\\s\\p{Lu}\\p{Ll}*)*$", message = "Malformed  name")
+    @NotBlank(message = "Please insert value")
+
     private String name;
 
     @Size(max = 11, message = "Phone number cannot 11 number !!!")
     @Pattern(regexp = "^((\\+84)|0)[0-9]{9}$", message = "Invalid phone number")
+    @NotBlank(message = "Please insert value")
+
 
     private String phone;
-    @Email(message = "email is incorrect . Please type abc@gmail.com ")
+    @Email(message = "Email is incorrect . Please type abc@gmail.com ")
+    @NotBlank(message = "Please insert value")
+
     private String email;
 
     @Size(max = 100, message = "Address cannot longer than 100 character !!")
-    private String address;
+    @NotBlank(message = "Please insert value")
 
+    private String address;
+    @Valid
     private AccountDTO accountDTO;
 
 

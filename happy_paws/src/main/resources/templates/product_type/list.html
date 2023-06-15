@@ -268,6 +268,7 @@
                 <th>Name</th>
                 <th>Create Date</th>
                 <th>Update Date</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -280,7 +281,6 @@
                     <a th:href="@{/api/admin/product-type/edit/{id}(id=${productType.id})}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                     <a th:attr="onclick=|deleteInformation(${productType.id},'${productType.nameTypeProduct}')|"  href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                 </td>
-            </tr>
             </tr>
             </tbody>
         </table>

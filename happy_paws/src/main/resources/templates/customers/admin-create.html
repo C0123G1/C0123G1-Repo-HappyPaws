@@ -239,29 +239,30 @@
         <span>Username</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="text" placeholder="user" th:field="*{accountDTO.username}"
-                       required/>
-                <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"
-                   th:errors="*{accountDTO.username}"></p>
+                <input type="text" th:field="*{accountDTO.username}"/>
+
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('accountDTO.username')}"
+           th:errors="*{accountDTO.username}"></p>
         <span
         >Password</span>
         <div class="row-1">
             <div class="row row-2">
 
-                <input type="password" placeholder="password" id="password" name="password"
-                       th:field="*{accountDTO.password}" pattern="^[a-zA-Z0-9]{8,30}$" required/>
-                <p style="color: red" th:if="${#fields.hasErrors('accountDTO.password')}"
-                   th:errors="*{accountDTO.password}"></p>
+                <input type="password" id="password" name="password"
+                       th:field="*{accountDTO.password}"/>
+
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('accountDTO.password')}"
+           th:errors="*{accountDTO.password}"></p>
         <span
         >Confirm Password</span>
         <div class="row-1">
             <div class="row row-2">
-                <input type="password" placeholder="confirm password" pattern="^[a-zA-Z0-9]{8,30}$"  id="confirm" name="confirm"
-                       required/>
+                <input type="password" id="confirm" name="confirm"
+                />
 
             </div>
         </div>
@@ -269,42 +270,52 @@
         >Name</span>
         <div class="row-1">
             <div class="row row-2">
-                <input placeholder="Your Name" type="text" th:field="*{name}" required>
-                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                <input type="text" th:field="*{name}">
+
             </div>
         </div>
-        <span>phone</span>
+        <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        <span>Phone</span>
         <div class="row-1">
             <div class="row row-2">
-                <input placeholder=" phone number " type="text" th:field="*{phone}"
-                       required>
-                <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+                <input type="text" th:field="*{phone}">
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
         <span
         >Email</span>
         <div class="row-1">
             <div class="row row-2">
-                <input placeholder="email " type="email" th:field="*{email}" required>
-                <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                <input type="email" th:field="*{email}">
+
             </div>
         </div>
+        <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
         <span
         >Address</span>
         <div class="row-1">
             <div class="row row-2">
-                <input placeholder=" phone number " type="text" th:field="*{address}"
-                       required>
-                <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                <input type="text" th:field="*{address}"
+                >
+
             </div>
         </div>
-
-        <button style="background:#e5707b" class="btn d-flex mx-auto" onclick="move()" value="Save"><b>Create</b></button>
+        <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+        <button style="background:#e593b8" class="btn d-flex mx-auto" onclick="move()" value="Save"><b>Create</b>
+        </button>
         <a th:href="@{/customer}">
             <button style="background: black" type="button" class="btn btn-dark">Back</button>
         </a>
     </form>
 </div>
+
+<div th:if="${mess}">
+    <span th:text="${mess}" id="inputId" hidden></span>
+</div>
+<div th:if="${messs}">
+    <span th:text="${messs}" id="inputId1" hidden></span>
+</div>
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     function validateForm() {
@@ -312,13 +323,10 @@
         const password = form["password"].value;
         const confirm = form["confirm"].value;
 
-        if (password === confirm){
+        if (password === confirm) {
             return true;
         }
 
-        // chưa check nhảy ra đc
-
-        //
         swal({
             title: "ERROR",
             text: `password does not match!!!`,
@@ -335,6 +343,23 @@
 
     }
 </script>
+
+<script>
+    let inputId = document.getElementById("inputId1");
+    if (inputId && inputId.innerText != null) {
+        swal({
+            title: "ERROR",
+            text: inputId.innerText,
+            icon: "error",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) {
+                inputId.innerText = '';
+            }
+        });
+    }
+</script>
+
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyDpLFDgziCMcgvUDrE64kNuoYiKvU3PeKg",
